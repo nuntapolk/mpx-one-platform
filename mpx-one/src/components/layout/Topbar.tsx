@@ -2,18 +2,24 @@
 import { usePathname } from 'next/navigation'
 
 const PAGE_TITLES: Record<string, string> = {
-  '/dashboard':          'Dashboard',
-  '/governance/data':    'Data Governance',
-  '/governance/it':      'IT Governance',
-  '/governance/ai':      'AI Governance',
-  '/governance/risk':    'IT Risk Management',
-  '/governance/reg-map': 'Regulatory Mapping',
-  '/settings':           'Settings',
+  '/dashboard':              'Dashboard',
+  '/governance/data':        'Data Governance',
+  '/governance/it':          'IT Governance',
+  '/governance/ai':          'AI Governance',
+  '/governance/risk':        'IT Risk Management',
+  '/governance/reg-map':     'Regulatory Mapping',
+  '/assessments':            'Assessments',
+  '/assessments/templates':  'Assessment Templates',
+  '/controls':               'Control Library',
+  '/frameworks':             'Frameworks',
+  '/settings':               'Settings',
 }
 
 export default function Topbar() {
   const pathname = usePathname()
-  const title = PAGE_TITLES[pathname] ?? 'MPX-ONE'
+  // Match dynamic routes
+  const title = PAGE_TITLES[pathname]
+    ?? (pathname.startsWith('/assessments/') ? 'Assessment Detail' : 'MPX-ONE')
 
   return (
     <header className="h-12 flex-shrink-0 flex items-center justify-between px-5 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">

@@ -8,14 +8,17 @@ const NAV_OVERVIEW: NavItem[] = [
 ]
 
 const NAV_GOVERNANCE: NavItem[] = [
-  { id: 'data',    label: 'Data governance', icon: '⊙', href: '/governance/data' },
-  { id: 'it',      label: 'IT governance',   icon: '⬡', href: '/governance/it',
-    badge: { value: 3, variant: 'warning' } },
-  { id: 'ai',      label: 'AI governance',   icon: '◈', href: '/governance/ai',
-    badge: { value: 3, variant: 'success' } },
-  { id: 'risk',    label: 'IT risk mgmt',    icon: '⚠', href: '/governance/risk',
-    badge: { value: '!', variant: 'danger' } },
-  { id: 'regmap',  label: 'Reg. mapping',    icon: '⊞', href: '/governance/reg-map' },
+  { id: 'data',        label: 'Data governance',  icon: '⊙', href: '/governance/data' },
+  { id: 'it',          label: 'IT governance',    icon: '⬡', href: '/governance/it' },
+  { id: 'ai',          label: 'AI governance',    icon: '◈', href: '/governance/ai' },
+  { id: 'risk',        label: 'IT risk mgmt',     icon: '⚠', href: '/governance/risk' },
+  { id: 'regmap',      label: 'Reg. mapping',     icon: '⊞', href: '/governance/reg-map' },
+]
+
+const NAV_ASSESSMENT: NavItem[] = [
+  { id: 'assessments', label: 'Assessments',      icon: '✓', href: '/assessments' },
+  { id: 'controls',    label: 'Control Library',  icon: '⊟', href: '/controls' },
+  { id: 'frameworks',  label: 'Frameworks',       icon: '≡', href: '/frameworks' },
 ]
 
 const NAV_PLATFORM: NavItem[] = [
@@ -46,6 +49,10 @@ export default function Sidebar() {
 
       <SidebarSection label="GOVERNANCE">
         {NAV_GOVERNANCE.map(item => <NavLink key={item.id} item={item} active={isActive(item.href)} />)}
+      </SidebarSection>
+
+      <SidebarSection label="ASSESSMENT">
+        {NAV_ASSESSMENT.map(item => <NavLink key={item.id} item={item} active={isActive(item.href)} />)}
       </SidebarSection>
 
       <SidebarSection label="PLATFORM">

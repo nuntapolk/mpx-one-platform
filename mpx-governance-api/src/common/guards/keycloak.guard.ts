@@ -23,6 +23,18 @@ export class KeycloakGuard implements CanActivate {
     const request = context.switchToHttp().getRequest()
     const authHeader: string = request.headers['authorization']
 
+    // Dev bypass: allow requests without token in development mode
+    if (process.env.NODE_ENV === 'development' && !authHeader) {
+      request.user = {
+        id: 'dev-user',
+        email: 'dev@mpx.local',
+        name: 'Dev User',
+        roles: ['admin'],
+        organization_id: process.env.DEV_ORG_ID || '08803204-c8d5-4f13-bf66-1e40d5ee4adc',
+      }
+      return true
+    }
+
     if (!authHeader?.startsWith('Bearer ')) {
       throw new UnauthorizedException('Missing Bearer token')
     }
