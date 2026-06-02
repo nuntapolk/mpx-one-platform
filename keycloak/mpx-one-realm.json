@@ -1,0 +1,84 @@
+{
+  "realm": "mpx-one",
+  "displayName": "MPX-ONE Governance",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "accessTokenLifespan": 3600,
+  "refreshTokenMaxReuse": 0,
+  "clients": [
+    {
+      "clientId": "mpx-web",
+      "name": "MPX-ONE Web",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
+      "redirectUris": [
+        "http://localhost:3000/*",
+        "https://mpx-one.example.com/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000",
+        "https://mpx-one.example.com"
+      ],
+      "protocol": "openid-connect"
+    },
+    {
+      "clientId": "mpx-api",
+      "name": "MPX-ONE API",
+      "enabled": true,
+      "publicClient": false,
+      "bearerOnly": true,
+      "protocol": "openid-connect"
+    }
+  ],
+  "roles": {
+    "realm": [
+      { "name": "admin",    "description": "Platform administrator" },
+      { "name": "dpo",      "description": "Data Protection Officer" },
+      { "name": "it-admin", "description": "IT governance administrator" },
+      { "name": "viewer",   "description": "Read-only access" }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin@mpx.local",
+      "email": "admin@mpx.local",
+      "firstName": "MPX",
+      "lastName": "Admin",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "mpx1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["admin"]
+    },
+    {
+      "username": "dpo@mpx.local",
+      "email": "dpo@mpx.local",
+      "firstName": "DPO",
+      "lastName": "Officer",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "mpx1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["dpo"]
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+version: '3.9'
+
+services:
+  # ── PostgreSQL 16 ──────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: mpx-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-mpx_one}
+      POSTGRES_USER: ${POSTGRES_USER:-mpx}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mpxsecret}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-mpx} -d ${POSTGRES_DB:-mpx_one}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis 7 ────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: mpx-redis
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD:-redissecret}
+    ports:
+      - '6379:6379'
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', '-a', '${REDIS_PASSWORD:-redissecret}', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Keycloak 24 ────────────────────────────────────────────────
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    container_name: mpx-keycloak
+    restart: unless-stopped
+    command: start-dev --import-realm
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin1234}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-mpx_one}
+      KC_DB_USERNAME: ${POSTGRES_USER:-mpx}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-mpxsecret}
+      KC_HOSTNAME_STRICT: 'false'
+      KC_HTTP_ENABLED: 'true'
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
+    ports:
+      - '8080:8080'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ── MinIO ──────────────────────────────────────────────────────
+  minio:
+    image: minio/minio:latest
+    container_name: mpx-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin1234}
+    volumes:
+      - miniodata:/data
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9000/minio/health/live']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── MinIO bucket setup ─────────────────────────────────────────
+  minio-setup:
+    image: minio/mc:latest
+    container_name: mpx-minio-setup
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+        mc alias set myminio http://minio:9000 ${MINIO_ROOT_USER:-minioadmin} ${MINIO_ROOT_PASSWORD:-minioadmin1234};
+        mc mb --ignore-existing myminio/mpx-one-storage;
+        mc anonymous set download myminio/mpx-one-storage;
+        exit 0;
+      "
+
+  # ── Prometheus ─────────────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: mpx-prometheus
+    restart: unless-stopped
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheusdata:/prometheus
+    ports:
+      - '9090:9090'
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=7d'
+
+  # ── Grafana ────────────────────────────────────────────────────
+  grafana:
+    image: grafana/grafana:latest
+    container_name: mpx-grafana
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin1234}
+      GF_INSTALL_PLUGINS: grafana-clock-panel
+    volumes:
+      - grafanadata:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - '3001:3000'
+    depends_on:
+      - prometheus
+
+  # ── NestJS API ─────────────────────────────────────────────────
+  mpx-api:
+    build:
+      context: ./mpx-governance-api
+      dockerfile: Dockerfile
+    container_name: mpx-api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 4000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-mpx}:${POSTGRES_PASSWORD:-mpxsecret}@postgres:5432/${POSTGRES_DB:-mpx_one}
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redissecret}@redis:6379
+      KEYCLOAK_URL: http://keycloak:8080
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM:-mpx-one}
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: 9000
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin1234}
+    ports:
+      - '4000:4000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:4000/health']
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # ── Next.js Frontend ───────────────────────────────────────────
+  mpx-web:
+    build:
+      context: ./mpx-one
+      dockerfile: Dockerfile
+    container_name: mpx-web
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+      NEXT_PUBLIC_KEYCLOAK_URL: http://localhost:8080
+      NEXT_PUBLIC_KEYCLOAK_REALM: ${KEYCLOAK_REALM:-mpx-one}
+      NEXT_PUBLIC_KEYCLOAK_CLIENT_ID: mpx-web
+    ports:
+      - '3000:3000'
+    depends_on:
+      mpx-api:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  redisdata:
+  miniodata:
+  prometheusdata:
+  grafanadata:

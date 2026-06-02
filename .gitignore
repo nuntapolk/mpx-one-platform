@@ -1,0 +1,28 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Next.js
+mpx-one/.next/
+mpx-one/out/
+mpx-one/.vercel/
+
+# NestJS
+mpx-governance-api/dist/
+
+# TypeScript
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes (local)
+pgdata/
+redisdata/
+miniodata/
