@@ -1,16 +1,18 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import * as jwt from 'jsonwebtoken'
-import * as jwksClient from 'jwks-rsa'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const jwksRsa = require('jwks-rsa')
+import type { JwksClient } from 'jwks-rsa'
 
 @Injectable()
 export class KeycloakGuard implements CanActivate {
-  private readonly jwksClient: jwksClient.JwksClient
+  private readonly jwksClient: JwksClient
 
   constructor(private config: ConfigService) {
     const url = this.config.get<string>('keycloak.url')
     const realm = this.config.get<string>('keycloak.realm')
-    this.jwksClient = jwksClient.default({
+    this.jwksClient = jwksRsa({
       jwksUri: `${url}/realms/${realm}/protocol/openid-connect/certs`,
       cache: true,
       cacheMaxAge: 600000,

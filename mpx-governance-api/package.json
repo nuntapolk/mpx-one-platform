@@ -13,32 +13,33 @@
     "migration:revert": "npm run typeorm -- migration:revert -d src/config/data-source.ts"
   },
   "dependencies": {
+    "@nestjs/cache-manager": "^2.2.1",
     "@nestjs/common": "^10.3.0",
+    "@nestjs/config": "^3.2.0",
     "@nestjs/core": "^10.3.0",
     "@nestjs/platform-express": "^10.3.0",
     "@nestjs/swagger": "^7.3.0",
-    "@nestjs/typeorm": "^10.0.2",
-    "@nestjs/config": "^3.2.0",
     "@nestjs/terminus": "^10.2.3",
-    "@nestjs/cache-manager": "^2.2.1",
+    "@nestjs/typeorm": "^10.0.2",
+    "@willsoto/nestjs-prometheus": "^6.0.0",
     "cache-manager": "^5.4.0",
     "cache-manager-redis-store": "^3.0.1",
-    "typeorm": "^0.3.20",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "jsonwebtoken": "^9.0.2",
+    "jwks-rsa": "^3.1.0",
     "pg": "^8.11.3",
+    "prom-client": "^15.1.0",
     "reflect-metadata": "^0.2.1",
     "rxjs": "^7.8.1",
-    "class-validator": "^0.14.1",
-    "class-transformer": "^0.5.1",
-    "jwks-rsa": "^3.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "nestjs-prometheus": "^0.10.0",
-    "prom-client": "^15.1.0"
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.3.2",
-    "@types/node": "^20.11.0",
+    "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.5",
-    "typescript": "^5.3.3",
-    "ts-node": "^10.9.2"
+    "@types/node": "^20.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }
