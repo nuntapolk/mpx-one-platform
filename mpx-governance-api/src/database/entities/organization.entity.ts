@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm'
 import { ApiProperty } from '@nestjs/swagger'
 
 @Entity('organizations')
@@ -23,9 +23,9 @@ export class Organization {
   @ApiProperty()
   settings: Record<string, unknown>
 
-  @CreateDateColumn()
-  created_at: Date
+  @Column({ default: true })
+  is_active: boolean
 
-  @UpdateDateColumn()
-  updated_at: Date
+  @CreateDateColumn() created_at: Date
+  @UpdateDateColumn() updated_at: Date
 }

@@ -25,12 +25,12 @@ export class DashboardService {
       this.changeRequests.count({ where: { organization_id: orgId, status: 'pending' } }),
     ])
 
-    const highRisks = await this.risks.count({
-      where: [
-        { organization_id: orgId, level: 'critical', status: 'open' },
-        { organization_id: orgId, level: 'high', status: 'open' },
-      ],
-    })
+    const highRisks = await this.risks
+      .createQueryBuilder('r')
+      .where('r.organization_id = :orgId', { orgId })
+      .andWhere("r.status = 'open'")
+      .andWhere("r.inherent_score >= 12")
+      .getCount()
 
     return {
       it_assets: { total: itTotal },
