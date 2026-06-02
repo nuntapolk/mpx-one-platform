@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { RiskRegister } from '../../database/entities/risk-register.entity'
+import { ActionPlan } from '../../database/entities/action-plan.entity'
 import { RiskRegistersController } from './risk-registers.controller'
 import { RiskRegistersService } from './risk-registers.service'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([RiskRegister])],
+  imports: [TypeOrmModule.forFeature([RiskRegister, ActionPlan])],
   controllers: [RiskRegistersController],
   providers: [RiskRegistersService],
+  exports: [RiskRegistersService],
 })
 export class RiskRegistersModule {}

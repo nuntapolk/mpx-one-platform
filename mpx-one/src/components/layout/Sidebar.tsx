@@ -17,6 +17,7 @@ const NAV_GOVERNANCE: NavItem[] = [
 
 const NAV_ASSESSMENT: NavItem[] = [
   { id: 'assessments', label: 'Assessments',      icon: '✓', href: '/assessments' },
+  { id: 'issues',      label: 'Issues & Findings', icon: '⚑', href: '/issues' },
   { id: 'controls',    label: 'Control Library',  icon: '⊟', href: '/controls' },
   { id: 'frameworks',  label: 'Frameworks',       icon: '≡', href: '/frameworks' },
 ]

@@ -9,6 +9,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/governance/risk':        'IT Risk Management',
   '/governance/reg-map':     'Regulatory Mapping',
   '/assessments':            'Assessments',
+  '/issues':                 'Issues & Findings',
   '/assessments/templates':  'Assessment Templates',
   '/controls':               'Control Library',
   '/frameworks':             'Frameworks',
