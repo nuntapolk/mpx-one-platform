@@ -58,7 +58,7 @@ export default function IssuesPage() {
     mutate(listKey); mutate(statsKey)
   }
 
-  const filtered = issues?.filter(i => filter === 'all' || i.status === filter) ?? []
+  const filtered = (Array.isArray(issues) ? issues : []).filter(i => filter === 'all' || i.status === filter)
 
   return (
     <div className="space-y-4">

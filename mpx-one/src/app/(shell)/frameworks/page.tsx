@@ -38,7 +38,7 @@ export default function FrameworksPage() {
         } />
         {isLoading ? (
           <div className="py-8 text-center text-xs text-zinc-400">กำลังโหลด...</div>
-        ) : !frameworks || frameworks.length === 0 ? (
+        ) : !Array.isArray(frameworks) || frameworks.length === 0 ? (
           <Empty />
         ) : (
           <TableWrap>

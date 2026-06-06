@@ -76,7 +76,7 @@ export default function AssessmentsPage() {
         } />
         {isLoading ? (
           <div className="py-8 text-center text-xs text-zinc-400">กำลังโหลด...</div>
-        ) : !list || list.length === 0 ? (
+        ) : !Array.isArray(list) || list.length === 0 ? (
           <Empty message="ยังไม่มี Assessment — สร้างจาก template ด้านบน" />
         ) : (
           <TableWrap>

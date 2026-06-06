@@ -41,7 +41,7 @@ export default function ControlsPage() {
         } />
         {isLoading ? (
           <div className="py-8 text-center text-xs text-zinc-400">กำลังโหลด...</div>
-        ) : !controls || controls.length === 0 ? (
+        ) : !Array.isArray(controls) || controls.length === 0 ? (
           <Empty />
         ) : (
           <TableWrap>

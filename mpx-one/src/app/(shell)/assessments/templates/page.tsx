@@ -47,7 +47,7 @@ export default function TemplatesPage() {
 
         {isLoading ? (
           <div className="py-8 text-center text-xs text-zinc-400">กำลังโหลด...</div>
-        ) : !templates || templates.length === 0 ? (
+        ) : !Array.isArray(templates) || templates.length === 0 ? (
           <Empty message="ยังไม่มี Assessment Template" />
         ) : (
           <div className="grid grid-cols-2 gap-3 mt-2">

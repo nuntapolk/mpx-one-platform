@@ -59,7 +59,7 @@ export default function AssessmentDetailPage() {
   if (!asm) return <div className="p-8 text-center text-xs text-zinc-400">ไม่พบ Assessment</div>
 
   const statusStyle = STATUS_BADGE[asm.status] ?? { bg: '#f4f4f5', text: '#71717a', label: asm.status }
-  const controls    = tmplControls?.template_controls ?? []
+  const controls    = Array.isArray(tmplControls?.template_controls) ? tmplControls.template_controls : []
   const respMap     = Object.fromEntries((responses ?? []).map(r => [r.control_id, r]))
   const scoringModel = asm.template?.scoring_model ?? 'pass_fail'
 

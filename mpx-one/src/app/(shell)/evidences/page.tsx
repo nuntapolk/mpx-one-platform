@@ -50,7 +50,7 @@ export default function EvidencesPage() {
   const pending  = evidences?.filter(e => ['submitted', 'draft'].includes(e.status)).length ?? 0
   const rejected = evidences?.filter(e => e.status === 'rejected').length ?? 0
 
-  const filtered = evidences?.filter(e => statusFilter === 'all' || e.status === statusFilter) ?? []
+  const filtered = (Array.isArray(evidences) ? evidences : []).filter(e => statusFilter === 'all' || e.status === statusFilter)
 
   async function createEvidence() {
     const count = evidences?.length ?? 0

@@ -126,7 +126,7 @@ export default function RiskPage() {
             : !risks || risks.length === 0 ? <Empty message="ยังไม่มี Risk — กด เพิ่ม Risk" />
             : (
               <div className="space-y-2 max-h-80 overflow-y-auto">
-                {risks.sort((a, b) => (b.likelihood * b.impact) - (a.likelihood * a.impact)).map(r => {
+                {[...(Array.isArray(risks) ? risks : [])].sort((a, b) => (b.likelihood * b.impact) - (a.likelihood * a.impact)).map(r => {
                   const score = r.likelihood * r.impact
                   return (
                     <div key={r.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-zinc-50">
@@ -152,7 +152,7 @@ export default function RiskPage() {
       {/* Full table */}
       <Card>
         <SectionHeader title="Risk Register ทั้งหมด" />
-        {!risks || risks.length === 0 ? <Empty /> : (
+        {!Array.isArray(risks) || risks.length === 0 ? <Empty /> : (
           <TableWrap>
             <thead>
               <tr>
@@ -167,7 +167,7 @@ export default function RiskPage() {
               </tr>
             </thead>
             <tbody>
-              {risks.map(r => {
+              {(Array.isArray(risks) ? risks : []).map(r => {
                 const score = r.likelihood * r.impact
                 return (
                   <tr key={r.id} className="hover:bg-zinc-50">
