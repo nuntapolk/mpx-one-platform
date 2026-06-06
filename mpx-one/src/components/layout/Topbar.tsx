@@ -2,35 +2,38 @@
 import { usePathname } from 'next/navigation'
 
 const PAGE_TITLES: Record<string, string> = {
-  '/dashboard':              'Dashboard',
+  '/dashboard':              '🏠 Executive Dashboard',
   '/governance/data':        'Data Governance',
   '/governance/it':          'IT Governance',
   '/governance/ai':          'AI Governance',
   '/governance/risk':        'IT Risk Management',
   '/governance/reg-map':     'Regulatory Mapping',
   '/assessments':            'Assessments',
-  '/issues':                 'Issues & Findings',
   '/assessments/templates':  'Assessment Templates',
+  '/issues':                 'Issues & Findings',
+  '/evidences':              'Evidence Repository',
   '/controls':               'Control Library',
-  '/frameworks':             'Frameworks',
+  '/frameworks':             'Framework Library',
+  '/audit-trail':            'Audit Trail',
   '/settings':               'Settings',
 }
 
 export default function Topbar() {
   const pathname = usePathname()
-  // Match dynamic routes
   const title = PAGE_TITLES[pathname]
-    ?? (pathname.startsWith('/assessments/') ? 'Assessment Detail' : 'MPX-ONE')
+    ?? (pathname.startsWith('/assessments/') ? 'Assessment Detail' : 'MPX-ONE Governance')
 
   return (
-    <header className="h-12 flex-shrink-0 flex items-center justify-between px-5 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
-      <h1 className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{title}</h1>
+    <header className="h-12 flex-shrink-0 flex items-center justify-between px-5 bg-white border-b border-zinc-200">
+      <h1 className="text-sm font-medium text-zinc-900">{title}</h1>
       <div className="flex items-center gap-3">
+        <a href="http://localhost:4000/api/docs" target="_blank" rel="noreferrer"
+          className="text-[10px] px-2 py-1 rounded border border-zinc-200 text-zinc-500 hover:border-[#02C39A] hover:text-[#02C39A] transition-colors">
+          API Docs
+        </a>
         <span className="text-xs text-zinc-400">MPX-ONE v1.0</span>
-        <div
-          className="w-7 h-7 rounded-full text-[11px] font-medium flex items-center justify-center"
-          style={{ background: '#0D1B3E', color: '#02C39A' }}
-        >
+        <div className="w-7 h-7 rounded-full text-[11px] font-medium flex items-center justify-center"
+          style={{ background: '#0D1B3E', color: '#02C39A' }}>
           M
         </div>
       </div>

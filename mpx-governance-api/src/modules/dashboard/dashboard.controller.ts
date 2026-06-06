@@ -1,5 +1,5 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common'
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { KeycloakGuard } from '../../common/guards/keycloak.guard'
 import { DashboardService } from './dashboard.service'
 
@@ -11,8 +11,14 @@ export class DashboardController {
   constructor(private readonly service: DashboardService) {}
 
   @Get('summary')
-  @ApiOkResponse({ description: 'Cross-module KPI summary' })
+  @ApiOperation({ summary: 'Executive dashboard — governance score + KPIs' })
   summary(@Req() req: any) {
-    return this.service.getSummary(req.user?.organization_id ?? 'default')
+    return this.service.getExecutiveSummary(req.user?.organization_id ?? 'default')
+  }
+
+  @Get('operations')
+  @ApiOperation({ summary: 'Governance operations dashboard' })
+  operations(@Req() req: any) {
+    return this.service.getOperationSummary(req.user?.organization_id ?? 'default')
   }
 }

@@ -2,14 +2,16 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { DashboardController } from './dashboard.controller'
 import { DashboardService } from './dashboard.service'
-import { ITAsset } from '../../database/entities/it-asset.entity'
 import { RiskRegister } from '../../database/entities/risk-register.entity'
-import { AITool } from '../../database/entities/ai-tool.entity'
-import { DataAsset } from '../../database/entities/data-asset.entity'
-import { ChangeRequest } from '../../database/entities/change-request.entity'
+import { Assessment } from '../../database/entities/assessment.entity'
+import { Issue } from '../../database/entities/issue.entity'
+import { ActionPlan } from '../../database/entities/action-plan.entity'
+import { Evidence } from '../../database/entities/evidence.entity'
+import { Control } from '../../database/entities/control.entity'
+import { Framework } from '../../database/entities/framework.entity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ITAsset, RiskRegister, AITool, DataAsset, ChangeRequest])],
+  imports: [TypeOrmModule.forFeature([RiskRegister, Assessment, Issue, ActionPlan, Evidence, Control, Framework])],
   controllers: [DashboardController],
   providers: [DashboardService],
 })

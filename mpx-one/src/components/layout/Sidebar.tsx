@@ -16,14 +16,16 @@ const NAV_GOVERNANCE: NavItem[] = [
 ]
 
 const NAV_ASSESSMENT: NavItem[] = [
-  { id: 'assessments', label: 'Assessments',      icon: '✓', href: '/assessments' },
+  { id: 'assessments', label: 'Assessments',       icon: '✓', href: '/assessments' },
   { id: 'issues',      label: 'Issues & Findings', icon: '⚑', href: '/issues' },
-  { id: 'controls',    label: 'Control Library',  icon: '⊟', href: '/controls' },
-  { id: 'frameworks',  label: 'Frameworks',       icon: '≡', href: '/frameworks' },
+  { id: 'evidences',   label: 'Evidence Repo',     icon: '📎', href: '/evidences' },
+  { id: 'controls',    label: 'Control Library',   icon: '⊟', href: '/controls' },
+  { id: 'frameworks',  label: 'Frameworks',        icon: '≡', href: '/frameworks' },
 ]
 
 const NAV_PLATFORM: NavItem[] = [
-  { id: 'settings', label: 'Settings', icon: '⚙', href: '/settings' },
+  { id: 'audit-trail', label: 'Audit Trail',  icon: '◉', href: '/audit-trail' },
+  { id: 'settings',    label: 'Settings',     icon: '⚙', href: '/settings' },
 ]
 
 export default function Sidebar() {
