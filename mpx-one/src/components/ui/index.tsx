@@ -101,9 +101,9 @@ export function KPICard({ label, value, sub, subVariant }: {
 }) {
   const subColor = { up: 'text-emerald-600', warn: 'text-amber-600', danger: 'text-red-600' }[subVariant ?? 'up']
   return (
-    <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl p-4">
-      <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">{label}</p>
-      <p className="text-2xl font-medium text-zinc-900 dark:text-zinc-100 leading-none">{value}</p>
+    <div className="glass-card p-4">
+      <p className="text-xs text-zinc-500 mb-1">{label}</p>
+      <p className="text-2xl font-medium text-zinc-900 leading-none">{value}</p>
       {sub && <p className={`text-xs mt-1 ${subColor}`}>{sub}</p>}
     </div>
   )
@@ -138,7 +138,7 @@ export function Toggle({ enabled, onToggle }: { enabled: boolean; onToggle: () =
 // ── Card ───────────────────────────────────────────────────────
 export function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl p-4 ${className}`}>
+    <div className={`glass-card p-4 ${className}`}>
       {children}
     </div>
   )
@@ -157,7 +157,7 @@ export function SectionHeader({ title, action }: { title: string; action?: React
 // ── Table ──────────────────────────────────────────────────────
 export function TableWrap({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl overflow-hidden">
+    <div className="glass-card overflow-hidden">
       <table className="w-full text-xs border-collapse">{children}</table>
     </div>
   )
@@ -165,7 +165,7 @@ export function TableWrap({ children }: { children: React.ReactNode }) {
 
 export function Th({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <th className={`bg-zinc-50 dark:bg-zinc-800 text-zinc-500 font-medium px-3 py-2 text-left border-b border-zinc-200 dark:border-zinc-700 ${className}`}>
+    <th className={`bg-white/50 text-zinc-500 font-medium px-3 py-2 text-left border-b border-white/60 ${className}`}>
       {children}
     </th>
   )
@@ -173,7 +173,7 @@ export function Th({ children, className = '' }: { children: React.ReactNode; cl
 
 export function Td({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <td className={`px-3 py-2.5 text-zinc-800 dark:text-zinc-200 border-b border-zinc-100 dark:border-zinc-800 ${className}`}>
+    <td className={`px-3 py-2.5 text-zinc-800 border-b border-white/40 ${className}`}>
       {children}
     </td>
   )
