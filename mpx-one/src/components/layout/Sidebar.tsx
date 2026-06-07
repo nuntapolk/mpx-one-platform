@@ -135,12 +135,7 @@ function NavLink({ item, active, onClick }: { item: NavItem; active: boolean; on
     <Link
       href={item.href}
       onClick={onClick}
-      className="w-full flex items-center gap-2.5 pl-4 pr-2 py-2 text-xs text-left transition-all rounded-lg"
-      style={{
-        color:      active ? '#02C39A' : 'rgba(255,255,255,0.6)',
-        background: active ? 'rgba(2,195,154,0.10)' : 'transparent',
-        borderLeft: active ? '2px solid #02C39A' : '2px solid transparent',
-      }}
+      className={`sidebar-link ${active ? 'active' : ''} w-full flex items-center gap-2.5 pl-4 pr-2 py-2 text-xs text-left rounded-lg`}
     >
       <span className="text-sm flex-shrink-0">{item.icon}</span>
       <span className="flex-1">{item.label}</span>
