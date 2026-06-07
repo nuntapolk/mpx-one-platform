@@ -35,6 +35,7 @@ const NAV_ASSESSMENT: NavItem[] = [
 
 const NAV_PLATFORM: NavItem[] = [
   { id: 'import-export', label: 'Import / Export', icon: '⇅', href: '/import-export' },
+  { id: 'admin',         label: 'Admin Config',    icon: '⚒', href: '/admin' },
   { id: 'audit-trail',   label: 'Audit Trail',     icon: '◉', href: '/audit-trail' },
   { id: 'settings',      label: 'Settings',        icon: '⚙', href: '/settings' },
 ]

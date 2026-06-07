@@ -22,6 +22,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/controls':               'Control Library',
   '/frameworks':             'Framework Library',
   '/import-export':          'Import / Export',
+  '/admin':                  'Admin Configuration',
   '/audit-trail':            'Audit Trail',
   '/settings':               'Settings',
 }
