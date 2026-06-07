@@ -35,7 +35,7 @@ export default function Page() {
 
       <Card>
         <SectionHeader title="Data Asset Registry" action={
-          <button onClick={() => setShowForm(v => !v)} className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>+ เพิ่ม</button>
+          <button onClick={() => setShowForm(v => !v)} className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">+ เพิ่ม</button>
         } />
 
         {showForm && (
@@ -44,8 +44,8 @@ export default function Page() {
             <input placeholder="Domain" value={form.data_domain} onChange={e => setForm(v => ({ ...v, data_domain: e.target.value }))} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded focus:outline-none focus:border-[#02C39A]" />
             <select value={form.classification} onChange={e => setForm(v => ({ ...v, classification: e.target.value }))} className="text-xs px-2 py-1.5 border border-zinc-200 rounded"><option value="">— Classification —</option><option key="public" value="public">public</option><option key="internal" value="internal">internal</option><option key="confidential" value="confidential">confidential</option><option key="restricted" value="restricted">restricted</option><option key="personal_data" value="personal_data">personal_data</option><option key="sensitive_personal_data" value="sensitive_personal_data">sensitive_personal_data</option></select>
             <div className="flex gap-2">
-              <button onClick={create} className="text-xs px-3 py-1.5 rounded text-white" style={{ background: '#02C39A' }}>บันทึก</button>
-              <button onClick={() => setShowForm(false)} className="text-xs px-3 py-1.5 rounded text-zinc-600 bg-zinc-100">ยกเลิก</button>
+              <button onClick={create} className="glass-btn-primary text-xs px-3 py-1.5 rounded">บันทึก</button>
+              <button onClick={() => setShowForm(false)} className="glass-btn-soft text-xs px-3 py-1.5 rounded">ยกเลิก</button>
             </div>
           </div>
         )}

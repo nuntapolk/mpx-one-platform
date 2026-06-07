@@ -34,7 +34,7 @@ export default function Page() {
 
       <Card>
         <SectionHeader title="AI Use Case Registry" action={
-          <button onClick={() => setShowForm(v => !v)} className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>+ เพิ่ม</button>
+          <button onClick={() => setShowForm(v => !v)} className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">+ เพิ่ม</button>
         } />
 
         {showForm && (
@@ -43,8 +43,8 @@ export default function Page() {
             <select value={form.ai_type} onChange={e => setForm(v => ({ ...v, ai_type: e.target.value }))} className="text-xs px-2 py-1.5 border border-zinc-200 rounded"><option value="">— AI Type —</option><option key="gen_ai" value="gen_ai">gen_ai</option><option key="machine_learning" value="machine_learning">machine_learning</option><option key="analytics" value="analytics">analytics</option><option key="chatbot" value="chatbot">chatbot</option><option key="recommendation" value="recommendation">recommendation</option><option key="decision_support" value="decision_support">decision_support</option><option key="agentic_ai" value="agentic_ai">agentic_ai</option><option key="other" value="other">other</option></select>
             <select value={form.risk_level} onChange={e => setForm(v => ({ ...v, risk_level: e.target.value }))} className="text-xs px-2 py-1.5 border border-zinc-200 rounded"><option value="">— Risk —</option><option key="critical" value="critical">critical</option><option key="high" value="high">high</option><option key="medium" value="medium">medium</option><option key="low" value="low">low</option></select>
             <div className="flex gap-2">
-              <button onClick={create} className="text-xs px-3 py-1.5 rounded text-white" style={{ background: '#02C39A' }}>บันทึก</button>
-              <button onClick={() => setShowForm(false)} className="text-xs px-3 py-1.5 rounded text-zinc-600 bg-zinc-100">ยกเลิก</button>
+              <button onClick={create} className="glass-btn-primary text-xs px-3 py-1.5 rounded">บันทึก</button>
+              <button onClick={() => setShowForm(false)} className="glass-btn-soft text-xs px-3 py-1.5 rounded">ยกเลิก</button>
             </div>
           </div>
         )}

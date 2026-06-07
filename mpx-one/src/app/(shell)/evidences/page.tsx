@@ -118,7 +118,7 @@ export default function EvidencesPage() {
               ))}
             </div>
             <button onClick={() => setShowForm(v => !v)}
-              className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>
+              className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">
               + เพิ่ม Evidence
             </button>
           </div>
@@ -143,8 +143,8 @@ export default function EvidencesPage() {
             <textarea placeholder="คำอธิบาย" value={form.description} onChange={e => setForm(v => ({ ...v, description: e.target.value }))}
               rows={2} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded focus:outline-none focus:border-[#02C39A]" />
             <div className="flex gap-2">
-              <button onClick={createEvidence} className="text-xs px-3 py-1.5 rounded text-white" style={{ background: '#02C39A' }}>บันทึก</button>
-              <button onClick={() => setShowForm(false)} className="text-xs px-3 py-1.5 rounded text-zinc-600 bg-zinc-100">ยกเลิก</button>
+              <button onClick={createEvidence} className="glass-btn-primary text-xs px-3 py-1.5 rounded">บันทึก</button>
+              <button onClick={() => setShowForm(false)} className="glass-btn-soft text-xs px-3 py-1.5 rounded">ยกเลิก</button>
             </div>
           </div>
         )}
@@ -200,8 +200,8 @@ export default function EvidencesPage() {
                         <div className="flex gap-1">
                           {e.status === 'submitted' && (
                             <>
-                              <button onClick={() => doReview(e.id, 'accept')} className="text-[10px] px-2 py-0.5 rounded text-white bg-emerald-600">Accept</button>
-                              <button onClick={() => doReview(e.id, 'reject')} className="text-[10px] px-2 py-0.5 rounded text-white bg-red-500">Reject</button>
+                              <button onClick={() => doReview(e.id, 'accept')} className="glass-btn-emerald text-[10px] px-2 py-0.5 rounded">Accept</button>
+                              <button onClick={() => doReview(e.id, 'reject')} className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">Reject</button>
                             </>
                           )}
                           {e.external_link && (

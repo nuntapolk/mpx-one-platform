@@ -34,7 +34,7 @@ export default function Page() {
 
       <Card>
         <SectionHeader title="Vendor / Third Party Registry" action={
-          <button onClick={() => setShowForm(v => !v)} className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>+ เพิ่ม</button>
+          <button onClick={() => setShowForm(v => !v)} className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">+ เพิ่ม</button>
         } />
 
         {showForm && (
@@ -43,8 +43,8 @@ export default function Page() {
             <select value={form.vendor_type} onChange={e => setForm(v => ({ ...v, vendor_type: e.target.value }))} className="text-xs px-2 py-1.5 border border-zinc-200 rounded"><option value="">— Type —</option><option key="software_vendor" value="software_vendor">software_vendor</option><option key="cloud_provider" value="cloud_provider">cloud_provider</option><option key="outsourcing_provider" value="outsourcing_provider">outsourcing_provider</option><option key="data_processor" value="data_processor">data_processor</option><option key="ai_tool_provider" value="ai_tool_provider">ai_tool_provider</option><option key="consultant" value="consultant">consultant</option><option key="infrastructure_provider" value="infrastructure_provider">infrastructure_provider</option><option key="other" value="other">other</option></select>
             <select value={form.risk_level} onChange={e => setForm(v => ({ ...v, risk_level: e.target.value }))} className="text-xs px-2 py-1.5 border border-zinc-200 rounded"><option value="">— Risk —</option><option key="critical" value="critical">critical</option><option key="high" value="high">high</option><option key="medium" value="medium">medium</option><option key="low" value="low">low</option></select>
             <div className="flex gap-2">
-              <button onClick={create} className="text-xs px-3 py-1.5 rounded text-white" style={{ background: '#02C39A' }}>บันทึก</button>
-              <button onClick={() => setShowForm(false)} className="text-xs px-3 py-1.5 rounded text-zinc-600 bg-zinc-100">ยกเลิก</button>
+              <button onClick={create} className="glass-btn-primary text-xs px-3 py-1.5 rounded">บันทึก</button>
+              <button onClick={() => setShowForm(false)} className="glass-btn-soft text-xs px-3 py-1.5 rounded">ยกเลิก</button>
             </div>
           </div>
         )}

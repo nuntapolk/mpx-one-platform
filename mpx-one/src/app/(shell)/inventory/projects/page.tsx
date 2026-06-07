@@ -34,7 +34,7 @@ export default function Page() {
 
       <Card>
         <SectionHeader title="Project Portfolio" action={
-          <button onClick={() => setShowForm(v => !v)} className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>+ เพิ่ม</button>
+          <button onClick={() => setShowForm(v => !v)} className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">+ เพิ่ม</button>
         } />
 
         {showForm && (
@@ -43,8 +43,8 @@ export default function Page() {
             <input placeholder="ประเภท" value={form.project_type} onChange={e => setForm(v => ({ ...v, project_type: e.target.value }))} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded focus:outline-none focus:border-[#02C39A]" />
             <select value={form.project_status} onChange={e => setForm(v => ({ ...v, project_status: e.target.value }))} className="text-xs px-2 py-1.5 border border-zinc-200 rounded"><option value="">— Status —</option><option key="proposed" value="proposed">proposed</option><option key="approved" value="approved">approved</option><option key="in_progress" value="in_progress">in_progress</option><option key="on_hold" value="on_hold">on_hold</option><option key="go_live_pending" value="go_live_pending">go_live_pending</option><option key="completed" value="completed">completed</option><option key="cancelled" value="cancelled">cancelled</option></select>
             <div className="flex gap-2">
-              <button onClick={create} className="text-xs px-3 py-1.5 rounded text-white" style={{ background: '#02C39A' }}>บันทึก</button>
-              <button onClick={() => setShowForm(false)} className="text-xs px-3 py-1.5 rounded text-zinc-600 bg-zinc-100">ยกเลิก</button>
+              <button onClick={create} className="glass-btn-primary text-xs px-3 py-1.5 rounded">บันทึก</button>
+              <button onClick={() => setShowForm(false)} className="glass-btn-soft text-xs px-3 py-1.5 rounded">ยกเลิก</button>
             </div>
           </div>
         )}

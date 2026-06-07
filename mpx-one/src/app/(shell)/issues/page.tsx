@@ -104,7 +104,7 @@ export default function IssuesPage() {
               ))}
             </div>
             <button onClick={() => setShowForm(v => !v)}
-              className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>
+              className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">
               + เพิ่ม Issue
             </button>
           </div>
@@ -129,8 +129,8 @@ export default function IssuesPage() {
             <textarea placeholder="Corrective Action" value={form.corrective_action} onChange={e => setForm(v => ({ ...v, corrective_action: e.target.value }))}
               rows={2} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded focus:outline-none focus:border-[#02C39A]" />
             <div className="flex gap-2">
-              <button onClick={createIssue} className="text-xs px-3 py-1.5 rounded text-white" style={{ background: '#02C39A' }}>บันทึก</button>
-              <button onClick={() => setShowForm(false)} className="text-xs px-3 py-1.5 rounded text-zinc-600 bg-zinc-100">ยกเลิก</button>
+              <button onClick={createIssue} className="glass-btn-primary text-xs px-3 py-1.5 rounded">บันทึก</button>
+              <button onClick={() => setShowForm(false)} className="glass-btn-soft text-xs px-3 py-1.5 rounded">ยกเลิก</button>
             </div>
           </div>
         )}
@@ -176,7 +176,7 @@ export default function IssuesPage() {
                       <Td>
                         {['open', 'in_progress', 'pending_review'].includes(i.status) && (
                           <button onClick={() => closeIssue(i.id)}
-                            className="text-[10px] px-2 py-0.5 rounded text-white bg-emerald-600">
+                            className="glass-btn-emerald text-[10px] px-2 py-0.5 rounded">
                             Close
                           </button>
                         )}

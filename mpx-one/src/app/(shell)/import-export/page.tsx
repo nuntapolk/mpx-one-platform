@@ -57,7 +57,7 @@ export default function ImportExportPage() {
               <p className="text-xs font-medium text-zinc-800 capitalize mb-2">{t.type.replace('-', ' ')}</p>
               <div className="flex gap-2">
                 <button onClick={() => download(`export/${t.type}`, `${t.type}-export.xlsx`)}
-                  className="flex-1 text-[11px] py-1.5 rounded text-white" style={{ background: '#02C39A' }}>
+                  className="glass-btn-primary flex-1 text-[11px] py-1.5 rounded">
                   ⬇ Export
                 </button>
                 <button onClick={() => download(`template/${t.type}`, `${t.type}-template.xlsx`)}
@@ -78,7 +78,7 @@ export default function ImportExportPage() {
             className="text-xs px-3 py-2 border border-zinc-200 rounded-lg">
             {typeList.map((t: any) => <option key={t.type} value={t.type}>{t.type}</option>)}
           </select>
-          <label className="text-xs px-3 py-2 rounded-lg text-white cursor-pointer" style={{ background: '#378ADD' }}>
+          <label className="glass-btn-blue text-xs px-3 py-2 rounded-lg cursor-pointer">
             เลือกไฟล์ Excel
             <input type="file" accept=".xlsx,.xls" onChange={onUpload} className="hidden" />
           </label>

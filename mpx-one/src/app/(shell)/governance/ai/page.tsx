@@ -11,7 +11,7 @@ export default function AIGovernancePage() {
       </div>
       <Card>
         <SectionHeader title="AI Tool Registry" action={
-          <button className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>
+          <button className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">
             + เพิ่ม AI Tool
           </button>
         } />

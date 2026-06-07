@@ -108,24 +108,24 @@ export default function AssessmentDetailPage() {
           <div className="flex gap-2">
             {asm.status === 'draft' && (
               <button onClick={() => doTransition('start')}
-                className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>
+                className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">
                 เริ่ม Assessment
               </button>
             )}
             {asm.status === 'in_progress' && (
               <button onClick={() => doTransition('submit')}
-                className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#378ADD' }}>
+                className="glass-btn-blue text-xs px-3 py-1.5 rounded-lg">
                 Submit for Review
               </button>
             )}
             {asm.status === 'submitted' && (
               <>
                 <button onClick={() => doTransition('approve', { comment })}
-                  className="text-xs px-3 py-1.5 rounded-lg text-white bg-emerald-600">
+                  className="glass-btn-emerald text-xs px-3 py-1.5 rounded-lg">
                   Approve
                 </button>
                 <button onClick={() => doTransition('reject', { comment })}
-                  className="text-xs px-3 py-1.5 rounded-lg text-white bg-red-500">
+                  className="glass-btn-danger text-xs px-3 py-1.5 rounded-lg">
                   Reject
                 </button>
               </>

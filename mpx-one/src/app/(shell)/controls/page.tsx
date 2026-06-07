@@ -35,7 +35,7 @@ export default function ControlsPage() {
 
       <Card>
         <SectionHeader title="Unified Control Library" action={
-          <button className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>
+          <button className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">
             + เพิ่ม Control
           </button>
         } />

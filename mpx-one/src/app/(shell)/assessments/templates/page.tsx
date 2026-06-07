@@ -40,7 +40,7 @@ export default function TemplatesPage() {
     <div className="space-y-4">
       <Card>
         <SectionHeader title="Assessment Templates" action={
-          <button className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>
+          <button className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">
             + สร้าง Template
           </button>
         } />
@@ -96,8 +96,7 @@ function CreateFromTemplate({ templateId, templateName }: { templateId: string; 
   }
   return (
     <button onClick={create}
-      className="flex-1 text-[11px] py-1.5 rounded-lg text-white"
-      style={{ background: '#02C39A' }}>
+      className="glass-btn-primary flex-1 text-[11px] py-1.5 rounded-lg">
       + สร้าง Assessment
     </button>
   )

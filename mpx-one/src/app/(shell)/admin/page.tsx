@@ -60,7 +60,7 @@ export default function AdminPage() {
               className="flex-1 text-xs px-2 py-1.5 border border-zinc-200 rounded focus:outline-none focus:border-[#02C39A]" />
             <input value={newLabel} onChange={e => setNewLabel(e.target.value)} placeholder="label (แสดงผล)"
               className="flex-1 text-xs px-2 py-1.5 border border-zinc-200 rounded focus:outline-none focus:border-[#02C39A]" />
-            <button onClick={addItem} className="text-xs px-3 py-1.5 rounded text-white" style={{ background: '#02C39A' }}>+ เพิ่ม</button>
+            <button onClick={addItem} className="glass-btn-primary text-xs px-3 py-1.5 rounded">+ เพิ่ม</button>
           </div>
           {itemList.length === 0 ? <Empty /> : (
             <TableWrap>

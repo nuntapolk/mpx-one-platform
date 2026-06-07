@@ -76,7 +76,7 @@ export default function RiskPage() {
         <Card className="col-span-3">
           <SectionHeader title="Top Risks" action={
             <button onClick={() => setShowForm(v => !v)}
-              className="text-xs px-3 py-1.5 rounded-lg text-white" style={{ background: '#02C39A' }}>
+              className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">
               + เพิ่ม Risk
             </button>
           } />
@@ -116,8 +116,8 @@ export default function RiskPage() {
                 onChange={e => setForm(v => ({ ...v, description: e.target.value }))}
                 rows={2} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded focus:outline-none focus:border-[#02C39A]" />
               <div className="flex gap-2">
-                <button onClick={createRisk} className="text-xs px-3 py-1.5 rounded text-white" style={{ background: '#02C39A' }}>บันทึก</button>
-                <button onClick={() => setShowForm(false)} className="text-xs px-3 py-1.5 rounded text-zinc-600 bg-zinc-100">ยกเลิก</button>
+                <button onClick={createRisk} className="glass-btn-primary text-xs px-3 py-1.5 rounded">บันทึก</button>
+                <button onClick={() => setShowForm(false)} className="glass-btn-soft text-xs px-3 py-1.5 rounded">ยกเลิก</button>
               </div>
             </div>
           )}
