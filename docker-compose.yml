@@ -156,6 +156,31 @@ services:
       timeout: 5s
       retries: 5
 
+  # ── FastAPI AI Service (Phase 2-ready) ─────────────────────────
+  mpx-ai:
+    build:
+      context: ./mpx-ai-service
+      dockerfile: Dockerfile
+    container_name: mpx-ai
+    restart: unless-stopped
+    environment:
+      ENV: ${NODE_ENV:-development}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-mpx}:${POSTGRES_PASSWORD:-mpxsecret}@postgres:5432/${POSTGRES_DB:-mpx_one}
+      CORE_API_URL: http://mpx-api:4000
+      INTERNAL_TOKEN: ${AI_SERVICE_TOKEN:-change-me-in-production}
+      KEYCLOAK_URL: http://keycloak:8080
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM:-mpx-one}
+    ports:
+      - '8000:8000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8000/health']
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
   # ── Next.js Frontend ───────────────────────────────────────────
   mpx-web:
     build:
