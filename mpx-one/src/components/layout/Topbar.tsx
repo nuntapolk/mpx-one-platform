@@ -21,6 +21,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/oic':                    'OIC Audit Readiness',
   '/controls':               'Control Library',
   '/frameworks':             'Framework Library',
+  '/import-export':          'Import / Export',
   '/audit-trail':            'Audit Trail',
   '/settings':               'Settings',
 }

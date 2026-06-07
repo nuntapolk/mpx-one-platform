@@ -55,6 +55,7 @@ import { VendorsModule } from './modules/vendors/vendors.module'
 import { ProjectsModule } from './modules/projects/projects.module'
 import { AiUseCasesModule } from './modules/ai-use-cases/ai-use-cases.module'
 import { OicModule } from './modules/oic/oic.module'
+import { ImportExportModule } from './modules/import-export/import-export.module'
 // Legacy modules
 import { ITAssetsModule } from './modules/it-assets/it-assets.module'
 import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
@@ -108,6 +109,7 @@ const ALL_ENTITIES = [
     ProjectsModule,
     AiUseCasesModule,
     OicModule,
+    ImportExportModule,
     // Legacy
     ITAssetsModule,
     ChangeRequestsModule,

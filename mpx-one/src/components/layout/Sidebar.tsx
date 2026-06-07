@@ -34,8 +34,9 @@ const NAV_ASSESSMENT: NavItem[] = [
 ]
 
 const NAV_PLATFORM: NavItem[] = [
-  { id: 'audit-trail', label: 'Audit Trail',  icon: '◉', href: '/audit-trail' },
-  { id: 'settings',    label: 'Settings',     icon: '⚙', href: '/settings' },
+  { id: 'import-export', label: 'Import / Export', icon: '⇅', href: '/import-export' },
+  { id: 'audit-trail',   label: 'Audit Trail',     icon: '◉', href: '/audit-trail' },
+  { id: 'settings',      label: 'Settings',        icon: '⚙', href: '/settings' },
 ]
 
 export default function Sidebar() {
