@@ -28,6 +28,7 @@ const NAV_ASSESSMENT: NavItem[] = [
   { id: 'assessments', label: 'Assessments',       icon: '✓', href: '/assessments' },
   { id: 'issues',      label: 'Issues & Findings', icon: '⚑', href: '/issues' },
   { id: 'evidences',   label: 'Evidence Repo',     icon: '📎', href: '/evidences' },
+  { id: 'oic',         label: 'OIC Readiness',     icon: '◎', href: '/oic' },
   { id: 'controls',    label: 'Control Library',   icon: '⊟', href: '/controls' },
   { id: 'frameworks',  label: 'Frameworks',        icon: '≡', href: '/frameworks' },
 ]

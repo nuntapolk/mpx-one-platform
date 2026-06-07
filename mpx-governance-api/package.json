@@ -14,7 +14,8 @@
     "seed": "ts-node -r tsconfig-paths/register src/database/seeds/seed-runner.ts",
     "seed:risks": "ts-node -r tsconfig-paths/register src/database/seeds/risks-issues.seed.ts",
     "seed:evidences": "ts-node -r tsconfig-paths/register src/database/seeds/evidences.seed.ts",
-    "seed:inventory": "ts-node -r tsconfig-paths/register src/database/seeds/inventory.seed.ts"
+    "seed:inventory": "ts-node -r tsconfig-paths/register src/database/seeds/inventory.seed.ts",
+    "seed:oic": "ts-node -r tsconfig-paths/register src/database/seeds/oic.seed.ts"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.1",

@@ -29,6 +29,7 @@ import { RopaActivity } from './database/entities/ropa.entity'
 import { Vendor } from './database/entities/vendor.entity'
 import { Project } from './database/entities/project.entity'
 import { AIUseCase } from './database/entities/ai-use-case.entity'
+import { OicRequirement } from './database/entities/oic-requirement.entity'
 // Legacy entities (kept for old dashboard widgets)
 import { ITAsset } from './database/entities/it-asset.entity'
 import { ChangeRequest } from './database/entities/change-request.entity'
@@ -53,6 +54,7 @@ import { RopaModule } from './modules/ropa/ropa.module'
 import { VendorsModule } from './modules/vendors/vendors.module'
 import { ProjectsModule } from './modules/projects/projects.module'
 import { AiUseCasesModule } from './modules/ai-use-cases/ai-use-cases.module'
+import { OicModule } from './modules/oic/oic.module'
 // Legacy modules
 import { ITAssetsModule } from './modules/it-assets/it-assets.module'
 import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
@@ -69,6 +71,7 @@ const ALL_ENTITIES = [
   AuditTrail,
   // M02 Shared Inventory
   Application, DataAssetInventory, RopaActivity, Vendor, Project, AIUseCase,
+  OicRequirement,
   // Legacy
   ITAsset, ChangeRequest, AITool, RegMapping,
 ]
@@ -104,6 +107,7 @@ const ALL_ENTITIES = [
     VendorsModule,
     ProjectsModule,
     AiUseCasesModule,
+    OicModule,
     // Legacy
     ITAssetsModule,
     ChangeRequestsModule,

@@ -18,6 +18,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/assessments/templates':  'Assessment Templates',
   '/issues':                 'Issues & Findings',
   '/evidences':              'Evidence Repository',
+  '/oic':                    'OIC Audit Readiness',
   '/controls':               'Control Library',
   '/frameworks':             'Framework Library',
   '/audit-trail':            'Audit Trail',
