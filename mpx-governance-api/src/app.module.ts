@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import databaseConfig from './config/database.config'
 import keycloakConfig from './config/keycloak.config'
 
-// ── Entities ──────────────────────────────────────────────────
+// ── Core entities ─────────────────────────────────────────────
 import { Organization } from './database/entities/organization.entity'
 import { BusinessUnit } from './database/entities/business-unit.entity'
 import { GovernanceDomain } from './database/entities/governance-domain.entity'
@@ -22,22 +22,23 @@ import { Issue } from './database/entities/issue.entity'
 import { Evidence } from './database/entities/evidence.entity'
 import { EvidenceLink } from './database/entities/evidence-link.entity'
 import { AuditTrail } from './database/entities/audit-trail.entity'
-// Legacy entities (keep for backward compat)
+// ── M02 Shared Inventory entities ─────────────────────────────
+import { Application } from './database/entities/application.entity'
+import { DataAssetInventory } from './database/entities/data-asset-inventory.entity'
+import { RopaActivity } from './database/entities/ropa.entity'
+import { Vendor } from './database/entities/vendor.entity'
+import { Project } from './database/entities/project.entity'
+import { AIUseCase } from './database/entities/ai-use-case.entity'
+// Legacy entities (kept for old dashboard widgets)
 import { ITAsset } from './database/entities/it-asset.entity'
 import { ChangeRequest } from './database/entities/change-request.entity'
 import { AITool } from './database/entities/ai-tool.entity'
-import { DataAsset } from './database/entities/data-asset.entity'
 import { RegMapping } from './database/entities/reg-mapping.entity'
 
 // ── Modules ───────────────────────────────────────────────────
 import { HealthModule } from './modules/health/health.module'
 import { DashboardModule } from './modules/dashboard/dashboard.module'
-import { ITAssetsModule } from './modules/it-assets/it-assets.module'
-import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
-import { AIToolsModule } from './modules/ai-tools/ai-tools.module'
-import { DataAssetsModule } from './modules/data-assets/data-assets.module'
 import { RiskRegistersModule } from './modules/risk-registers/risk-registers.module'
-import { RegMappingsModule } from './modules/reg-mappings/reg-mappings.module'
 import { FrameworksModule } from './modules/frameworks/frameworks.module'
 import { ObligationsModule } from './modules/obligations/obligations.module'
 import { ControlsModule } from './modules/controls/controls.module'
@@ -45,6 +46,18 @@ import { AssessmentsModule } from './modules/assessments/assessments.module'
 import { IssuesModule } from './modules/issues/issues.module'
 import { EvidencesModule } from './modules/evidences/evidences.module'
 import { AuditTrailModule } from './modules/audit-trail/audit-trail.module'
+// M02 Shared Inventory modules
+import { ApplicationsModule } from './modules/applications/applications.module'
+import { DataAssetsModule } from './modules/data-assets/data-assets.module'
+import { RopaModule } from './modules/ropa/ropa.module'
+import { VendorsModule } from './modules/vendors/vendors.module'
+import { ProjectsModule } from './modules/projects/projects.module'
+import { AiUseCasesModule } from './modules/ai-use-cases/ai-use-cases.module'
+// Legacy modules
+import { ITAssetsModule } from './modules/it-assets/it-assets.module'
+import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
+import { AIToolsModule } from './modules/ai-tools/ai-tools.module'
+import { RegMappingsModule } from './modules/reg-mappings/reg-mappings.module'
 
 const ALL_ENTITIES = [
   Organization, BusinessUnit, GovernanceDomain,
@@ -54,8 +67,10 @@ const ALL_ENTITIES = [
   RiskRegister, ActionPlan, Issue,
   Evidence, EvidenceLink,
   AuditTrail,
+  // M02 Shared Inventory
+  Application, DataAssetInventory, RopaActivity, Vendor, Project, AIUseCase,
   // Legacy
-  ITAsset, ChangeRequest, AITool, DataAsset, RegMapping,
+  ITAsset, ChangeRequest, AITool, RegMapping,
 ]
 
 @Module({
@@ -73,6 +88,7 @@ const ALL_ENTITIES = [
     }),
     HealthModule,
     DashboardModule,
+    // Governance library
     FrameworksModule,
     ObligationsModule,
     ControlsModule,
@@ -80,12 +96,18 @@ const ALL_ENTITIES = [
     IssuesModule,
     EvidencesModule,
     AuditTrailModule,
-    // Legacy modules
+    RiskRegistersModule,
+    // M02 Shared Inventory
+    ApplicationsModule,
+    DataAssetsModule,
+    RopaModule,
+    VendorsModule,
+    ProjectsModule,
+    AiUseCasesModule,
+    // Legacy
     ITAssetsModule,
     ChangeRequestsModule,
     AIToolsModule,
-    DataAssetsModule,
-    RiskRegistersModule,
     RegMappingsModule,
   ],
 })

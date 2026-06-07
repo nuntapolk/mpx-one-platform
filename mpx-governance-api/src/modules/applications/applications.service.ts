@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { DataAssetInventory } from '../../database/entities/data-asset-inventory.entity'
+import { Application } from '../../database/entities/application.entity'
 
 @Injectable()
-export class DataAssetsService {
-  constructor(@InjectRepository(DataAssetInventory) private repo: Repository<DataAssetInventory>) {}
+export class ApplicationsService {
+  constructor(@InjectRepository(Application) private repo: Repository<Application>) {}
 
   findAll(orgId: string) {
     return this.repo.find({ where: { organization_id: orgId }, order: { created_at: 'DESC' } })
@@ -13,18 +13,18 @@ export class DataAssetsService {
 
   async findOne(id: string, orgId: string) {
     const item = await this.repo.findOne({ where: { id, organization_id: orgId } })
-    if (!item) throw new NotFoundException('DataAssetInventory ' + id + ' not found')
+    if (!item) throw new NotFoundException('Application ' + id + ' not found')
     return item
   }
 
-  async create(body: Partial<DataAssetInventory>, orgId: string) {
+  async create(body: Partial<Application>, orgId: string) {
     const count = await this.repo.count({ where: { organization_id: orgId } })
     const year = new Date().getFullYear()
-    const code = body.data_asset_code || 'DAT-' + year + '-' + String(count + 1).padStart(3, '0')
-    return this.repo.save(this.repo.create({ ...body, data_asset_code: code, organization_id: orgId }))
+    const code = body.application_code || 'APP-' + year + '-' + String(count + 1).padStart(3, '0')
+    return this.repo.save(this.repo.create({ ...body, application_code: code, organization_id: orgId }))
   }
 
-  async update(id: string, body: Partial<DataAssetInventory>, orgId: string) {
+  async update(id: string, body: Partial<Application>, orgId: string) {
     await this.findOne(id, orgId)
     await this.repo.update({ id, organization_id: orgId }, body)
     return this.findOne(id, orgId)

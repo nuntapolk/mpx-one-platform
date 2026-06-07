@@ -7,6 +7,15 @@ const NAV_OVERVIEW: NavItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: '▦', href: '/dashboard' },
 ]
 
+const NAV_INVENTORY: NavItem[] = [
+  { id: 'inv-app',    label: 'Applications',   icon: '▢', href: '/inventory/applications' },
+  { id: 'inv-data',   label: 'Data Assets',    icon: '◫', href: '/inventory/data-assets' },
+  { id: 'inv-ropa',   label: 'ROPA',           icon: '⊡', href: '/inventory/ropa' },
+  { id: 'inv-vendor', label: 'Vendors',        icon: '⬢', href: '/inventory/vendors' },
+  { id: 'inv-proj',   label: 'Projects',       icon: '◇', href: '/inventory/projects' },
+  { id: 'inv-ai',     label: 'AI Use Cases',   icon: '◈', href: '/inventory/ai-use-cases' },
+]
+
 const NAV_GOVERNANCE: NavItem[] = [
   { id: 'data',        label: 'Data governance',  icon: '⊙', href: '/governance/data' },
   { id: 'it',          label: 'IT governance',    icon: '⬡', href: '/governance/it' },
@@ -48,6 +57,10 @@ export default function Sidebar() {
 
       <SidebarSection label="OVERVIEW">
         {NAV_OVERVIEW.map(item => <NavLink key={item.id} item={item} active={isActive(item.href)} />)}
+      </SidebarSection>
+
+      <SidebarSection label="SHARED INVENTORY">
+        {NAV_INVENTORY.map(item => <NavLink key={item.id} item={item} active={isActive(item.href)} />)}
       </SidebarSection>
 
       <SidebarSection label="GOVERNANCE">

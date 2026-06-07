@@ -1,14 +1,14 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { KeycloakGuard } from '../../common/guards/keycloak.guard'
-import { DataAssetsService } from './data-assets.service'
+import { AiUseCasesService } from './ai-use-cases.service'
 
-@ApiTags('Data Assets')
+@ApiTags('AI Use Cases')
 @ApiBearerAuth()
 @UseGuards(KeycloakGuard)
-@Controller('api/v1/data-assets')
-export class DataAssetsController {
-  constructor(private readonly svc: DataAssetsService) {}
+@Controller('api/v1/ai-use-cases')
+export class AiUseCasesController {
+  constructor(private readonly svc: AiUseCasesService) {}
 
   @Get('stats') getStats(@Req() req: any) { return this.svc.getStats(req.user?.organization_id ?? 'default') }
   @Get()        findAll(@Req() req: any) { return this.svc.findAll(req.user?.organization_id ?? 'default') }
