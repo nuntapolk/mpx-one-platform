@@ -1,91 +1,126 @@
 'use client'
+import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { NavItem } from '@/types'
 
-const NAV_OVERVIEW: NavItem[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: '▦', href: '/dashboard' },
-]
-
-const NAV_INVENTORY: NavItem[] = [
-  { id: 'inv-app',    label: 'Applications',   icon: '▢', href: '/inventory/applications' },
-  { id: 'inv-data',   label: 'Data Assets',    icon: '◫', href: '/inventory/data-assets' },
-  { id: 'inv-ropa',   label: 'ROPA',           icon: '⊡', href: '/inventory/ropa' },
-  { id: 'inv-vendor', label: 'Vendors',        icon: '⬢', href: '/inventory/vendors' },
-  { id: 'inv-proj',   label: 'Projects',       icon: '◇', href: '/inventory/projects' },
-  { id: 'inv-ai',     label: 'AI Use Cases',   icon: '◈', href: '/inventory/ai-use-cases' },
-]
-
-const NAV_GOVERNANCE: NavItem[] = [
-  { id: 'data',        label: 'Data governance',  icon: '⊙', href: '/governance/data' },
-  { id: 'it',          label: 'IT governance',    icon: '⬡', href: '/governance/it' },
-  { id: 'ai',          label: 'AI governance',    icon: '◈', href: '/governance/ai' },
-  { id: 'risk',        label: 'IT risk mgmt',     icon: '⚠', href: '/governance/risk' },
-  { id: 'regmap',      label: 'Reg. mapping',     icon: '⊞', href: '/governance/reg-map' },
-]
-
-const NAV_ASSESSMENT: NavItem[] = [
-  { id: 'assessments', label: 'Assessments',       icon: '✓', href: '/assessments' },
-  { id: 'issues',      label: 'Issues & Findings', icon: '⚑', href: '/issues' },
-  { id: 'evidences',   label: 'Evidence Repo',     icon: '📎', href: '/evidences' },
-  { id: 'oic',         label: 'OIC Readiness',     icon: '◎', href: '/oic' },
-  { id: 'controls',    label: 'Control Library',   icon: '⊟', href: '/controls' },
-  { id: 'frameworks',  label: 'Frameworks',        icon: '≡', href: '/frameworks' },
-]
-
-const NAV_PLATFORM: NavItem[] = [
-  { id: 'import-export', label: 'Import / Export', icon: '⇅', href: '/import-export' },
-  { id: 'admin',         label: 'Admin Config',    icon: '⚒', href: '/admin' },
-  { id: 'audit-trail',   label: 'Audit Trail',     icon: '◉', href: '/audit-trail' },
-  { id: 'settings',      label: 'Settings',        icon: '⚙', href: '/settings' },
+const SECTIONS: { id: string; label: string; items: NavItem[] }[] = [
+  {
+    id: 'overview', label: 'OVERVIEW', items: [
+      { id: 'dashboard', label: 'Dashboard', icon: '▦', href: '/dashboard' },
+    ],
+  },
+  {
+    id: 'inventory', label: 'SHARED INVENTORY', items: [
+      { id: 'inv-app',    label: 'Applications', icon: '▢', href: '/inventory/applications' },
+      { id: 'inv-data',   label: 'Data Assets',  icon: '◫', href: '/inventory/data-assets' },
+      { id: 'inv-ropa',   label: 'ROPA',         icon: '⊡', href: '/inventory/ropa' },
+      { id: 'inv-vendor', label: 'Vendors',      icon: '⬢', href: '/inventory/vendors' },
+      { id: 'inv-proj',   label: 'Projects',     icon: '◇', href: '/inventory/projects' },
+      { id: 'inv-ai',     label: 'AI Use Cases', icon: '◈', href: '/inventory/ai-use-cases' },
+    ],
+  },
+  {
+    id: 'governance', label: 'GOVERNANCE', items: [
+      { id: 'data',   label: 'Data governance', icon: '⊙', href: '/governance/data' },
+      { id: 'it',     label: 'IT governance',   icon: '⬡', href: '/governance/it' },
+      { id: 'ai',     label: 'AI governance',   icon: '◈', href: '/governance/ai' },
+      { id: 'risk',   label: 'IT risk mgmt',    icon: '⚠', href: '/governance/risk' },
+      { id: 'regmap', label: 'Reg. mapping',    icon: '⊞', href: '/governance/reg-map' },
+    ],
+  },
+  {
+    id: 'assessment', label: 'ASSESSMENT', items: [
+      { id: 'assessments', label: 'Assessments',       icon: '✓', href: '/assessments' },
+      { id: 'issues',      label: 'Issues & Findings', icon: '⚑', href: '/issues' },
+      { id: 'evidences',   label: 'Evidence Repo',     icon: '📎', href: '/evidences' },
+      { id: 'oic',         label: 'OIC Readiness',     icon: '◎', href: '/oic' },
+      { id: 'controls',    label: 'Control Library',   icon: '⊟', href: '/controls' },
+      { id: 'frameworks',  label: 'Frameworks',        icon: '≡', href: '/frameworks' },
+    ],
+  },
+  {
+    id: 'platform', label: 'PLATFORM', items: [
+      { id: 'import-export', label: 'Import / Export', icon: '⇅', href: '/import-export' },
+      { id: 'admin',         label: 'Admin Config',    icon: '⚒', href: '/admin' },
+      { id: 'audit-trail',   label: 'Audit Trail',     icon: '◉', href: '/audit-trail' },
+      { id: 'settings',      label: 'Settings',        icon: '⚙', href: '/settings' },
+    ],
+  },
 ]
 
 export default function Sidebar() {
   const pathname = usePathname()
+  // null = all collapsed (default on start)
+  const [openSection, setOpenSection] = useState<string | null>(null)
 
   const isActive = (href: string) =>
     href === '/dashboard' ? pathname === href : pathname.startsWith(href)
 
+  const toggle = (id: string) => setOpenSection(prev => (prev === id ? null : id))
+
   return (
-    <aside className="w-[200px] flex-shrink-0 flex flex-col" style={{ background: '#0D1B3E' }}>
+    <aside className="w-[210px] flex-shrink-0 flex flex-col" style={{ background: '#0D1B3E' }}>
       {/* Logo */}
       <div className="px-4 py-4 border-b border-white/10">
-        <p className="text-[15px] font-semibold tracking-wide" style={{ color: '#02C39A' }}>
-          MPX-ONE
-        </p>
-        <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>
-          Governance Platform
-        </p>
+        <p className="text-[15px] font-semibold tracking-wide" style={{ color: '#02C39A' }}>MPX-ONE</p>
+        <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>Governance Platform</p>
       </div>
 
-      <SidebarSection label="OVERVIEW">
-        {NAV_OVERVIEW.map(item => <NavLink key={item.id} item={item} active={isActive(item.href)} />)}
-      </SidebarSection>
+      <nav className="flex-1 overflow-y-auto py-2">
+        {SECTIONS.map(section => {
+          const isOpen = openSection === section.id
+          const hasActiveChild = section.items.some(i => isActive(i.href))
+          return (
+            <div key={section.id} className="px-2">
+              {/* Section header (collapsible) */}
+              <button
+                onClick={() => toggle(section.id)}
+                className="w-full flex items-center justify-between px-2 py-2 rounded-lg transition-colors group"
+                style={{ background: isOpen ? 'rgba(255,255,255,0.04)' : 'transparent' }}
+              >
+                <span
+                  className="text-[10px] tracking-widest font-medium"
+                  style={{ color: isOpen || hasActiveChild ? '#02C39A' : 'rgba(255,255,255,0.4)' }}
+                >
+                  {section.label}
+                </span>
+                <span
+                  className="text-[9px] transition-transform duration-200"
+                  style={{
+                    color: 'rgba(255,255,255,0.4)',
+                    transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                  }}
+                >
+                  ▶
+                </span>
+              </button>
 
-      <SidebarSection label="SHARED INVENTORY">
-        {NAV_INVENTORY.map(item => <NavLink key={item.id} item={item} active={isActive(item.href)} />)}
-      </SidebarSection>
-
-      <SidebarSection label="GOVERNANCE">
-        {NAV_GOVERNANCE.map(item => <NavLink key={item.id} item={item} active={isActive(item.href)} />)}
-      </SidebarSection>
-
-      <SidebarSection label="ASSESSMENT">
-        {NAV_ASSESSMENT.map(item => <NavLink key={item.id} item={item} active={isActive(item.href)} />)}
-      </SidebarSection>
-
-      <SidebarSection label="PLATFORM">
-        {NAV_PLATFORM.map(item => <NavLink key={item.id} item={item} active={isActive(item.href)} />)}
-      </SidebarSection>
+              {/* Items (collapsible body) */}
+              <div
+                className="overflow-hidden transition-all duration-200 ease-in-out"
+                style={{ maxHeight: isOpen ? `${section.items.length * 40 + 8}px` : '0px' }}
+              >
+                <div className="py-1">
+                  {section.items.map(item => (
+                    <NavLink
+                      key={item.id}
+                      item={item}
+                      active={isActive(item.href)}
+                      onClick={() => setOpenSection(section.id)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </nav>
 
       {/* User stub */}
-      <div className="mt-auto px-4 py-3 border-t border-white/10 flex items-center gap-2">
-        <div
-          className="w-7 h-7 rounded-full text-[11px] font-medium flex-shrink-0 flex items-center justify-center"
-          style={{ background: '#1D9E75', color: '#E1F5EE' }}
-        >
-          M
-        </div>
+      <div className="px-4 py-3 border-t border-white/10 flex items-center gap-2">
+        <div className="w-7 h-7 rounded-full text-[11px] font-medium flex-shrink-0 flex items-center justify-center"
+          style={{ background: '#1D9E75', color: '#E1F5EE' }}>M</div>
         <div>
           <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.6)' }}>MPX Admin</p>
           <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.3)' }}>admin · MPX-ONE</p>
@@ -95,41 +130,20 @@ export default function Sidebar() {
   )
 }
 
-function SidebarSection({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="py-2">
-      <p className="px-4 py-1 text-[10px] tracking-widest" style={{ color: 'rgba(255,255,255,0.3)' }}>
-        {label}
-      </p>
-      {children}
-    </div>
-  )
-}
-
-function NavLink({ item, active }: { item: NavItem; active: boolean }) {
-  const badgeStyle = {
-    success: { background: 'rgba(2,195,154,0.15)',   color: '#02C39A' },
-    warning: { background: 'rgba(239,159,39,0.15)',  color: '#EF9F27' },
-    danger:  { background: 'rgba(226,75,74,0.15)',   color: '#E24B4A' },
-  }[item.badge?.variant ?? 'success']
-
+function NavLink({ item, active, onClick }: { item: NavItem; active: boolean; onClick: () => void }) {
   return (
     <Link
       href={item.href}
-      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-left transition-all"
+      onClick={onClick}
+      className="w-full flex items-center gap-2.5 pl-4 pr-2 py-2 text-xs text-left transition-all rounded-lg"
       style={{
-        color:      active ? '#02C39A' : 'rgba(255,255,255,0.55)',
-        background: active ? 'rgba(2,195,154,0.08)' : 'transparent',
+        color:      active ? '#02C39A' : 'rgba(255,255,255,0.6)',
+        background: active ? 'rgba(2,195,154,0.10)' : 'transparent',
         borderLeft: active ? '2px solid #02C39A' : '2px solid transparent',
       }}
     >
       <span className="text-sm flex-shrink-0">{item.icon}</span>
       <span className="flex-1">{item.label}</span>
-      {item.badge && (
-        <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={badgeStyle}>
-          {item.badge.value}
-        </span>
-      )}
     </Link>
   )
 }
