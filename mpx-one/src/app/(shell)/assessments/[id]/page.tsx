@@ -6,7 +6,7 @@ import { Card, SectionHeader, KPICard } from '@/components/ui'
 import type { AssessmentProgress, AssessmentTemplateControl, AssessmentResponse, Control } from '@/types'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url, { cache: 'no-store' }).then(r => r.json())
 
 const PASS_FAIL_OPTIONS = [
   { value: 'pass', label: 'Pass ✓',  color: 'bg-emerald-50 border-emerald-400 text-emerald-800' },

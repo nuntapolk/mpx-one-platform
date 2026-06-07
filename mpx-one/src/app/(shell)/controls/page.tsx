@@ -4,7 +4,7 @@ import { Card, SectionHeader, KPICard, TableWrap, Th, Td, Empty } from '@/compon
 import type { Control } from '@/types'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url, { cache: 'no-store' }).then(r => r.json())
 
 const DOMAIN_COLORS: Record<string, string> = {
   PDPA:'#1D9E75', IT_RISK:'#EF9F27', IT_GOV:'#378ADD',

@@ -6,7 +6,7 @@ import { Card, SectionHeader, KPICard, TableWrap, Th, Td, StatusBadge, Empty } f
 import type { Assessment, AssessmentStats } from '@/types'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url, { cache: 'no-store' }).then(r => r.json())
 
 const SCORING_LABELS: Record<string, string> = {
   pass_fail: 'Pass / Fail',

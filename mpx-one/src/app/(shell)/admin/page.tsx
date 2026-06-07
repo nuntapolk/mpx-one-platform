@@ -4,7 +4,7 @@ import useSWR, { mutate } from 'swr'
 import { Card, SectionHeader, TableWrap, Th, Td, Empty } from '@/components/ui'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url, { cache: 'no-store' }).then(r => r.json())
 
 export default function AdminPage() {
   const { data: cats } = useSWR(`${API}/api/v1/admin/lookups/categories`, fetcher)

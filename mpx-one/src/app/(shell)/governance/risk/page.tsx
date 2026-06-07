@@ -5,7 +5,7 @@ import { Card, SectionHeader, KPICard, TableWrap, Th, Td, Empty } from '@/compon
 import type { RiskRegister } from '@/types'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url, { cache: 'no-store' }).then(r => r.json())
 
 // Risk score → color
 function scoreColor(s: number) {

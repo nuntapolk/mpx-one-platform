@@ -16,6 +16,15 @@ async function bootstrap() {
     credentials: true,
   })
 
+  // Force no-cache on every API response — always fetch fresh from server
+  app.use((_req: any, res: any, next: any) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
+    res.setHeader('Pragma', 'no-cache')
+    res.setHeader('Expires', '0')
+    res.setHeader('Surrogate-Control', 'no-store')
+    next()
+  })
+
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))
   app.useGlobalFilters(new AllExceptionsFilter())
   const auditService = app.get(AuditTrailService)

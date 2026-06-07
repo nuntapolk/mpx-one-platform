@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import { Card, SectionHeader, KPICard, ProgressBar, TableWrap, Th, Td, Empty } from '@/components/ui'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url, { cache: 'no-store' }).then(r => r.json())
 
 function pctColor(p: number) {
   if (p >= 80) return '#1D9E75'

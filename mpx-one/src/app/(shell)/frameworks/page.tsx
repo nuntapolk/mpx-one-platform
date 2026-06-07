@@ -4,7 +4,7 @@ import { Card, SectionHeader, KPICard, TableWrap, Th, Td, Empty } from '@/compon
 import type { Framework } from '@/types'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url, { cache: 'no-store' }).then(r => r.json())
 
 const TYPE_BADGE: Record<string, string> = {
   regulation:       'bg-red-50    text-red-700',

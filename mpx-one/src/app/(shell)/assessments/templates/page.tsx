@@ -5,7 +5,7 @@ import { Card, SectionHeader, Empty } from '@/components/ui'
 import type { AssessmentTemplate } from '@/types'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url, { cache: 'no-store' }).then(r => r.json())
 
 const TYPE_LABELS: Record<string, string> = {
   control_self_assessment: 'Control Self-Assessment',
