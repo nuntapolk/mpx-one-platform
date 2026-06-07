@@ -34,25 +34,25 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.9);
   }
 
-  /* ── Sidebar nav item ──────────────────────────────────────── */
-  .sidebar-link {
+  /* ── Sidebar buttons (nav items + section headers) ─────────── */
+  .sidebar-link,
+  .sidebar-section {
     color: rgba(255, 255, 255, 0.6);
-    border-left: 2px solid transparent;
     transition: color 0.15s ease, background 0.15s ease, filter 0.15s ease;
   }
-  /* 1) hover → ปุ่มสว่างขึ้น (อ่อนลง) ~40% */
-  .sidebar-link:hover {
+  /* 1) hover → ปุ่มสว่างขึ้น (อ่อนลง) ~60% — ทุกปุ่มรวม section bar */
+  .sidebar-link:hover,
+  .sidebar-section:hover {
     color: rgba(255, 255, 255, 1);
-    background: rgba(255, 255, 255, 0.06);
-    filter: brightness(1.4);
+    background: rgba(255, 255, 255, 0.08);
+    filter: brightness(1.6);
   }
-  /* 2) active (ถูกคลิก) → glass style */
+  /* 2) active (ถูกคลิก) → glass style (ไม่มีกรอบเขียว) */
   .sidebar-link.active {
     color: #02C39A;
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(10px) saturate(160%);
     -webkit-backdrop-filter: blur(10px) saturate(160%);
-    border-left: 2px solid #02C39A;
     box-shadow:
       0 1px 4px rgba(0, 0, 0, 0.15),
       inset 0 1px 0 rgba(255, 255, 255, 0.18);

@@ -76,7 +76,7 @@ export default function Sidebar() {
               {/* Section header (collapsible) */}
               <button
                 onClick={() => toggle(section.id)}
-                className="w-full flex items-center justify-between px-2 py-2 rounded-lg transition-colors group"
+                className="sidebar-section w-full flex items-center justify-between px-2 py-2 rounded-lg"
                 style={{ background: isOpen ? 'rgba(255,255,255,0.04)' : 'transparent' }}
               >
                 <span
