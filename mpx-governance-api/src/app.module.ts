@@ -40,6 +40,8 @@ import { RightsRequest } from './database/entities/rights-request.entity'
 import { RightsRequestNote } from './database/entities/rights-request-note.entity'
 import { BreachIncident } from './database/entities/breach-incident.entity'
 import { BreachTimeline } from './database/entities/breach-timeline.entity'
+import { PrivacyNotice } from './database/entities/privacy-notice.entity'
+import { RetentionSchedule } from './database/entities/retention-schedule.entity'
 // Legacy entities (kept for old dashboard widgets)
 import { ITAsset } from './database/entities/it-asset.entity'
 import { ChangeRequest } from './database/entities/change-request.entity'
@@ -71,6 +73,7 @@ import { OwnersModule } from './modules/owners/owners.module'
 import { ConsentModule } from './modules/consent/consent.module'
 import { DsarModule } from './modules/dsar/dsar.module'
 import { BreachModule } from './modules/breach/breach.module'
+import { PrivacyModule } from './modules/privacy/privacy.module'
 // Legacy modules
 import { ITAssetsModule } from './modules/it-assets/it-assets.module'
 import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
@@ -89,7 +92,7 @@ const ALL_ENTITIES = [
   Application, DataAssetInventory, RopaActivity, Vendor, Project, AIUseCase,
   OicRequirement, Lookup, OwnerAssignment,
   DataSubject, ConsentTemplate, Consent, RightsRequest, RightsRequestNote,
-  BreachIncident, BreachTimeline,
+  BreachIncident, BreachTimeline, PrivacyNotice, RetentionSchedule,
   // Legacy
   ITAsset, ChangeRequest, AITool, RegMapping,
 ]
@@ -132,6 +135,7 @@ const ALL_ENTITIES = [
     ConsentModule,
     DsarModule,
     BreachModule,
+    PrivacyModule,
     // Legacy
     ITAssetsModule,
     ChangeRequestsModule,

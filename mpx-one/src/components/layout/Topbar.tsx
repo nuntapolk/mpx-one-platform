@@ -17,6 +17,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/pdpa/consent':           'PDPA · Consent Management',
   '/pdpa/dsar':              'PDPA · Rights Requests (DSAR)',
   '/pdpa/breach':            'PDPA · Breach Incidents',
+  '/pdpa/privacy':           'PDPA · Privacy Notice & Retention',
   '/assessments':            'Assessments',
   '/assessments/templates':  'Assessment Templates',
   '/issues':                 'Issues & Findings',

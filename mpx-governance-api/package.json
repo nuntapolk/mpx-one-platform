@@ -19,7 +19,8 @@
     "seed:lookups": "ts-node -r tsconfig-paths/register src/database/seeds/lookups.seed.ts",
     "seed:consent": "ts-node -r tsconfig-paths/register src/database/seeds/consent.seed.ts",
     "seed:dsar": "ts-node -r tsconfig-paths/register src/database/seeds/dsar.seed.ts",
-    "seed:breach": "ts-node -r tsconfig-paths/register src/database/seeds/breach.seed.ts"
+    "seed:breach": "ts-node -r tsconfig-paths/register src/database/seeds/breach.seed.ts",
+    "seed:privacy": "ts-node -r tsconfig-paths/register src/database/seeds/privacy.seed.ts"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.1",
