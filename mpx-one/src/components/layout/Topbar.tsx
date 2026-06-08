@@ -16,6 +16,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/inventory/ai-use-cases':  'AI Use Case Registry',
   '/pdpa/consent':           'PDPA · Consent Management',
   '/pdpa/dsar':              'PDPA · Rights Requests (DSAR)',
+  '/pdpa/breach':            'PDPA · Breach Incidents',
   '/assessments':            'Assessments',
   '/assessments/templates':  'Assessment Templates',
   '/issues':                 'Issues & Findings',
