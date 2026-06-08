@@ -32,6 +32,10 @@ import { AIUseCase } from './database/entities/ai-use-case.entity'
 import { OicRequirement } from './database/entities/oic-requirement.entity'
 import { Lookup } from './database/entities/lookup.entity'
 import { OwnerAssignment } from './database/entities/owner-assignment.entity'
+// PDPA
+import { DataSubject } from './database/entities/data-subject.entity'
+import { ConsentTemplate } from './database/entities/consent-template.entity'
+import { Consent } from './database/entities/consent.entity'
 // Legacy entities (kept for old dashboard widgets)
 import { ITAsset } from './database/entities/it-asset.entity'
 import { ChangeRequest } from './database/entities/change-request.entity'
@@ -60,6 +64,7 @@ import { OicModule } from './modules/oic/oic.module'
 import { ImportExportModule } from './modules/import-export/import-export.module'
 import { AdminModule } from './modules/admin/admin.module'
 import { OwnersModule } from './modules/owners/owners.module'
+import { ConsentModule } from './modules/consent/consent.module'
 // Legacy modules
 import { ITAssetsModule } from './modules/it-assets/it-assets.module'
 import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
@@ -77,6 +82,7 @@ const ALL_ENTITIES = [
   // M02 Shared Inventory
   Application, DataAssetInventory, RopaActivity, Vendor, Project, AIUseCase,
   OicRequirement, Lookup, OwnerAssignment,
+  DataSubject, ConsentTemplate, Consent,
   // Legacy
   ITAsset, ChangeRequest, AITool, RegMapping,
 ]
@@ -116,6 +122,7 @@ const ALL_ENTITIES = [
     ImportExportModule,
     AdminModule,
     OwnersModule,
+    ConsentModule,
     // Legacy
     ITAssetsModule,
     ChangeRequestsModule,

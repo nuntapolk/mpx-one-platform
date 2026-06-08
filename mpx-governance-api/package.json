@@ -16,7 +16,8 @@
     "seed:evidences": "ts-node -r tsconfig-paths/register src/database/seeds/evidences.seed.ts",
     "seed:inventory": "ts-node -r tsconfig-paths/register src/database/seeds/inventory.seed.ts",
     "seed:oic": "ts-node -r tsconfig-paths/register src/database/seeds/oic.seed.ts",
-    "seed:lookups": "ts-node -r tsconfig-paths/register src/database/seeds/lookups.seed.ts"
+    "seed:lookups": "ts-node -r tsconfig-paths/register src/database/seeds/lookups.seed.ts",
+    "seed:consent": "ts-node -r tsconfig-paths/register src/database/seeds/consent.seed.ts"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.1",

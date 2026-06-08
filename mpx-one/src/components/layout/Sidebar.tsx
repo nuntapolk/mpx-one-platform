@@ -21,6 +21,11 @@ const SECTIONS: { id: string; label: string; items: NavItem[] }[] = [
     ],
   },
   {
+    id: 'pdpa', label: 'PDPA GOVERNANCE', items: [
+      { id: 'pdpa-consent', label: 'Consent', icon: '✍', href: '/pdpa/consent' },
+    ],
+  },
+  {
     id: 'governance', label: 'GOVERNANCE', items: [
       { id: 'data',   label: 'Data governance', icon: '⊙', href: '/governance/data' },
       { id: 'it',     label: 'IT governance',   icon: '⬡', href: '/governance/it' },

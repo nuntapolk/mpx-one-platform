@@ -14,6 +14,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/inventory/vendors':       'Vendor Registry',
   '/inventory/projects':      'Project Portfolio',
   '/inventory/ai-use-cases':  'AI Use Case Registry',
+  '/pdpa/consent':           'PDPA · Consent Management',
   '/assessments':            'Assessments',
   '/assessments/templates':  'Assessment Templates',
   '/issues':                 'Issues & Findings',
