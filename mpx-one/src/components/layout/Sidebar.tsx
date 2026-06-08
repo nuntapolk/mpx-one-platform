@@ -22,7 +22,8 @@ const SECTIONS: { id: string; label: string; items: NavItem[] }[] = [
   },
   {
     id: 'pdpa', label: 'PDPA GOVERNANCE', items: [
-      { id: 'pdpa-consent', label: 'Consent', icon: '✍', href: '/pdpa/consent' },
+      { id: 'pdpa-consent', label: 'Consent',       icon: '✍', href: '/pdpa/consent' },
+      { id: 'pdpa-dsar',    label: 'Rights (DSAR)', icon: '⚖', href: '/pdpa/dsar' },
     ],
   },
   {
