@@ -43,6 +43,15 @@ import { BreachTimeline } from './database/entities/breach-timeline.entity'
 import { PrivacyNotice } from './database/entities/privacy-notice.entity'
 import { RetentionSchedule } from './database/entities/retention-schedule.entity'
 import { Dpia } from './database/entities/dpia.entity'
+import { DpoTask } from './database/entities/dpo-task.entity'
+import { CookieBannerSetting } from './database/entities/cookie-banner.entity'
+import { CookieConsent } from './database/entities/cookie-consent.entity'
+import { TrainingCourse } from './database/entities/training-course.entity'
+import { TrainingCompletion } from './database/entities/training-completion.entity'
+import { ExternalParty } from './database/entities/external-party.entity'
+import { DataProcessingAgreement } from './database/entities/dpa.entity'
+import { RopaCampaign } from './database/entities/ropa-campaign.entity'
+import { RopaCampaignInvitee } from './database/entities/ropa-campaign-invitee.entity'
 // Legacy entities (kept for old dashboard widgets)
 import { ITAsset } from './database/entities/it-asset.entity'
 import { ChangeRequest } from './database/entities/change-request.entity'
@@ -76,6 +85,11 @@ import { DsarModule } from './modules/dsar/dsar.module'
 import { BreachModule } from './modules/breach/breach.module'
 import { PrivacyModule } from './modules/privacy/privacy.module'
 import { DpiaModule } from './modules/dpia/dpia.module'
+import { DpoModule } from './modules/dpo/dpo.module'
+import { TrainingModule } from './modules/training/training.module'
+import { ExternalPartiesModule } from './modules/external-parties/external-parties.module'
+import { RopaCampaignsModule } from './modules/ropa-campaigns/ropa-campaigns.module'
+import { CookieModule } from './modules/cookie/cookie.module'
 // Legacy modules
 import { ITAssetsModule } from './modules/it-assets/it-assets.module'
 import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
@@ -95,6 +109,8 @@ const ALL_ENTITIES = [
   OicRequirement, Lookup, OwnerAssignment,
   DataSubject, ConsentTemplate, Consent, RightsRequest, RightsRequestNote,
   BreachIncident, BreachTimeline, PrivacyNotice, RetentionSchedule, Dpia,
+  DpoTask, CookieBannerSetting, CookieConsent, TrainingCourse, TrainingCompletion,
+  ExternalParty, DataProcessingAgreement, RopaCampaign, RopaCampaignInvitee,
   // Legacy
   ITAsset, ChangeRequest, AITool, RegMapping,
 ]
@@ -139,6 +155,11 @@ const ALL_ENTITIES = [
     BreachModule,
     PrivacyModule,
     DpiaModule,
+    DpoModule,
+    TrainingModule,
+    ExternalPartiesModule,
+    RopaCampaignsModule,
+    CookieModule,
     // Legacy
     ITAssetsModule,
     ChangeRequestsModule,

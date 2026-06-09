@@ -27,6 +27,11 @@ const SECTIONS: { id: string; label: string; items: NavItem[] }[] = [
       { id: 'pdpa-breach',  label: 'Breach',        icon: '⚡', href: '/pdpa/breach' },
       { id: 'pdpa-privacy', label: 'Privacy Notice',icon: '§', href: '/pdpa/privacy' },
       { id: 'pdpa-dpia',    label: 'DPIA',          icon: '◑', href: '/pdpa/dpia' },
+      { id: 'pdpa-cookie',  label: 'Cookie Consent',icon: '◕', href: '/pdpa/cookie' },
+      { id: 'pdpa-dpo',     label: 'DPO Tasks',     icon: '☑', href: '/pdpa/dpo' },
+      { id: 'pdpa-train',   label: 'Training',      icon: '🎓', href: '/pdpa/training' },
+      { id: 'pdpa-party',   label: 'External Parties', icon: '⇄', href: '/pdpa/external-parties' },
+      { id: 'pdpa-camp',    label: 'ROPA Campaigns',icon: '📣', href: '/pdpa/campaigns' },
     ],
   },
   {
