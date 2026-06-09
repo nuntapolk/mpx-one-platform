@@ -90,6 +90,7 @@ import { TrainingModule } from './modules/training/training.module'
 import { ExternalPartiesModule } from './modules/external-parties/external-parties.module'
 import { RopaCampaignsModule } from './modules/ropa-campaigns/ropa-campaigns.module'
 import { CookieModule } from './modules/cookie/cookie.module'
+import { DataMapModule } from './modules/data-map/data-map.module'
 // Legacy modules
 import { ITAssetsModule } from './modules/it-assets/it-assets.module'
 import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
@@ -160,6 +161,7 @@ const ALL_ENTITIES = [
     ExternalPartiesModule,
     RopaCampaignsModule,
     CookieModule,
+    DataMapModule,
     // Legacy
     ITAssetsModule,
     ChangeRequestsModule,
