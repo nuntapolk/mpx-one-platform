@@ -25,12 +25,15 @@ export default function PrivacyPage() {
   const { data: stats } = useSWR(statsKey, fetcher)
   const { data: notices } = useSWR(noticeKey, fetcher)
   const { data: retention } = useSWR(retKey, fetcher)
+  const { data: ropas } = useSWR(`${API}/api/v1/ropa`, fetcher)
   const nList = Array.isArray(notices) ? notices : []
   const rList = Array.isArray(retention) ? retention : []
+  const ropaList = Array.isArray(ropas) ? ropas : []
+  const ropaName = (id: string) => ropaList.find((r: any) => r.id === id)?.processing_activity_name ?? '—'
 
   const [tab, setTab] = useState<'notices' | 'retention'>('notices')
   const [nForm, setNForm] = useState({ type: 'website', title: '', language: 'th', version: '1.0', content: '' })
-  const [rForm, setRForm] = useState({ data_category: '', retention_years: 1, legal_basis: '' })
+  const [rForm, setRForm] = useState({ data_category: '', retention_years: 1, legal_basis: '', related_ropa_id: '' })
   const [showN, setShowN] = useState(false)
   const [showR, setShowR] = useState(false)
 
@@ -46,7 +49,7 @@ export default function PrivacyPage() {
   async function createRet() {
     await fetch(retKey, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(rForm) })
     mutate(retKey); mutate(statsKey); setShowR(false)
-    setRForm({ data_category: '', retention_years: 1, legal_basis: '' })
+    setRForm({ data_category: '', retention_years: 1, legal_basis: '', related_ropa_id: '' })
   }
 
   return (
@@ -128,6 +131,10 @@ export default function PrivacyPage() {
                   <input type="number" placeholder="ปีที่เก็บ" value={rForm.retention_years} onChange={e => setRForm(v => ({ ...v, retention_years: +e.target.value }))} className="text-xs px-2 py-1.5 border border-zinc-200 rounded" />
                   <input placeholder="ฐานกฎหมาย" value={rForm.legal_basis} onChange={e => setRForm(v => ({ ...v, legal_basis: e.target.value }))} className="text-xs px-2 py-1.5 border border-zinc-200 rounded" />
                 </div>
+                <select value={rForm.related_ropa_id} onChange={e => setRForm(v => ({ ...v, related_ropa_id: e.target.value }))} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded">
+                  <option value="">— เชื่อมกับ ROPA (optional) —</option>
+                  {ropaList.map((r: any) => <option key={r.id} value={r.id}>{r.ropa_code} · {r.processing_activity_name}</option>)}
+                </select>
                 <div className="flex gap-2">
                   <button onClick={createRet} className="glass-btn-primary text-xs px-3 py-1.5 rounded">บันทึก</button>
                   <button onClick={() => setShowR(false)} className="glass-btn-soft text-xs px-3 py-1.5 rounded">ยกเลิก</button>
@@ -136,14 +143,14 @@ export default function PrivacyPage() {
             )}
             {rList.length === 0 ? <Empty /> : (
               <TableWrap>
-                <thead><tr><Th>ประเภทข้อมูล</Th><Th>ระยะเก็บ</Th><Th>ฐานกฎหมาย</Th><Th>หมายเหตุ</Th></tr></thead>
+                <thead><tr><Th>ประเภทข้อมูล</Th><Th>ระยะเก็บ</Th><Th>ฐานกฎหมาย</Th><Th>ROPA ที่เชื่อม</Th></tr></thead>
                 <tbody>
                   {rList.map((r: any) => (
                     <tr key={r.id} className="hover:bg-zinc-50">
                       <Td><span className="font-medium text-zinc-800">{r.data_category}</span></Td>
                       <Td><span className="text-xs font-semibold text-[#02C39A]">{r.retention_years} ปี</span></Td>
                       <Td><span className="text-[11px] text-zinc-600">{r.legal_basis}</span></Td>
-                      <Td><span className="text-[11px] text-zinc-400">{r.notes ?? '—'}</span></Td>
+                      <Td><span className="text-[11px] text-zinc-500">{r.related_ropa_id ? ropaName(r.related_ropa_id) : '—'}</span></Td>
                     </tr>
                   ))}
                 </tbody>

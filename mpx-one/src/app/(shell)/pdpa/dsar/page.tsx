@@ -32,15 +32,20 @@ export default function DsarPage() {
   const listKey  = `${API}/api/v1/dsar`
   const { data: stats } = useSWR(statsKey, fetcher)
   const { data: list } = useSWR(listKey, fetcher)
+  const { data: ropas } = useSWR(`${API}/api/v1/ropa`, fetcher)
   const rows = Array.isArray(list) ? list : []
+  const ropaList = Array.isArray(ropas) ? ropas : []
 
   const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState({ type: 'access', requester_name: '', requester_email: '', description: '' })
+  const [form, setForm] = useState({ type: 'access', requester_name: '', requester_email: '', description: '', related_ropa: '' })
 
   async function create() {
-    await fetch(listKey, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
+    const payload: any = { ...form }
+    if (form.related_ropa) payload.ropa_linked_process_ids = [form.related_ropa]
+    delete payload.related_ropa
+    await fetch(listKey, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
     mutate(listKey); mutate(statsKey)
-    setShowForm(false); setForm({ type: 'access', requester_name: '', requester_email: '', description: '' })
+    setShowForm(false); setForm({ type: 'access', requester_name: '', requester_email: '', description: '', related_ropa: '' })
   }
   async function advance(id: string, status: string) {
     await fetch(`${API}/api/v1/dsar/${id}/status`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status }) })
@@ -72,6 +77,10 @@ export default function DsarPage() {
             </div>
             <input placeholder="อีเมลผู้ขอ" value={form.requester_email} onChange={e => setForm(v => ({ ...v, requester_email: e.target.value }))} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded" />
             <textarea placeholder="รายละเอียดคำขอ" value={form.description} onChange={e => setForm(v => ({ ...v, description: e.target.value }))} rows={2} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded" />
+            <select value={form.related_ropa} onChange={e => setForm(v => ({ ...v, related_ropa: e.target.value }))} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded">
+              <option value="">— เชื่อมกับกิจกรรมประมวลผล ROPA (optional) —</option>
+              {ropaList.map((r: any) => <option key={r.id} value={r.id}>{r.ropa_code} · {r.processing_activity_name}</option>)}
+            </select>
             <div className="flex gap-2">
               <button onClick={create} className="glass-btn-primary text-xs px-3 py-1.5 rounded">บันทึก (SLA 30 วัน)</button>
               <button onClick={() => setShowForm(false)} className="glass-btn-soft text-xs px-3 py-1.5 rounded">ยกเลิก</button>
