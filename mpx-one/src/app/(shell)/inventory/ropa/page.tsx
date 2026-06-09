@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import useSWR, { mutate } from 'swr'
+import Link from 'next/link'
 import { Card, SectionHeader, KPICard, TableWrap, Th, Td, Empty } from '@/components/ui'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
@@ -89,7 +90,12 @@ export default function RopaPage() {
                         <span className="text-[10px] font-medium" style={{ color: compColor(r.completeness) }}>{r.completeness}%</span>
                       </div>
                     </Td>
-                    <Td><button onClick={() => setOpenId(openId === r.id ? null : r.id)} className="glass-btn-soft text-[10px] px-2 py-0.5 rounded">{openId === r.id ? 'ปิด' : 'ดู phases'}</button></Td>
+                    <Td>
+                      <div className="flex gap-1">
+                        <button onClick={() => setOpenId(openId === r.id ? null : r.id)} className="glass-btn-soft text-[10px] px-2 py-0.5 rounded">{openId === r.id ? 'ปิด' : 'phases'}</button>
+                        <Link href={`/inventory/ropa/${r.id}`} className="glass-btn-primary text-[10px] px-2 py-0.5 rounded">แก้ไข</Link>
+                      </div>
+                    </Td>
                   </tr>
                 ))}
               </tbody>

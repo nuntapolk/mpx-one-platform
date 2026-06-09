@@ -35,7 +35,7 @@ const PAGE_TITLES: Record<string, string> = {
 export default function Topbar() {
   const pathname = usePathname()
   const title = PAGE_TITLES[pathname]
-    ?? (pathname.startsWith('/assessments/') ? 'Assessment Detail' : 'MPX-ONE Governance')
+    ?? (pathname.startsWith('/inventory/ropa/') ? 'ROPA — 4-Phase Editor' : pathname.startsWith('/assessments/') ? 'Assessment Detail' : 'MPX-ONE Governance')
 
   return (
     <header className="h-12 flex-shrink-0 flex items-center justify-between px-5" style={{ background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(255,255,255,0.6)', WebkitBackdropFilter: 'blur(16px)' }}>
