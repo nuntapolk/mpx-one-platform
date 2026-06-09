@@ -26,6 +26,7 @@ const SECTIONS: { id: string; label: string; items: NavItem[] }[] = [
       { id: 'pdpa-dsar',    label: 'Rights (DSAR)', icon: '⚖', href: '/pdpa/dsar' },
       { id: 'pdpa-breach',  label: 'Breach',        icon: '⚡', href: '/pdpa/breach' },
       { id: 'pdpa-privacy', label: 'Privacy Notice',icon: '§', href: '/pdpa/privacy' },
+      { id: 'pdpa-dpia',    label: 'DPIA',          icon: '◑', href: '/pdpa/dpia' },
     ],
   },
   {
