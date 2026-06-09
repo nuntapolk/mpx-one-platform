@@ -72,6 +72,58 @@ export class RopaActivity {
   @Column({ default: 'medium' })
   @ApiProperty({ enum: ['critical', 'high', 'medium', 'low'] }) risk_level: string
 
+  // ── Org context (PDPA Studio parity) ──────────────────────────
+  @Column({ length: 255, nullable: true }) department: string
+  @Column({ length: 255, nullable: true }) role: string
+  @Column({ type: 'text', nullable: true }) legitimate_interest_description: string
+  @Column({ default: false }) has_sensitive_data: boolean
+  @Column({ default: false }) third_party_transfer: boolean
+  @Column({ type: 'text', nullable: true }) cross_border_countries: string
+  @Column({ type: 'text', nullable: true }) security_measures: string
+  @Column({ type: 'text', nullable: true }) system_used: string
+
+  // ── Phase 3: Activity timeline ────────────────────────────────
+  @Column({ type: 'date', nullable: true }) start_date: Date
+  @Column({ type: 'date', nullable: true }) end_date: Date
+  @Column({ length: 255, nullable: true }) replacement_activity: string
+
+  // ── Phase 3: Collection (extended) ────────────────────────────
+  @Column({ default: false }) indirect_notice_given: boolean
+  @Column({ type: 'text', nullable: true }) re_noticing_process: string
+
+  // ── Phase 3: Storage & use (extended) ─────────────────────────
+  @Column({ type: 'text', nullable: true }) internal_data_sources: string
+  @Column({ type: 'text', nullable: true }) internal_shared_databases: string
+  @Column({ type: 'simple-array', nullable: true }) use_activities: string[]
+  @Column({ type: 'simple-array', nullable: true }) access_methods: string[]
+  @Column({ default: false }) access_during_maintenance: boolean
+  @Column({ length: 100, nullable: true }) maintenance_duration: string
+  @Column({ type: 'text', nullable: true }) data_subject_rights_process: string
+  @Column({ type: 'text', nullable: true }) rejection_records: string
+
+  // ── Phase 3: Implementation ───────────────────────────────────
+  @Column({ default: false }) access_control_defined: boolean
+  @Column({ length: 255, nullable: true }) access_control_ref: string
+  @Column({ length: 100, nullable: true }) implementation_phase: string
+  @Column({ length: 255, nullable: true }) contact_point: string
+  @Column({ type: 'simple-array', nullable: true }) operation_manual_files: string[]
+  @Column({ type: 'int', nullable: true }) gap_count: number
+  @Column({ type: 'simple-array', nullable: true }) compliance_checks: string[]
+  @Column({ length: 500, nullable: true }) attachment_path: string
+
+  // ── DPIA (extended) ───────────────────────────────────────────
+  @Column({ default: false }) dpia_required: boolean
+  @Column({ type: 'uuid', nullable: true }) dpia_owner: string
+  @Column({ length: 100, nullable: true }) dpia_drill: string
+
+  // ── Review tracking ───────────────────────────────────────────
+  @Column({ type: 'timestamptz', nullable: true }) last_reviewed_at: Date
+  @Column({ type: 'date', nullable: true }) next_review_date: Date
+  @Column({ type: 'uuid', nullable: true }) reviewed_by: string
+
+  // ── Pass / priority ───────────────────────────────────────────
+  @Column({ length: 20, nullable: true }) auto_priority: string
+
   // ── Completeness tracking ─────────────────────────────────────
   @Column({ default: 1 })
   @ApiProperty({ description: 'Which ROPA phase the record has reached (1-4)' }) target_pass: number
