@@ -34,6 +34,7 @@ const SECTIONS: { id: string; label: string; items: NavItem[] }[] = [
       { id: 'pdpa-camp',    label: 'ROPA Campaigns',icon: '📣', href: '/pdpa/campaigns' },
       { id: 'pdpa-datamap', label: 'Data Map',      icon: '🗺', href: '/pdpa/data-map' },
       { id: 'pdpa-reports', label: 'Reports',       icon: '📈', href: '/pdpa/reports' },
+      { id: 'pdpa-access',  label: 'Access Review', icon: '🔑', href: '/pdpa/access-review' },
     ],
   },
   {

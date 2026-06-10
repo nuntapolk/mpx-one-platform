@@ -93,6 +93,8 @@ import { CookieModule } from './modules/cookie/cookie.module'
 import { DataMapModule } from './modules/data-map/data-map.module'
 import { ReportsModule } from './modules/reports/reports.module'
 import { PublicPortalModule } from './modules/public-portal/public-portal.module'
+import { AccessReviewModule } from './modules/access-review/access-review.module'
+import { AccessReview } from './database/entities/access-review.entity'
 // Legacy modules
 import { ITAssetsModule } from './modules/it-assets/it-assets.module'
 import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
@@ -114,6 +116,7 @@ const ALL_ENTITIES = [
   BreachIncident, BreachTimeline, PrivacyNotice, RetentionSchedule, Dpia,
   DpoTask, CookieBannerSetting, CookieConsent, TrainingCourse, TrainingCompletion,
   ExternalParty, DataProcessingAgreement, RopaCampaign, RopaCampaignInvitee,
+  AccessReview,
   // Legacy
   ITAsset, ChangeRequest, AITool, RegMapping,
 ]
@@ -166,6 +169,7 @@ const ALL_ENTITIES = [
     DataMapModule,
     ReportsModule,
     PublicPortalModule,
+    AccessReviewModule,
     // Legacy
     ITAssetsModule,
     ChangeRequestsModule,
