@@ -98,6 +98,8 @@ import { AccessReview } from './database/entities/access-review.entity'
 import { WorkflowModule } from './modules/workflow/workflow.module'
 import { WorkflowTemplate } from './database/entities/workflow-template.entity'
 import { WorkflowInstance } from './database/entities/workflow-instance.entity'
+import { RopaFieldConfigModule } from './modules/ropa-field-config/ropa-field-config.module'
+import { RopaFieldConfig } from './database/entities/ropa-field-config.entity'
 // Legacy modules
 import { ITAssetsModule } from './modules/it-assets/it-assets.module'
 import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
@@ -119,7 +121,7 @@ const ALL_ENTITIES = [
   BreachIncident, BreachTimeline, PrivacyNotice, RetentionSchedule, Dpia,
   DpoTask, CookieBannerSetting, CookieConsent, TrainingCourse, TrainingCompletion,
   ExternalParty, DataProcessingAgreement, RopaCampaign, RopaCampaignInvitee,
-  AccessReview, WorkflowTemplate, WorkflowInstance,
+  AccessReview, WorkflowTemplate, WorkflowInstance, RopaFieldConfig,
   // Legacy
   ITAsset, ChangeRequest, AITool, RegMapping,
 ]
@@ -174,6 +176,7 @@ const ALL_ENTITIES = [
     PublicPortalModule,
     AccessReviewModule,
     WorkflowModule,
+    RopaFieldConfigModule,
     // Legacy
     ITAssetsModule,
     ChangeRequestsModule,
