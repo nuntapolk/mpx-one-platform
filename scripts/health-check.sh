@@ -15,6 +15,9 @@ check() {
   # healthy = any 2xx or 3xx (3xx = redirect, e.g. / → /dashboard)
   if [[ "$code" =~ ^[23][0-9][0-9]$ ]]; then
     printf "  ${GREEN}✓${NC} %-26s ${DIM}%s${NC} ${GREEN}%s${NC}\n" "$label" "$url" "$code"
+  elif [[ "$code" == "401" || "$code" == "403" ]]; then
+    # Service is up and correctly enforcing auth (AUTH_ENABLED=true) — not a failure.
+    printf "  ${YELLOW}🔒${NC} %-26s ${DIM}%s${NC} ${YELLOW}%s secured${NC}\n" "$label" "$url" "$code"
   else
     printf "  ${RED}✗${NC} %-26s ${DIM}%s${NC} ${RED}%s${NC}\n" "$label" "$url" "${code:-no-response}"
     fail=1
