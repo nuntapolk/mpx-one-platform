@@ -1,29 +1,22 @@
-import { useAuthStore } from '@/store/auth'
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+// All calls go through the same-origin BFF proxy; the proxy attaches the Bearer token
+// from the httpOnly cookie. No token handling on the client.
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api/proxy'
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const token = useAuthStore.getState().token
-
   const res = await fetch(`${BASE_URL}${path}`, {
+    cache: 'no-store',
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
+    headers: { 'Content-Type': 'application/json', ...options.headers },
   })
 
   if (res.status === 401) {
-    useAuthStore.getState().logout()
+    if (typeof window !== 'undefined') window.location.href = '/login'
     throw new Error('Unauthorized')
   }
-
   if (!res.ok) {
     const err = await res.json().catch(() => ({ message: res.statusText }))
     throw new Error(err.message || 'API Error')
   }
-
   return res.json()
 }
 

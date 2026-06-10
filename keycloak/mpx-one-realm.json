@@ -37,14 +37,59 @@
       "publicClient": false,
       "bearerOnly": true,
       "protocol": "openid-connect"
+    },
+    {
+      "clientId": "mpx-bff",
+      "name": "MPX-ONE BFF (server-side)",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "mpx-bff-dev-secret",
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://localhost:3000/api/auth/callback",
+        "https://mpx-one.example.com/api/auth/callback"
+      ],
+      "webOrigins": [
+        "http://localhost:3000",
+        "https://mpx-one.example.com"
+      ],
+      "attributes": {
+        "post.logout.redirect.uris": "http://localhost:3000/*##https://mpx-one.example.com/*"
+      },
+      "protocolMappers": [
+        {
+          "name": "audience-mpx-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.client.audience": "mpx-api",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        }
+      ]
     }
   ],
   "roles": {
     "realm": [
-      { "name": "admin",    "description": "Platform administrator" },
-      { "name": "dpo",      "description": "Data Protection Officer" },
-      { "name": "it-admin", "description": "IT governance administrator" },
-      { "name": "viewer",   "description": "Read-only access" }
+      {
+        "name": "admin",
+        "description": "Platform administrator"
+      },
+      {
+        "name": "dpo",
+        "description": "Data Protection Officer"
+      },
+      {
+        "name": "it-admin",
+        "description": "IT governance administrator"
+      },
+      {
+        "name": "viewer",
+        "description": "Read-only access"
+      }
     ]
   },
   "users": [
@@ -62,7 +107,9 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["admin"]
+      "realmRoles": [
+        "admin"
+      ]
     },
     {
       "username": "dpo@mpx.local",
@@ -78,7 +125,9 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["dpo"]
+      "realmRoles": [
+        "dpo"
+      ]
     }
   ]
 }

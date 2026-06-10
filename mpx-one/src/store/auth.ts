@@ -1,32 +1,24 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-import type { AuthUser, Organization } from '@/types'
 
-interface AuthState {
-  token: string | null
-  user: AuthUser | null
-  org: Organization | null
-  setAuth: (token: string, user: AuthUser) => void
-  setOrg: (org: Organization) => void
-  logout: () => void
-  isAuthenticated: () => boolean
+export interface SessionUser {
+  name?: string
+  email?: string
+  roles: string[]
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set, get) => ({
-      token: null,
-      user:  null,
-      org:   null,
+interface AuthState {
+  ready: boolean
+  authEnabled: boolean
+  authenticated: boolean
+  user: SessionUser | null
+  setSession: (s: { authEnabled: boolean; authenticated: boolean; user: SessionUser | null }) => void
+}
 
-      setAuth: (token, user) => set({ token, user }),
-      setOrg:  (org) => set({ org }),
-      logout:  () => set({ token: null, user: null, org: null }),
-      isAuthenticated: () => !!get().token,
-    }),
-    {
-      name: 'mpx-auth',
-      partialize: (state) => ({ token: state.token, user: state.user, org: state.org }),
-    },
-  ),
-)
+// Tokens are NOT stored client-side (httpOnly cookie BFF). This only mirrors session state for UI.
+export const useAuthStore = create<AuthState>()((set) => ({
+  ready: false,
+  authEnabled: false,
+  authenticated: false,
+  user: null,
+  setSession: (s) => set({ ...s, ready: true }),
+}))
