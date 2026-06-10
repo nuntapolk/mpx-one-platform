@@ -25,6 +25,7 @@
     "seed:ropa-bulk": "ts-node -r tsconfig-paths/register src/database/seeds/ropa-bulk.seed.ts",
     "seed:dpia-bulk": "ts-node -r tsconfig-paths/register src/database/seeds/dpia-bulk.seed.ts",
     "seed:access-review": "ts-node -r tsconfig-paths/register src/database/seeds/access-review.seed.ts",
+    "seed:workflow": "ts-node -r tsconfig-paths/register src/database/seeds/workflow.seed.ts",
     "health": "bash ../scripts/health-check.sh"
   },
   "dependencies": {

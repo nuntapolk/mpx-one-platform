@@ -35,6 +35,7 @@ const SECTIONS: { id: string; label: string; items: NavItem[] }[] = [
       { id: 'pdpa-datamap', label: 'Data Map',      icon: '🗺', href: '/pdpa/data-map' },
       { id: 'pdpa-reports', label: 'Reports',       icon: '📈', href: '/pdpa/reports' },
       { id: 'pdpa-access',  label: 'Access Review', icon: '🔑', href: '/pdpa/access-review' },
+      { id: 'pdpa-workflow',label: 'Workflow',      icon: '🔀', href: '/pdpa/workflow' },
     ],
   },
   {
