@@ -92,6 +92,7 @@ import { RopaCampaignsModule } from './modules/ropa-campaigns/ropa-campaigns.mod
 import { CookieModule } from './modules/cookie/cookie.module'
 import { DataMapModule } from './modules/data-map/data-map.module'
 import { ReportsModule } from './modules/reports/reports.module'
+import { PublicPortalModule } from './modules/public-portal/public-portal.module'
 // Legacy modules
 import { ITAssetsModule } from './modules/it-assets/it-assets.module'
 import { ChangeRequestsModule } from './modules/change-requests/change-requests.module'
@@ -164,6 +165,7 @@ const ALL_ENTITIES = [
     CookieModule,
     DataMapModule,
     ReportsModule,
+    PublicPortalModule,
     // Legacy
     ITAssetsModule,
     ChangeRequestsModule,
