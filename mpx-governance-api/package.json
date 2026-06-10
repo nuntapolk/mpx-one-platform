@@ -23,7 +23,8 @@
     "seed:privacy": "ts-node -r tsconfig-paths/register src/database/seeds/privacy.seed.ts",
     "seed:pdpa-extra": "ts-node -r tsconfig-paths/register src/database/seeds/pdpa-extra.seed.ts",
     "seed:ropa-bulk": "ts-node -r tsconfig-paths/register src/database/seeds/ropa-bulk.seed.ts",
-    "seed:dpia-bulk": "ts-node -r tsconfig-paths/register src/database/seeds/dpia-bulk.seed.ts"
+    "seed:dpia-bulk": "ts-node -r tsconfig-paths/register src/database/seeds/dpia-bulk.seed.ts",
+    "health": "bash ../scripts/health-check.sh"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.1",
