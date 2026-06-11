@@ -6,6 +6,8 @@ import { AllExceptionsFilter } from './common/filters/http-exception.filter'
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
 import { AuditInterceptor } from './common/interceptors/audit.interceptor'
 import { AuditTrailService } from './modules/audit-trail/audit-trail.service'
+import { AccessLogInterceptor } from './common/interceptors/access-log.interceptor'
+import { AccessLogService } from './modules/access-log/access-log.service'
 import { ValidationPipe } from '@nestjs/common'
 
 async function bootstrap() {
@@ -28,7 +30,12 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))
   app.useGlobalFilters(new AllExceptionsFilter())
   const auditService = app.get(AuditTrailService)
-  app.useGlobalInterceptors(new LoggingInterceptor(), new AuditInterceptor(auditService))
+  const accessLogService = app.get(AccessLogService)
+  app.useGlobalInterceptors(
+    new LoggingInterceptor(),
+    new AuditInterceptor(auditService),
+    new AccessLogInterceptor(accessLogService),
+  )
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('MPX-ONE Governance API')

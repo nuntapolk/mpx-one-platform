@@ -1,6 +1,7 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common'
 import { Observable, tap } from 'rxjs'
 import { AuditTrailService } from '../../modules/audit-trail/audit-trail.service'
+import { maskObject } from '../logging/pii-mask'
 
 // Maps URL segment → audit object_type
 const TYPE_MAP: Record<string, string> = {
@@ -49,7 +50,7 @@ export class AuditInterceptor implements NestInterceptor {
           action,
           object_type: objectType,
           object_id: objectId,
-          new_value: method !== 'DELETE' ? body : undefined,
+          new_value: method !== 'DELETE' ? (maskObject(body) as Record<string, unknown>) : undefined,
           user_id: user?.id,
           user_email: user?.email,
           ip_address: ip,
