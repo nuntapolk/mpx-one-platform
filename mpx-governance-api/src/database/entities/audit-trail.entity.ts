@@ -38,5 +38,12 @@ export class AuditTrail {
   @Column({ type: 'text', nullable: true })
   remark: string
 
+  // Tamper-evidence chain
+  @Column({ length: 64, nullable: true })
+  prev_hash: string
+
+  @Column({ length: 64, nullable: true })
+  hash: string
+
   @CreateDateColumn() created_at: Date
 }

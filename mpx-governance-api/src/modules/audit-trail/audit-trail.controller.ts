@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, Req, UseGuards } from '@nestjs/common'
+import { Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger'
 import { KeycloakGuard } from '../../common/guards/keycloak.guard'
 import { AuditTrailService } from './audit-trail.service'
@@ -9,6 +9,12 @@ import { AuditTrailService } from './audit-trail.service'
 @Controller('api/v1/audit-trail')
 export class AuditTrailController {
   constructor(private readonly service: AuditTrailService) {}
+
+  @Get('verify')
+  verify() { return this.service.verifyChain() }
+
+  @Post('reseal')
+  reseal() { return this.service.resealLegacy() }
 
   @Get()
   @ApiQuery({ name: 'object_type', required: false })

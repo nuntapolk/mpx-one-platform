@@ -28,9 +28,9 @@ async function bootstrap() {
   })
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))
-  app.useGlobalFilters(new AllExceptionsFilter())
   const auditService = app.get(AuditTrailService)
   const accessLogService = app.get(AccessLogService)
+  app.useGlobalFilters(new AllExceptionsFilter(accessLogService))
   app.useGlobalInterceptors(
     new LoggingInterceptor(),
     new AuditInterceptor(auditService),

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { RightsRequest } from '../../database/entities/rights-request.entity'
 import { RightsRequestNote } from '../../database/entities/rights-request-note.entity'
+import { AccessLogService } from '../access-log/access-log.service'
 
 const CLOSED = ['completed', 'rejected', 'withdrawn']
 const DEFAULT_SLA_DAYS = 30  // PDPA — respond within 30 days
@@ -23,6 +24,7 @@ export class DsarService {
   constructor(
     @InjectRepository(RightsRequest)     private repo: Repository<RightsRequest>,
     @InjectRepository(RightsRequestNote) private noteRepo: Repository<RightsRequestNote>,
+    private readonly accessLog: AccessLogService,
   ) {}
 
   async findAll(orgId: string) {
@@ -49,11 +51,27 @@ export class DsarService {
   }
 
   async updateStatus(id: string, status: string, orgId: string) {
-    await this.findOne(id, orgId)
+    const before: any = await this.findOne(id, orgId)
     const patch: any = { status }
     if (status === 'completed') patch.completed_at = new Date()
     if (status === 'in_review') patch.acknowledged_at = new Date()
     await this.repo.update({ id }, patch)
+
+    // P6 — immutable proof of fulfilment (esp. erasure / ม.33 right to be forgotten)
+    if (status === 'completed') {
+      this.accessLog.record({
+        organization_id: orgId,
+        category: 'dsar',
+        severity: before.type === 'erasure' ? 'critical' : 'warn',
+        action: before.type === 'erasure' ? 'erasure_fulfilled' : 'dsar_fulfilled',
+        resource_type: 'rights_request',
+        resource_id: id,
+        pii_categories: ['name', 'email'],
+        legal_basis: 'data_subject_rights',
+        endpoint: `dsar/${id}/status`,
+        outcome: 'success',
+      }).catch(() => {})
+    }
     return this.findOne(id, orgId)
   }
 

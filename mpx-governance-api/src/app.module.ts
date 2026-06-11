@@ -1,5 +1,6 @@
 import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ScheduleModule } from '@nestjs/schedule'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import databaseConfig from './config/database.config'
 import keycloakConfig from './config/keycloak.config'
@@ -144,6 +145,7 @@ const ALL_ENTITIES = [
         entities: ALL_ENTITIES,
       }),
     }),
+    ScheduleModule.forRoot(),
     AuthCommonModule,
     AccessLogModule,
     HealthModule,

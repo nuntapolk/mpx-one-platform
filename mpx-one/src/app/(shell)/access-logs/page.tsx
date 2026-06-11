@@ -10,6 +10,28 @@ const actColor = (a: string) => (({ read: ['#eff6ff', '#1d4ed8'], search: ['#f5f
 const sevColor = (s: string) => (({ info: '#64748b', warn: '#d97706', critical: '#c0272d' } as any)[s] || '#64748b')
 const SENSITIVE = ['national_id', 'health', 'biometric', 'criminal']
 
+function IntegrityBadge() {
+  const [state, setState] = useState<any>(null)
+  const [busy, setBusy] = useState(false)
+  async function verify() {
+    setBusy(true)
+    try { const r = await fetch(`${API}/api/v1/access-logs/verify`, { cache: 'no-store' }); setState(await r.json()) }
+    finally { setBusy(false) }
+  }
+  return (
+    <div className="text-right">
+      <button onClick={verify} disabled={busy} className="glass-btn-soft text-xs px-3 py-1.5 rounded-lg">
+        {busy ? 'กำลังตรวจ...' : '🔐 ตรวจสอบความครบถ้วน (hash chain)'}
+      </button>
+      {state && (
+        <div className="mt-1 text-[11px]" style={{ color: state.valid ? '#15803d' : '#c0272d' }}>
+          {state.valid ? `✓ สมบูรณ์ — ${state.total} records (ไม่มีการแก้ไข)` : `✗ ตรวจพบการแก้ไข! broken at ${String(state.broken_at).slice(0, 8)}`}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Page() {
   const [filter, setFilter] = useState<string>('all')
   const qs = filter === 'export' ? '?action=export' : filter === 'sensitive' ? '' : filter !== 'all' ? `?action=${filter}` : ''
@@ -22,9 +44,12 @@ export default function Page() {
 
   return (
     <div className="space-y-4">
-      <div>
-        <h1 className="text-xl font-bold text-zinc-800">🔍 Access Logs — บันทึกการเข้าถึงข้อมูลส่วนบุคคล</h1>
-        <p className="text-xs text-zinc-500 mt-0.5">บันทึก immutable การอ่าน/ค้นหา/ส่งออกข้อมูลส่วนบุคคล (PDPA ม.37 · ISO 27701)</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-xl font-bold text-zinc-800">🔍 Access Logs — บันทึกการเข้าถึงข้อมูลส่วนบุคคล</h1>
+          <p className="text-xs text-zinc-500 mt-0.5">บันทึก immutable การอ่าน/ค้นหา/ส่งออกข้อมูลส่วนบุคคล (PDPA ม.37 · ISO 27701)</p>
+        </div>
+        <IntegrityBadge />
       </div>
 
       <div className="grid grid-cols-4 gap-3">

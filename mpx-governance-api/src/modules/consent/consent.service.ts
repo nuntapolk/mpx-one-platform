@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 import { Consent } from '../../database/entities/consent.entity'
 import { ConsentTemplate } from '../../database/entities/consent-template.entity'
 import { DataSubject } from '../../database/entities/data-subject.entity'
+import { AccessLogService } from '../access-log/access-log.service'
 
 export function consentStatus(c: Consent): string {
   if (c.withdrawn_at) return 'withdrawn'
@@ -21,6 +22,7 @@ export class ConsentService {
     @InjectRepository(Consent)         private repo: Repository<Consent>,
     @InjectRepository(ConsentTemplate) private tmplRepo: Repository<ConsentTemplate>,
     @InjectRepository(DataSubject)     private subjRepo: Repository<DataSubject>,
+    private readonly accessLog: AccessLogService,
   ) {}
 
   // ── Consents ─────────────────────────────────────────────────
@@ -34,18 +36,31 @@ export class ConsentService {
     return rows.map(c => ({ ...c, status: consentStatus(c), is_active: isActive(c) }))
   }
 
+  private logConsent(action: string, id: string, orgId: string, subjectId?: string) {
+    // P6 — immutable consent event log (PDPA ม.19 proof of consent / withdrawal)
+    this.accessLog.record({
+      organization_id: orgId, category: 'consent', severity: 'info',
+      action, resource_type: 'consent', resource_id: id,
+      pii_categories: ['name', 'email'], legal_basis: 'consent',
+      endpoint: `consent/${id}`, outcome: 'success',
+    }).catch(() => {})
+  }
+
   async create(body: Partial<Consent>, orgId: string) {
     const granted = body.granted ?? false
-    return this.repo.save(this.repo.create({
+    const saved: any = await this.repo.save(this.repo.create({
       ...body, organization_id: orgId,
       granted_at: granted ? new Date() : undefined,
     }))
+    this.logConsent(granted ? 'consent_grant' : 'consent_deny', saved.id, orgId, saved.data_subject_id)
+    return saved
   }
 
   async withdraw(id: string, reason: string, orgId: string) {
     const c = await this.repo.findOne({ where: { id, organization_id: orgId } })
     if (!c) throw new NotFoundException(`Consent ${id} not found`)
     await this.repo.update({ id }, { withdrawn_at: new Date(), withdrawal_reason: reason, granted: false })
+    this.logConsent('consent_withdraw', id, orgId, c.data_subject_id)
     return this.repo.findOne({ where: { id } })
   }
 

@@ -1,0 +1,38 @@
+groups:
+  - name: mpx-security-alerts
+    rules:
+      # Brute-force / credential stuffing: spike in auth failures
+      - alert: AuthFailureSpike
+        expr: sum(count_over_time({category="authorization", outcome="denied"} [5m])) > 20
+        for: 0m
+        labels: { severity: warning, domain: security }
+        annotations:
+          summary: "High rate of auth failures (possible brute-force)"
+          description: "More than 20 denied auth events in 5 minutes."
+
+      # Mass data exfiltration: unusual export volume
+      - alert: BulkExportSpike
+        expr: sum(count_over_time({category="export"} [10m])) > 10
+        for: 0m
+        labels: { severity: critical, domain: pdpa }
+        annotations:
+          summary: "Unusual data export volume"
+          description: "More than 10 export operations in 10 minutes — possible data exfiltration."
+
+      # Sensitive PII access outside business hours (warn-severity access events)
+      - alert: SensitivePiiAccess
+        expr: sum(count_over_time({category="pii_access", severity="warn"} [5m])) > 30
+        for: 0m
+        labels: { severity: warning, domain: pdpa }
+        annotations:
+          summary: "Elevated sensitive PII access"
+          description: "High volume of warn-level PII access events."
+
+      # Application errors
+      - alert: ServerErrorSpike
+        expr: sum(count_over_time({severity="error"} [5m])) > 15
+        for: 2m
+        labels: { severity: warning, domain: ops }
+        annotations:
+          summary: "Elevated server error rate"
+          description: "More than 15 errors in 5 minutes."

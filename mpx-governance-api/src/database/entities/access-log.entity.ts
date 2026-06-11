@@ -8,7 +8,7 @@ import { ApiProperty } from '@nestjs/swagger'
 @Index(['resource_type', 'resource_id'])
 export class AccessLog {
   @PrimaryGeneratedColumn('uuid') @ApiProperty() id: string
-  @Column({ type: 'uuid' }) organization_id: string
+  @Column({ type: 'uuid', nullable: true }) organization_id: string
 
   @Column({ length: 30, default: 'pii_access' })
   @ApiProperty({ enum: ['pii_access', 'export'] }) category: string
@@ -38,6 +38,10 @@ export class AccessLog {
   @Column({ length: 20, default: 'success' })
   @ApiProperty({ enum: ['success', 'denied', 'error'] }) outcome: string
   @Column({ length: 50, nullable: true }) legal_basis: string
+
+  // Tamper-evidence chain
+  @Column({ length: 64, nullable: true }) prev_hash: string
+  @Column({ length: 64, nullable: true }) hash: string
 
   @CreateDateColumn() created_at: Date
 }

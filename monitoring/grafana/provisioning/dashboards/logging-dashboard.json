@@ -1,0 +1,48 @@
+{
+  "uid": "mpx-logging",
+  "title": "MPX-ONE · Logging & PDPA Compliance",
+  "tags": ["logging", "pdpa", "security"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "time": { "from": "now-24h", "to": "now" },
+  "panels": [
+    {
+      "id": 1, "title": "PII access events (rate)", "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [{ "expr": "sum(count_over_time({category=\"pii_access\"} [5m]))", "refId": "A" }]
+    },
+    {
+      "id": 2, "title": "Auth denied (401/403)", "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [{ "expr": "sum(count_over_time({category=\"authorization\", outcome=\"denied\"} [5m]))", "refId": "A" }]
+    },
+    {
+      "id": 3, "title": "Data exports (bulk)", "type": "stat",
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 8 },
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [{ "expr": "sum(count_over_time({category=\"export\"} [24h]))", "refId": "A" }]
+    },
+    {
+      "id": 4, "title": "Server errors (5xx)", "type": "stat",
+      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 8 },
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [{ "expr": "sum(count_over_time({severity=\"error\"} [24h]))", "refId": "A" }]
+    },
+    {
+      "id": 5, "title": "Consent / DSAR events", "type": "stat",
+      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 8 },
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [{ "expr": "sum(count_over_time({category=~\"consent|dsar\"} [24h]))", "refId": "A" }]
+    },
+    {
+      "id": 6, "title": "Recent security & access log stream", "type": "logs",
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 14 },
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [{ "expr": "{category=~\"authorization|export|pii_access|consent|dsar\"}", "refId": "A" }]
+    }
+  ]
+}
