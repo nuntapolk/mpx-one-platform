@@ -13,7 +13,7 @@ const fetcher = (url: string) => fetch(url, { cache: 'no-store' }).then(r => r.o
 export default function Sidebar() {
   const pathname = usePathname()
   const [openSection, setOpenSection] = useState<string | null>(null)
-  const { user, authEnabled, authenticated } = useAuthStore()
+  const { user } = useAuthStore()
   const { data: rolesData } = useSWR(`${API}/api/v1/roles`, fetcher)
 
   // Match the current user's role keys to role configs; compute effective access.
@@ -71,17 +71,6 @@ export default function Sidebar() {
       </nav>
 
       <div className="px-4 py-3 border-t border-white/10 flex items-center gap-2">
-        {authEnabled && authenticated && (
-          <a href="/api/auth/logout" title="ออกจากระบบ" aria-label="ออกจากระบบ"
-            className="sidebar-logout flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-colors"
-            style={{ color: 'rgba(255,255,255,0.5)' }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
-          </a>
-        )}
         <div className="w-7 h-7 rounded-full text-[11px] font-medium flex-shrink-0 flex items-center justify-center"
           style={{ background: '#1D9E75', color: '#E1F5EE' }}>{(user?.name || user?.email || 'M')[0].toUpperCase()}</div>
         <div className="min-w-0 flex-1">

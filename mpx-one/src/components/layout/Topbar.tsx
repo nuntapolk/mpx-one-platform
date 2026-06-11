@@ -58,12 +58,24 @@ export default function Topbar() {
 }
 
 function UserMenu() {
-  const { user } = useAuthStore()
+  const { user, authEnabled, authenticated } = useAuthStore()
   const name = user?.name || user?.email || 'User'
   const initial = (name[0] || 'M').toUpperCase()
   return (
-    <div className="w-7 h-7 rounded-full text-[11px] font-medium flex items-center justify-center" style={{ background: '#0D1B3E', color: '#02C39A' }}>
-      {initial}
+    <div className="flex items-center gap-2">
+      <div className="w-7 h-7 rounded-full text-[11px] font-medium flex items-center justify-center" style={{ background: '#0D1B3E', color: '#02C39A' }}>
+        {initial}
+      </div>
+      {authEnabled && authenticated && (
+        <a href="/api/auth/logout" title="ออกจากระบบ" aria-label="ออกจากระบบ"
+          className="w-7 h-7 rounded-lg flex items-center justify-center text-zinc-400 hover:text-red-500 hover:bg-red-50 transition-colors">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </a>
+      )}
     </div>
   )
 }
