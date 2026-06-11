@@ -69,7 +69,7 @@ export default function Page() {
           </div>
         } />
 
-        <div className="flex gap-1 mb-3">
+        <div className="inline-flex gap-0.5 p-1 rounded-lg bg-zinc-100/60 mb-3">
           {FILTERS.map(([k, l]) => (
             <button key={k} onClick={() => setFilter(k)} className={`text-xs px-3 py-1 rounded-md ${filter === k ? 'glass-tab active' : 'glass-tab'}`}>{l}</button>
           ))}

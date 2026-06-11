@@ -53,7 +53,7 @@ export default function Page() {
         <KPICard label="ปฏิเสธ" value={stats?.rejected ?? '—'} subVariant="danger" sub="rejected" />
       </div>
 
-      <div className="flex gap-1">
+      <div className="inline-flex gap-0.5 p-1 rounded-lg bg-zinc-100/60">
         {(['templates', 'instances'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === t ? 'glass-tab active' : 'glass-tab'}`}>
             {t === 'templates' ? '📋 Templates' : '▶️ Running Instances'}

@@ -94,7 +94,7 @@ export default function IssuesPage() {
       <Card>
         <SectionHeader title="Issue & Finding Register" action={
           <div className="flex gap-2">
-            <div className="flex gap-1">
+            <div className="inline-flex gap-0.5 p-1 rounded-lg bg-zinc-100/60">
               {['all', 'open', 'in_progress', 'pending_review', 'closed'].map(s => (
                 <button key={s} onClick={() => setFilter(s)}
                   className={`text-[10px] px-2 py-1 rounded-full transition-colors glass-tab ${filter === s ? 'active' : ''}`}>

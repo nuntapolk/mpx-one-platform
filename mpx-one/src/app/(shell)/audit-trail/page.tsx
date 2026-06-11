@@ -43,7 +43,7 @@ export default function AuditTrailPage() {
         } />
 
         {/* Object type filter */}
-        <div className="flex flex-wrap gap-1 mb-4">
+        <div className="inline-flex flex-wrap gap-0.5 p-1 rounded-lg bg-zinc-100/60 mb-4">
           {types.map(t => (
             <button key={t} onClick={() => setObjectType(t)}
               className={`text-[10px] px-2 py-1 rounded-full capitalize glass-tab ${objectType === t ? 'active' : ''}`}>

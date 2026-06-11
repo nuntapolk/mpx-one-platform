@@ -61,7 +61,7 @@ export default function Page() {
 
       <Card>
         <SectionHeader title="เหตุการณ์ล่าสุด" action={
-          <div className="flex gap-1">{FILTERS.map(([k, l]) => (
+          <div className="inline-flex gap-0.5 p-1 rounded-lg bg-zinc-100/60">{FILTERS.map(([k, l]) => (
             <button key={k} onClick={() => setFilter(k)} className={`text-[11px] px-2.5 py-1 rounded-md ${filter === k ? 'glass-tab active' : 'glass-tab'}`}>{l}</button>
           ))}</div>
         } />

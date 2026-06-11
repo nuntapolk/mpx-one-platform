@@ -19,7 +19,7 @@ export default function Page() {
           <h1 className="text-xl font-bold text-zinc-800">👤 Account Management</h1>
           <p className="text-xs text-zinc-500 mt-0.5">จัดการบัญชีผู้ใช้ · role · สิทธิ์การเข้าถึงแต่ละเมนู</p>
         </div>
-        <div className="flex gap-1 p-1 rounded-lg bg-zinc-100/60">
+        <div className="inline-flex gap-0.5 p-1 rounded-lg bg-zinc-100/60">
           <button onClick={() => setTab('users')} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === 'users' ? 'glass-tab active' : 'glass-tab'}`}>บัญชีผู้ใช้</button>
           <button onClick={() => setTab('roles')} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === 'roles' ? 'glass-tab active' : 'glass-tab'}`}>Roles & Permissions</button>
         </div>

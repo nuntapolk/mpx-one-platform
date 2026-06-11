@@ -20,7 +20,7 @@ export default function Page() {
         <h1 className="text-xl font-bold text-zinc-800">⚙️ Master Data Settings</h1>
         <p className="text-xs text-zinc-500 mt-0.5">จัดการข้อมูลตั้งต้น (master data) และ field กำหนดเองของ ROPA</p>
       </div>
-      <div className="flex gap-1">
+      <div className="inline-flex gap-0.5 p-1 rounded-lg bg-zinc-100/60">
         {TABS.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === t.id ? 'glass-tab active' : 'glass-tab'}`}>{t.label}</button>
         ))}

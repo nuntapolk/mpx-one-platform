@@ -108,7 +108,7 @@ export default function EvidencesPage() {
       <Card>
         <SectionHeader title="Evidence Repository" action={
           <div className="flex gap-2">
-            <div className="flex gap-1">
+            <div className="inline-flex gap-0.5 p-1 rounded-lg bg-zinc-100/60">
               {['all', 'accepted', 'submitted', 'draft', 'rejected', 'expired'].map(s => (
                 <button key={s} onClick={() => setStatusFilter(s)}
                   className={`text-[10px] px-2 py-1 rounded-full glass-tab ${statusFilter === s ? 'active' : ''}`}>

@@ -64,7 +64,7 @@ export default function AssessmentsPage() {
       {/* Assessment list */}
       <Card>
         <SectionHeader title="รายการ Assessment" action={
-          <div className="flex gap-2">
+          <div className="inline-flex gap-0.5 p-1 rounded-lg bg-zinc-100/60">
             {(['all', 'my'] as const).map(t => (
               <button key={t} onClick={() => setTab(t)}
                 className={`text-xs px-3 py-1 rounded-full transition-colors glass-tab ${tab === t ? 'active' : ''}`}>
