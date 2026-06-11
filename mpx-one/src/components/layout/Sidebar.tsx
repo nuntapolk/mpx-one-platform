@@ -61,6 +61,7 @@ const SECTIONS: { id: string; label: string; items: NavItem[] }[] = [
   {
     id: 'platform', label: 'PLATFORM', items: [
       { id: 'import-export', label: 'Import / Export', icon: '⇅', href: '/import-export' },
+      { id: 'accounts',      label: 'Account Mgmt',    icon: '👤', href: '/accounts' },
       { id: 'admin',         label: 'Admin Config',    icon: '⚒', href: '/admin' },
       { id: 'audit-trail',   label: 'Audit Trail',     icon: '◉', href: '/audit-trail' },
       { id: 'access-logs',   label: 'Access Logs',     icon: '🔍', href: '/access-logs' },

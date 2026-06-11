@@ -105,6 +105,7 @@ import { AuthCommonModule } from './common/auth/auth-common.module'
 import { AppUser } from './database/entities/app-user.entity'
 import { AccessLogModule } from './modules/access-log/access-log.module'
 import { AccessLog } from './database/entities/access-log.entity'
+import { AccountsModule } from './modules/accounts/accounts.module'
 import { RequestIdMiddleware } from './common/logging/request-id.middleware'
 // Legacy modules
 import { ITAssetsModule } from './modules/it-assets/it-assets.module'
@@ -148,6 +149,7 @@ const ALL_ENTITIES = [
     ScheduleModule.forRoot(),
     AuthCommonModule,
     AccessLogModule,
+    AccountsModule,
     HealthModule,
     DashboardModule,
     // Governance library
