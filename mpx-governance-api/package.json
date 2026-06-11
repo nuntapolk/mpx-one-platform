@@ -28,6 +28,7 @@
     "seed:workflow": "ts-node -r tsconfig-paths/register src/database/seeds/workflow.seed.ts",
     "seed:master-data": "ts-node -r tsconfig-paths/register src/database/seeds/master-data.seed.ts",
     "seed:app-users": "ts-node -r tsconfig-paths/register src/database/seeds/app-users.seed.ts",
+    "seed:apps-apm": "ts-node -r tsconfig-paths/register src/database/seeds/applications-apm.seed.ts",
     "health": "bash ../scripts/health-check.sh"
   },
   "dependencies": {

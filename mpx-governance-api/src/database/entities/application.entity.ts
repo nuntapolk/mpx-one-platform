@@ -38,6 +38,41 @@ export class Application {
   @Column({ type: 'date', nullable: true }) go_live_date: Date
   @Column({ type: 'date', nullable: true }) retirement_date: Date
 
+  // ── [C] Portfolio / APM (จาก MPX Studio) ──────────────────────
+  @Column({ length: 20, nullable: true })
+  @ApiProperty({ enum: ['invest', 'tolerate', 'migrate', 'eliminate'], description: 'BCG / TIME classification' })
+  bcg_classification: string
+  @Column({ type: 'int', nullable: true }) health_score: number      // 0-100
+  @Column({ type: 'int', nullable: true }) tech_debt_score: number   // 0-100 (สูง = หนี้เยอะ)
+  @Column({ type: 'bigint', nullable: true }) tco_annual: number      // ต้นทุนรวมต่อปี
+  @Column({ type: 'int', nullable: true }) strategic_value: number   // 0-100
+  @Column({ type: 'int', nullable: true }) users_count: number
+
+  // ── [D] Lifecycle & Assessment ────────────────────────────────
+  @Column({ type: 'date', nullable: true }) eol_date: Date
+  @Column({ type: 'date', nullable: true }) contract_end_date: Date
+  @Column({ length: 50, nullable: true })
+  @ApiProperty({ enum: ['not_started', 'in_progress', 'completed'] }) assess_status: string
+  @Column({ type: 'date', nullable: true }) assess_date: Date
+  @Column({ type: 'int', nullable: true }) migration_wave: number
+  @Column({ default: false }) decommissioned: boolean
+  @Column({ type: 'date', nullable: true }) decomm_date: Date
+  @Column({ type: 'text', nullable: true }) decomm_reason: string
+
+  // ── [E] Operations ────────────────────────────────────────────
+  @Column({ default: false }) dr_enabled: boolean
+  @Column({ length: 100, nullable: true }) service_hours: string
+  @Column({ length: 100, nullable: true }) maint_window: string
+  @Column({ length: 100, nullable: true }) support_model: string   // Inhouse / Vendor / Hybrid
+  @Column({ length: 100, nullable: true }) os_platform: string
+  @Column({ length: 100, nullable: true }) db_platform: string
+  @Column({ length: 100, nullable: true }) language: string
+
+  // ── [F] EA Classification ─────────────────────────────────────
+  @Column({ length: 100, nullable: true }) ea_group: string
+  @Column({ length: 100, nullable: true }) ea_category: string
+  @Column({ length: 100, nullable: true }) ea_sub_category: string
+
   @Column({ default: 'active' }) status: string
   @Column({ type: 'uuid', nullable: true }) created_by: string
   @CreateDateColumn() created_at: Date
