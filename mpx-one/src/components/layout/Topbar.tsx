@@ -1,6 +1,7 @@
 'use client'
 import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/store/auth'
+import { APP_VERSION } from '@/lib/version'
 
 const PAGE_TITLES: Record<string, string> = {
   '/dashboard':              '🏠 Executive Dashboard',
@@ -51,6 +52,7 @@ export default function Topbar() {
           className="text-[10px] px-2 py-1 rounded border border-zinc-200 text-zinc-500 hover:border-[#02C39A] hover:text-[#02C39A] transition-colors">
           API Docs
         </a>
+        <span className="text-[10px] text-zinc-400 font-mono" title="App version · build number">v{APP_VERSION.full}</span>
         <UserMenu />
       </div>
     </header>

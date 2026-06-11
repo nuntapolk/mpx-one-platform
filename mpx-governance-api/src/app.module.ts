@@ -105,6 +105,8 @@ import { AuthCommonModule } from './common/auth/auth-common.module'
 import { AppUser } from './database/entities/app-user.entity'
 import { AccessLogModule } from './modules/access-log/access-log.module'
 import { AccessLog } from './database/entities/access-log.entity'
+import { RolesModule } from './modules/roles/roles.module'
+import { Role } from './database/entities/role.entity'
 import { AccountsModule } from './modules/accounts/accounts.module'
 import { RequestIdMiddleware } from './common/logging/request-id.middleware'
 // Legacy modules
@@ -128,7 +130,7 @@ const ALL_ENTITIES = [
   BreachIncident, BreachTimeline, PrivacyNotice, RetentionSchedule, Dpia,
   DpoTask, CookieBannerSetting, CookieConsent, TrainingCourse, TrainingCompletion,
   ExternalParty, DataProcessingAgreement, RopaCampaign, RopaCampaignInvitee,
-  AccessReview, WorkflowTemplate, WorkflowInstance, RopaFieldConfig, AppUser, AccessLog,
+  AccessReview, WorkflowTemplate, WorkflowInstance, RopaFieldConfig, AppUser, AccessLog, Role,
   // Legacy
   ITAsset, ChangeRequest, AITool, RegMapping,
 ]
@@ -150,6 +152,7 @@ const ALL_ENTITIES = [
     AuthCommonModule,
     AccessLogModule,
     AccountsModule,
+    RolesModule,
     HealthModule,
     DashboardModule,
     // Governance library
