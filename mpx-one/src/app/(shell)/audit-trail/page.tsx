@@ -46,7 +46,7 @@ export default function AuditTrailPage() {
         <div className="inline-flex flex-wrap gap-0.5 p-1 rounded-lg bg-zinc-100/60 mb-4">
           {types.map(t => (
             <button key={t} onClick={() => setObjectType(t)}
-              className={`text-[10px] px-2 py-1 rounded-full capitalize glass-tab ${objectType === t ? 'active' : ''}`}>
+              className={`text-[10px] px-2 py-1 rounded-md capitalize glass-tab ${objectType === t ? 'active' : ''}`}>
               {TYPE_ICONS[t] ? `${TYPE_ICONS[t]} ${t}` : t}
             </button>
           ))}

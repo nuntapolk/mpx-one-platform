@@ -60,7 +60,7 @@ export default function Topbar() {
 }
 
 function UserMenu() {
-  const { user, authEnabled, authenticated } = useAuthStore()
+  const { user } = useAuthStore()
   const name = user?.name || user?.email || 'User'
   const initial = (name[0] || 'M').toUpperCase()
   return (
@@ -72,9 +72,6 @@ function UserMenu() {
       <div className="w-7 h-7 rounded-full text-[11px] font-medium flex items-center justify-center" style={{ background: '#0D1B3E', color: '#02C39A' }}>
         {initial}
       </div>
-      {authEnabled && authenticated && (
-        <a href="/api/auth/logout" className="text-[10px] px-2 py-1 rounded border border-zinc-200 text-zinc-500 hover:border-red-400 hover:text-red-500 transition-colors">ออกจากระบบ</a>
-      )}
     </div>
   )
 }

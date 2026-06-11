@@ -58,7 +58,7 @@ export default function ConsentPage() {
           <div className="inline-flex gap-0.5 p-1 rounded-lg bg-zinc-100/60">
             {([['consents','Consents'],['templates','Templates'],['subjects','เจ้าของข้อมูล']] as const).map(([k, l]) => (
               <button key={k} onClick={() => setTab(k)}
-                className={`text-[11px] px-3 py-1 rounded-full glass-tab ${tab === k ? 'active' : ''}`}>
+                className={`text-[11px] px-3 py-1 rounded-md glass-tab ${tab === k ? 'active' : ''}`}>
                 {l}
               </button>
             ))}
