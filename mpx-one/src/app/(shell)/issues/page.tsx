@@ -97,8 +97,7 @@ export default function IssuesPage() {
             <div className="flex gap-1">
               {['all', 'open', 'in_progress', 'pending_review', 'closed'].map(s => (
                 <button key={s} onClick={() => setFilter(s)}
-                  className={`text-[10px] px-2 py-1 rounded-full transition-colors ${filter === s ? 'text-white' : 'text-zinc-500 hover:bg-zinc-100'}`}
-                  style={filter === s ? { background: '#02C39A' } : {}}>
+                  className={`text-[10px] px-2 py-1 rounded-full transition-colors glass-tab ${filter === s ? 'active' : ''}`}>
                   {s === 'all' ? 'ทั้งหมด' : s.replace('_', ' ')}
                 </button>
               ))}

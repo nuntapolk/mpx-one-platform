@@ -58,7 +58,7 @@ export default function ConsentPage() {
           <div className="flex gap-1">
             {([['consents','Consents'],['templates','Templates'],['subjects','เจ้าของข้อมูล']] as const).map(([k, l]) => (
               <button key={k} onClick={() => setTab(k)}
-                className={`text-[11px] px-3 py-1 rounded-full ${tab === k ? 'glass-btn-primary' : 'text-zinc-500 hover:bg-zinc-100'}`}>
+                className={`text-[11px] px-3 py-1 rounded-full glass-tab ${tab === k ? 'active' : ''}`}>
                 {l}
               </button>
             ))}

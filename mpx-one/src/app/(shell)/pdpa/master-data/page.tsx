@@ -22,7 +22,7 @@ export default function Page() {
       </div>
       <div className="flex gap-1">
         {TABS.map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === t.id ? 'glass-btn-primary' : 'glass-btn-soft'}`}>{t.label}</button>
+          <button key={t.id} onClick={() => setTab(t.id)} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === t.id ? 'glass-tab active' : 'glass-tab'}`}>{t.label}</button>
         ))}
       </div>
       {tab === 'pdt' && <LookupManager category="personal_data_type" title="ประเภทข้อมูลส่วนบุคคล" />}

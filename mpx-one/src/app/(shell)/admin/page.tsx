@@ -42,8 +42,7 @@ export default function AdminPage() {
         <div className="space-y-0.5">
           {catList.map((c: any) => (
             <button key={c.category} onClick={() => setSelected(c.category)}
-              className={`w-full flex items-center justify-between text-xs px-2 py-1.5 rounded-lg text-left transition-colors ${active === c.category ? 'text-white' : 'text-zinc-600 hover:bg-zinc-100'}`}
-              style={active === c.category ? { background: '#02C39A' } : {}}>
+              className={`w-full flex items-center justify-between text-xs px-2 py-1.5 rounded-lg text-left transition-colors glass-tab ${active === c.category ? 'active' : ''}`}>
               <span>{c.category.replace(/_/g, ' ')}</span>
               <span className="text-[10px] opacity-70">{c.count}</span>
             </button>

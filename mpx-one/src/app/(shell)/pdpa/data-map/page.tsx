@@ -50,7 +50,7 @@ export default function Page() {
         <div className="flex gap-1 p-1 rounded-lg bg-zinc-100/60">
           {TABS.map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
-              className={`text-xs px-3 py-1.5 rounded-md font-medium transition ${tab === t.id ? 'glass-btn-primary' : 'glass-btn-soft'}`}>
+              className={`text-xs px-3 py-1.5 rounded-md font-medium transition ${tab === t.id ? 'glass-tab active' : 'glass-tab'}`}>
               {t.label}
             </button>
           ))}

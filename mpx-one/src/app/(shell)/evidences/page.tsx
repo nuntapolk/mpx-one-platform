@@ -111,8 +111,7 @@ export default function EvidencesPage() {
             <div className="flex gap-1">
               {['all', 'accepted', 'submitted', 'draft', 'rejected', 'expired'].map(s => (
                 <button key={s} onClick={() => setStatusFilter(s)}
-                  className={`text-[10px] px-2 py-1 rounded-full ${statusFilter === s ? 'text-white' : 'text-zinc-500 hover:bg-zinc-100'}`}
-                  style={statusFilter === s ? { background: '#02C39A' } : {}}>
+                  className={`text-[10px] px-2 py-1 rounded-full glass-tab ${statusFilter === s ? 'active' : ''}`}>
                   {s}
                 </button>
               ))}

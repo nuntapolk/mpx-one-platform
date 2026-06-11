@@ -20,8 +20,8 @@ export default function Page() {
           <p className="text-xs text-zinc-500 mt-0.5">จัดการบัญชีผู้ใช้ · role · สิทธิ์การเข้าถึงแต่ละเมนู</p>
         </div>
         <div className="flex gap-1 p-1 rounded-lg bg-zinc-100/60">
-          <button onClick={() => setTab('users')} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === 'users' ? 'glass-btn-primary' : 'glass-btn-soft'}`}>บัญชีผู้ใช้</button>
-          <button onClick={() => setTab('roles')} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === 'roles' ? 'glass-btn-primary' : 'glass-btn-soft'}`}>Roles & Permissions</button>
+          <button onClick={() => setTab('users')} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === 'users' ? 'glass-tab active' : 'glass-tab'}`}>บัญชีผู้ใช้</button>
+          <button onClick={() => setTab('roles')} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === 'roles' ? 'glass-tab active' : 'glass-tab'}`}>Roles & Permissions</button>
         </div>
       </div>
       {tab === 'users' ? <UsersTab /> : <RolesTab />}

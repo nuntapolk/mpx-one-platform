@@ -181,7 +181,7 @@ export default function RopaEditor() {
         <div className="flex gap-1 mb-4 border-b border-zinc-100 pb-2">
           {PHASES.map((p, i) => (
             <button key={p.id} onClick={() => setPhase(i)}
-              className={`text-[11px] px-3 py-1.5 rounded-lg ${phase === i ? 'glass-btn-primary' : 'text-zinc-500 hover:bg-zinc-100'}`}>
+              className={`text-[11px] px-3 py-1.5 rounded-lg glass-tab ${phase === i ? 'active' : ''}`}>
               {p.label}
             </button>
           ))}

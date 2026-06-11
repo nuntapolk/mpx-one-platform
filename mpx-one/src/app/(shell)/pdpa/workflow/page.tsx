@@ -55,7 +55,7 @@ export default function Page() {
 
       <div className="flex gap-1">
         {(['templates', 'instances'] as const).map(t => (
-          <button key={t} onClick={() => setTab(t)} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === t ? 'glass-btn-primary' : 'glass-btn-soft'}`}>
+          <button key={t} onClick={() => setTab(t)} className={`text-xs px-3 py-1.5 rounded-md font-medium ${tab === t ? 'glass-tab active' : 'glass-tab'}`}>
             {t === 'templates' ? '📋 Templates' : '▶️ Running Instances'}
           </button>
         ))}

@@ -108,6 +108,44 @@
   }
   .glass-btn-emerald:hover { background: rgba(16, 137, 86, 0.28); }
 
+  /* ── Glass tabs — ใช้กับทุก tab/filter ใน app ───────────────── */
+  /* container (optional) */
+  .glass-tabs {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.30);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+  }
+  /* inactive tab — ดูเป็นปุ่ม/แท็บชัด แต่สีจาง */
+  .glass-tab {
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    color: #64748b;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+  }
+  .glass-tab:hover {
+    background: rgba(255, 255, 255, 0.6);
+    color: #334155;
+    border-color: rgba(15, 23, 42, 0.16);
+  }
+  /* active tab — glass สีเขียวเด่น แยกจาก inactive ชัดเจน */
+  .glass-tab.active {
+    background: rgba(2, 195, 154, 0.22);
+    border: 1px solid rgba(2, 195, 154, 0.55);
+    color: #0F8C6E;
+    font-weight: 600;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 2px 8px rgba(2, 195, 154, 0.18);
+  }
+  .glass-tab.active:hover { background: rgba(2, 195, 154, 0.30); }
+
   /* neutral / secondary glass */
   .glass-btn-soft {
     background: rgba(255, 255, 255, 0.25);

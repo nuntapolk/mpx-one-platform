@@ -67,8 +67,7 @@ export default function AssessmentsPage() {
           <div className="flex gap-2">
             {(['all', 'my'] as const).map(t => (
               <button key={t} onClick={() => setTab(t)}
-                className={`text-xs px-3 py-1 rounded-full transition-colors ${tab === t ? 'text-white' : 'text-zinc-600 hover:bg-zinc-100'}`}
-                style={tab === t ? { background: '#02C39A' } : {}}>
+                className={`text-xs px-3 py-1 rounded-full transition-colors glass-tab ${tab === t ? 'active' : ''}`}>
                 {t === 'all' ? 'ทั้งหมด' : 'ของฉัน'}
               </button>
             ))}
