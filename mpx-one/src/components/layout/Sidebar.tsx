@@ -70,27 +70,24 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="px-4 py-3 border-t border-white/10">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full text-[11px] font-medium flex-shrink-0 flex items-center justify-center"
-            style={{ background: '#1D9E75', color: '#E1F5EE' }}>{(user?.name || user?.email || 'M')[0].toUpperCase()}</div>
-          <div className="min-w-0 flex-1">
-            <p className="text-[11px] truncate" style={{ color: 'rgba(255,255,255,0.6)' }}>{user?.name || user?.email || 'MPX Admin'}</p>
-            <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.3)' }}>{(user?.roles?.[0] || 'member')} · v{APP_VERSION.full}</p>
-          </div>
-        </div>
+      <div className="px-4 py-3 border-t border-white/10 flex items-center gap-2">
         {authEnabled && authenticated && (
           <a href="/api/auth/logout" title="ออกจากระบบ" aria-label="ออกจากระบบ"
-            className="sidebar-logout mt-2 flex items-center gap-2 w-full px-2 py-1.5 rounded-lg text-left transition-colors"
+            className="sidebar-logout flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-colors"
             style={{ color: 'rgba(255,255,255,0.5)' }}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
               <polyline points="16 17 21 12 16 7" />
               <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
-            <span className="text-[11px]">ออกจากระบบ</span>
           </a>
         )}
+        <div className="w-7 h-7 rounded-full text-[11px] font-medium flex-shrink-0 flex items-center justify-center"
+          style={{ background: '#1D9E75', color: '#E1F5EE' }}>{(user?.name || user?.email || 'M')[0].toUpperCase()}</div>
+        <div className="min-w-0 flex-1">
+          <p className="text-[11px] truncate" style={{ color: 'rgba(255,255,255,0.6)' }}>{user?.name || user?.email || 'MPX Admin'}</p>
+          <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.3)' }}>{(user?.roles?.[0] || 'member')} · v{APP_VERSION.full}</p>
+        </div>
       </div>
     </aside>
   )

@@ -1,7 +1,6 @@
 'use client'
 import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/store/auth'
-import { APP_VERSION } from '@/lib/version'
 
 const PAGE_TITLES: Record<string, string> = {
   '/dashboard':              '🏠 Executive Dashboard',
@@ -52,7 +51,6 @@ export default function Topbar() {
           className="text-[10px] px-2 py-1 rounded border border-zinc-200 text-zinc-500 hover:border-[#02C39A] hover:text-[#02C39A] transition-colors">
           API Docs
         </a>
-        <span className="text-[10px] text-zinc-400 font-mono" title="App version · build number">v{APP_VERSION.full}</span>
         <UserMenu />
       </div>
     </header>
@@ -64,14 +62,8 @@ function UserMenu() {
   const name = user?.name || user?.email || 'User'
   const initial = (name[0] || 'M').toUpperCase()
   return (
-    <div className="flex items-center gap-2">
-      <div className="text-right leading-tight hidden sm:block">
-        <div className="text-[11px] text-zinc-700 font-medium">{name}</div>
-        <div className="text-[9px] text-zinc-400">{user?.roles?.[0] || 'member'}</div>
-      </div>
-      <div className="w-7 h-7 rounded-full text-[11px] font-medium flex items-center justify-center" style={{ background: '#0D1B3E', color: '#02C39A' }}>
-        {initial}
-      </div>
+    <div className="w-7 h-7 rounded-full text-[11px] font-medium flex items-center justify-center" style={{ background: '#0D1B3E', color: '#02C39A' }}>
+      {initial}
     </div>
   )
 }
