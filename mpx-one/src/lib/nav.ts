@@ -35,6 +35,9 @@ export const SECTIONS: NavSectionDef[] = [
     { id: 'ea-cap', label: 'EA Capabilities', icon: '🏛', href: '/ea/capabilities' },
     { id: 'ea-arb', label: 'Architecture Review', icon: '⚖', href: '/ea/arb' },
   ]},
+  { id: 'aigov', label: 'AI GOVERNANCE', items: [
+    { id: 'ai-assessment', label: 'AI Assessment', icon: '🤖', href: '/ai-governance/assessment' },
+  ]},
   { id: 'governance', label: 'GOVERNANCE', items: [
     { id: 'data',   label: 'Data governance', icon: '🛢', href: '/governance/data' },
     { id: 'it',     label: 'IT governance',   icon: '⚙️', href: '/governance/it' },
