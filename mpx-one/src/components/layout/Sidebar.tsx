@@ -86,7 +86,7 @@ function NavLink({ item, active, onClick }: { item: NavItemDef; active: boolean;
   return (
     <Link href={item.href} onClick={onClick}
       className={`sidebar-link ${active ? 'active' : ''} w-full flex items-center gap-2.5 pl-4 pr-2 py-2 text-xs text-left rounded-lg`}>
-      <span className="text-sm flex-shrink-0">{item.icon}</span>
+      <span className="text-[11px] flex-shrink-0 w-4 text-center leading-none">{item.icon}</span>
       <span className="flex-1">{item.label}</span>
     </Link>
   )
