@@ -30,6 +30,7 @@
     "seed:app-users": "ts-node -r tsconfig-paths/register src/database/seeds/app-users.seed.ts",
     "seed:apps-apm": "ts-node -r tsconfig-paths/register src/database/seeds/applications-apm.seed.ts",
     "seed:ea-arb": "ts-node -r tsconfig-paths/register src/database/seeds/ea-arb.seed.ts",
+    "seed:studio-apps": "ts-node -r tsconfig-paths/register src/database/seeds/mpx-studio-apps.seed.ts",
     "health": "bash ../scripts/health-check.sh"
   },
   "dependencies": {
