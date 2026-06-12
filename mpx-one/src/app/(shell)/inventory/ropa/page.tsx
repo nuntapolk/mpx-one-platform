@@ -94,7 +94,7 @@ export default function RopaPage() {
                       <div className="flex gap-1">
                         <button onClick={() => setOpenId(openId === r.id ? null : r.id)} className="glass-btn-soft text-[10px] px-2 py-0.5 rounded">{openId === r.id ? 'ปิด' : 'phases'}</button>
                         <Link href={`/inventory/ropa/${r.id}?view=1`} title="ดูรายละเอียด" className="glass-btn-soft text-[10px] px-2 py-0.5 rounded">🔍</Link>
-                        <Link href={`/inventory/ropa/${r.id}`} className="glass-btn-primary text-[10px] px-2 py-0.5 rounded">แก้ไข</Link>
+                        <Link href={`/inventory/ropa/${r.id}`} title="แก้ไข" className="glass-btn-primary text-[10px] px-2 py-0.5 rounded">✏️</Link>
                       </div>
                     </Td>
                   </tr>
