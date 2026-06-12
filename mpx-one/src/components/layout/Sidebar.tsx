@@ -36,7 +36,7 @@ export default function Sidebar() {
     <aside className="w-[210px] flex-shrink-0 flex flex-col" style={{ background: 'linear-gradient(180deg, #f3f8fd 0%, #dfeaf7 100%)', borderRight: '1px solid rgba(13,27,62,0.08)' }}>
       <div className="px-4 py-4 flex items-center gap-2.5" style={{ borderBottom: '1px solid rgba(13,27,62,0.08)' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/mpx-one-logo-small.png" alt="MPX-ONE" className="h-9 w-9 object-contain flex-shrink-0" />
+        <img src="/mpx-one-logo-small.png" alt="MPX-ONE" className="h-12 w-12 object-contain flex-shrink-0" />
         <div className="min-w-0">
           <p className="text-[15px] font-bold tracking-wide leading-none" style={{ color: '#0D1B3E' }}>MPX-ONE</p>
           <p className="text-[10px] mt-1" style={{ color: 'rgba(13,27,62,0.45)' }}>Governance Platform</p>
