@@ -91,6 +91,8 @@ export default function RopaDetail() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
   const { data, mutate } = useSWR(id ? `${API}/api/v1/ropa/${id}` : null, fetcher)
+  // ฐานทางกฎหมาย — ดึงตัวเลือกจาก Lookup Categories (admin ปรับเพิ่ม/ลดได้)
+  const { data: lawfulOpts } = useSWR(`${API}/api/v1/admin/lookups?category=lawful_basis`, fetcher)
   const [editing, setEditing] = useState<string | null>(null)
   const [draft, setDraft] = useState<any>({})
   const [saving, setSaving] = useState(false)
@@ -132,6 +134,18 @@ export default function RopaDetail() {
   }
   function editInput(f: F) {
     const v = draft[f.key]
+    // ฐานทางกฎหมาย → dropdown จาก lookups (active เท่านั้น) + คงค่าปัจจุบันไว้ถ้าไม่อยู่ในรายการ
+    if (f.key === 'lawful_basis') {
+      const opts = (Array.isArray(lawfulOpts) ? lawfulOpts : []).filter((o: any) => o.is_active)
+      const labels = opts.map((o: any) => o.label)
+      return (
+        <select value={v ?? ''} onChange={e => set(f.key, e.target.value)} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded">
+          <option value="">— เลือกฐานทางกฎหมาย —</option>
+          {v && !labels.includes(v) && <option value={v}>{v} (ค่าเดิม)</option>}
+          {opts.map((o: any) => <option key={o.id} value={o.label}>{o.label}</option>)}
+        </select>
+      )
+    }
     if (f.kind === 'bool') return <label className="flex items-center gap-2 text-xs text-zinc-700 pt-1"><input type="checkbox" checked={!!v} onChange={e => set(f.key, e.target.checked)} /> {f.label}</label>
     if (f.kind === 'textarea') return <textarea value={v ?? ''} onChange={e => set(f.key, e.target.value)} rows={2} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded" />
     if (f.kind === 'csv') return <input value={Array.isArray(v) ? v.join(', ') : (v ?? '')} onChange={e => set(f.key, e.target.value.split(',').map(s => s.trim()).filter(Boolean))} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded" />
