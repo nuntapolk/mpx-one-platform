@@ -78,7 +78,7 @@ export default function RopaPage() {
                 {rows.map((r: any) => (
                   <tr key={r.id} className="hover:bg-zinc-50">
                     <Td><span className="font-mono text-[10px] text-zinc-400">{r.ropa_code}</span></Td>
-                    <Td><span className="font-medium text-zinc-800">{r.processing_activity_name}</span></Td>
+                    <Td><Link href={`/inventory/ropa/${r.id}`} className="font-medium text-zinc-800 hover:text-blue-600 hover:underline">{r.processing_activity_name}</Link></Td>
                     <Td><span className="text-[11px] text-zinc-600">{r.lawful_basis || '—'}</span></Td>
                     <Td><span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ background: critBg(r.risk_level), color: critFg(r.risk_level) }}>{r.risk_level}</span></Td>
                     <Td>{r.dpia_required_flag ? <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-50 text-purple-700">{DPIA_LABEL[r.dpia_status] ?? 'ต้องทำ'}</span> : <span className="text-zinc-300 text-xs">—</span>}</Td>
@@ -91,11 +91,7 @@ export default function RopaPage() {
                       </div>
                     </Td>
                     <Td>
-                      <div className="flex gap-1">
-                        <button onClick={() => setOpenId(openId === r.id ? null : r.id)} className="glass-btn-soft text-[10px] px-2 py-0.5 rounded">{openId === r.id ? 'ปิด' : 'phases'}</button>
-                        <Link href={`/inventory/ropa/${r.id}?view=1`} title="ดูรายละเอียด" className="glass-btn-soft text-[10px] px-2 py-0.5 rounded">🔍</Link>
-                        <Link href={`/inventory/ropa/${r.id}`} title="แก้ไข" className="glass-btn-primary text-[10px] px-2 py-0.5 rounded">✏️</Link>
-                      </div>
+                      <button onClick={() => setOpenId(openId === r.id ? null : r.id)} className="glass-btn-soft text-[10px] px-2 py-0.5 rounded">{openId === r.id ? 'ปิด' : 'phases'}</button>
                     </Td>
                   </tr>
                 ))}
