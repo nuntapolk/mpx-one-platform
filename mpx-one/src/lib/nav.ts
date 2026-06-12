@@ -7,7 +7,7 @@ export const SECTIONS: NavSectionDef[] = [
     { id: 'dashboard', label: 'Dashboard', icon: '▦', href: '/dashboard' },
   ]},
   { id: 'inventory', label: 'SHARED INVENTORY', items: [
-    { id: 'inv-app',    label: 'Applications', icon: '▢', href: '/inventory/applications' },
+    { id: 'inv-app',    label: 'Applications', icon: '🖥', href: '/inventory/applications' },
     { id: 'inv-data',   label: 'Data Assets',  icon: '◫', href: '/inventory/data-assets' },
     { id: 'inv-ropa',   label: 'ROPA',         icon: '⊡', href: '/inventory/ropa' },
     { id: 'inv-vendor', label: 'Vendors',      icon: '⬢', href: '/inventory/vendors' },
