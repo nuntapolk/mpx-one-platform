@@ -33,10 +33,10 @@ export default function Sidebar() {
     .filter(s => s.items.length > 0)
 
   return (
-    <aside className="w-[210px] flex-shrink-0 flex flex-col" style={{ background: '#0D1B3E' }}>
-      <div className="px-4 py-4 border-b border-white/10">
-        <p className="text-[15px] font-semibold tracking-wide" style={{ color: '#02C39A' }}>MPX-ONE</p>
-        <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>Governance Platform</p>
+    <aside className="w-[210px] flex-shrink-0 flex flex-col" style={{ background: 'linear-gradient(180deg, #f3f8fd 0%, #dfeaf7 100%)', borderRight: '1px solid rgba(13,27,62,0.08)' }}>
+      <div className="px-4 py-4" style={{ borderBottom: '1px solid rgba(13,27,62,0.08)' }}>
+        <p className="text-[15px] font-bold tracking-wide" style={{ color: '#0D1B3E' }}>MPX-ONE</p>
+        <p className="text-[10px] mt-0.5" style={{ color: 'rgba(13,27,62,0.45)' }}>Governance Platform</p>
       </div>
 
       <nav className="flex-1 overflow-y-auto py-2">
@@ -48,14 +48,14 @@ export default function Sidebar() {
               <button
                 onClick={() => toggle(section.id)}
                 className="sidebar-section w-full flex items-center justify-between px-2 py-2 rounded-lg"
-                style={{ background: isOpen ? 'rgba(255,255,255,0.04)' : 'transparent' }}
+                style={{ background: isOpen ? 'rgba(29,99,176,0.08)' : 'transparent' }}
               >
-                <span className="text-[10px] tracking-widest font-medium"
-                  style={{ color: isOpen || hasActiveChild ? '#02C39A' : 'rgba(255,255,255,0.4)' }}>
+                <span className="text-[10px] tracking-widest font-semibold"
+                  style={{ color: isOpen || hasActiveChild ? '#1D63B0' : 'rgba(13,27,62,0.5)' }}>
                   {section.label}
                 </span>
                 <span className="text-[9px] transition-transform duration-200"
-                  style={{ color: 'rgba(255,255,255,0.4)', transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>▶</span>
+                  style={{ color: 'rgba(13,27,62,0.4)', transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>▶</span>
               </button>
               <div className="overflow-hidden transition-all duration-200 ease-in-out"
                 style={{ maxHeight: isOpen ? `${section.items.length * 40 + 8}px` : '0px' }}>
@@ -70,12 +70,12 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="px-4 py-3 border-t border-white/10 flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full text-[11px] font-medium flex-shrink-0 flex items-center justify-center"
-          style={{ background: '#1D9E75', color: '#E1F5EE' }}>{(user?.name || user?.email || 'M')[0].toUpperCase()}</div>
+      <div className="px-4 py-3 flex items-center gap-2" style={{ borderTop: '1px solid rgba(13,27,62,0.08)' }}>
+        <div className="w-7 h-7 rounded-full text-[11px] font-semibold flex-shrink-0 flex items-center justify-center"
+          style={{ background: '#1D63B0', color: '#fff' }}>{(user?.name || user?.email || 'M')[0].toUpperCase()}</div>
         <div className="min-w-0 flex-1">
-          <p className="text-[11px] truncate" style={{ color: 'rgba(255,255,255,0.6)' }}>{user?.name || user?.email || 'MPX Admin'}</p>
-          <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.3)' }}>{(user?.roles?.[0] || 'member')} · v{APP_VERSION.full}</p>
+          <p className="text-[11px] truncate" style={{ color: 'rgba(13,27,62,0.75)' }}>{user?.name || user?.email || 'MPX Admin'}</p>
+          <p className="text-[10px]" style={{ color: 'rgba(13,27,62,0.4)' }}>{(user?.roles?.[0] || 'member')} · v{APP_VERSION.full}</p>
         </div>
       </div>
     </aside>
