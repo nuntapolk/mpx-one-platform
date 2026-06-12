@@ -10,6 +10,7 @@ const TABS = [
   { id: 'pdt', label: '🗂️ ประเภทข้อมูลส่วนบุคคล' },
   { id: 'dst', label: '👥 ประเภทเจ้าของข้อมูล' },
   { id: 'lawful', label: '⚖️ ฐานทางกฎหมาย' },
+  { id: 'compliance', label: '🔐 Compliance Tags' },
   { id: 'fields', label: '⚙️ ROPA Field Config' },
 ]
 
@@ -29,6 +30,7 @@ export default function Page() {
       {tab === 'pdt' && <LookupManager category="personal_data_type" title="ประเภทข้อมูลส่วนบุคคล" />}
       {tab === 'dst' && <LookupManager category="data_subject_type" title="ประเภทเจ้าของข้อมูล" />}
       {tab === 'lawful' && <LookupManager category="lawful_basis" title="ฐานทางกฎหมาย (PDPA มาตรา 24/26)" />}
+      {tab === 'compliance' && <LookupManager category="compliance_tag" title="Compliance & Governance Tags (ใช้ใน Application)" />}
       {tab === 'fields' && <FieldConfigManager />}
     </div>
   )

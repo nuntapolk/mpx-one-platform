@@ -33,6 +33,8 @@ export class Application {
   @Column({ default: false }) iso_scope_flag: boolean
   @Column({ default: false }) oic_scope_flag: boolean
   @Column({ default: false }) internet_facing_flag: boolean
+  // Configurable compliance/governance tags (จาก Lookup category 'compliance_tag')
+  @Column({ type: 'simple-array', nullable: true }) compliance_tags: string[]
 
   @Column({ type: 'text', nullable: true }) integration_summary: string
   @Column({ type: 'date', nullable: true }) go_live_date: Date

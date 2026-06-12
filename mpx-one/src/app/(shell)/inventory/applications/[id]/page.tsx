@@ -13,11 +13,15 @@ const riskColor = (r: string) => (({ low: '#15803d', medium: '#d97706', high: '#
 const healthColor = (h: number) => h >= 75 ? '#15803d' : h >= 50 ? '#d97706' : '#c0272d'
 const fmtTco = (n: number) => n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${Math.round(n / 1e3)}K` : String(n || 0)
 const inputCls = 'text-xs px-2 py-1 border border-zinc-200 rounded w-full'
+// known compliance tags → boolean flags (keep stats/alerts in sync)
+const COMP_FLAG: Record<string, string> = { pdpa: 'personal_data_flag', sensitive: 'sensitive_data_flag', iso: 'iso_scope_flag', oic: 'oic_scope_flag', ai: 'ai_enabled_flag', internet: 'internet_facing_flag' }
 
 export default function Page() {
   const { id } = useParams<{ id: string }>()
   const key = `${API}/api/v1/applications/${id}/360`
   const { data, isLoading, mutate } = useSWR(key, fetcher)
+  // compliance tags — ตัวเลือกจาก Lookup Categories (admin เพิ่ม/ลดได้)
+  const { data: compOpts } = useSWR(`${API}/api/v1/admin/lookups?category=compliance_tag`, fetcher)
   // which section is in edit mode
   const [editing, setEditing] = useState<string | null>(null)
   const [draft, setDraft] = useState<any>({})
@@ -124,22 +128,36 @@ export default function Page() {
       </Card>
 
       <div className="grid grid-cols-2 gap-4">
-        {/* Compliance flags */}
+        {/* Compliance — configurable checkboxes (Lookup Categories) */}
         <Card>
-          <SectionHeader title="🔐 Compliance & Governance" action={<EditBtn section="compliance" fields={['personal_data_flag', 'sensitive_data_flag', 'iso_scope_flag', 'oic_scope_flag', 'ai_enabled_flag', 'internet_facing_flag']} />} />
-          {ed('compliance') ? (
-            <div className="space-y-1.5">
-              {[['personal_data_flag', 'PDPA (PII)'], ['sensitive_data_flag', 'ข้อมูลอ่อนไหว'], ['iso_scope_flag', 'ISO 27001'], ['oic_scope_flag', 'OIC'], ['ai_enabled_flag', 'AI'], ['internet_facing_flag', 'Internet-facing']].map(([f, label]) => (
-                <label key={f} className="flex items-center gap-2 text-xs text-zinc-600"><input type="checkbox" checked={!!draft[f]} onChange={e => set(f, e.target.checked)} /> {label}</label>
-              ))}
-            </div>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              <Flag on={c.pdpa} label="PDPA (PII)" color="#1d4ed8" /><Flag on={c.sensitive} label="ข้อมูลอ่อนไหว" color="#c0272d" />
-              <Flag on={c.iso} label="ISO 27001" color="#15803d" /><Flag on={c.oic} label="OIC" color="#7c3aed" />
-              <Flag on={c.ai} label="AI" color="#7c3aed" /><Flag on={c.internet_facing} label="Internet-facing" color="#d97706" />
-            </div>
-          )}
+          <SectionHeader title="🔐 Compliance & Governance" action={<EditBtn section="compliance" fields={['compliance_tags', 'personal_data_flag', 'sensitive_data_flag', 'iso_scope_flag', 'oic_scope_flag', 'ai_enabled_flag', 'internet_facing_flag']} />} />
+          {(() => {
+            const opts = (Array.isArray(compOpts) ? compOpts : []).filter((o: any) => o.is_active)
+            const labelOf = (v: string) => opts.find((o: any) => o.value === v)?.label || v
+            if (ed('compliance')) {
+              const tags: string[] = Array.isArray(draft.compliance_tags) ? draft.compliance_tags : []
+              const toggle = (val: string) => {
+                const next = tags.includes(val) ? tags.filter(t => t !== val) : [...tags, val]
+                const patch: any = { compliance_tags: next }
+                if (COMP_FLAG[val]) patch[COMP_FLAG[val]] = next.includes(val)  // sync known flag
+                setDraft((d: any) => ({ ...d, ...patch }))
+              }
+              return (
+                <div className="space-y-1.5">
+                  {opts.map((o: any) => (
+                    <label key={o.id} className="flex items-center gap-2 text-xs text-zinc-600"><input type="checkbox" checked={tags.includes(o.value)} onChange={() => toggle(o.value)} /> {o.label}</label>
+                  ))}
+                  {opts.length === 0 && <p className="text-[11px] text-zinc-400">ยังไม่มีรายการ — เพิ่มได้ที่ Master Data → Compliance</p>}
+                </div>
+              )
+            }
+            const tags: string[] = Array.isArray(a.compliance_tags) ? a.compliance_tags : []
+            return tags.length ? (
+              <div className="flex flex-wrap gap-2">
+                {tags.map(t => <Flag key={t} on={true} label={labelOf(t)} color="#1d4ed8" />)}
+              </div>
+            ) : <p className="text-xs text-zinc-400">— ยังไม่ระบุ —</p>
+          })()}
         </Card>
 
         {/* Operations */}
