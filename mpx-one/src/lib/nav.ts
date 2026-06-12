@@ -50,7 +50,7 @@ export const SECTIONS: NavSectionDef[] = [
     { id: 'controls',    label: 'Control Library',   icon: '⊟', href: '/controls' },
     { id: 'frameworks',  label: 'Frameworks',        icon: '≡', href: '/frameworks' },
   ]},
-  { id: 'platform', label: 'PLATFORM', items: [
+  { id: 'platform', label: 'CONFIGURATION', items: [
     { id: 'import-export', label: 'Import / Export', icon: '⇅', href: '/import-export' },
     { id: 'accounts',      label: 'Account Mgmt',    icon: '👤', href: '/accounts' },
     { id: 'admin',         label: 'Admin Config',    icon: '⚒', href: '/admin' },
