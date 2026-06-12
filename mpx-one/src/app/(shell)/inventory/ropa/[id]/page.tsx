@@ -104,8 +104,6 @@ export default function RopaEditor() {
   const [form, setForm] = useState<any>({})
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
-  // read-only details mode (เปิดจากตาราง ด้วย ?view=1) — เข้าดูได้ทันทีไม่ต้องกดแก้ไข
-  const [view, setView] = useState(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('view') === '1')
 
   useEffect(() => { if (data && !data.statusCode) setForm(data) }, [data])
 
@@ -127,14 +125,6 @@ export default function RopaEditor() {
 
   function renderField(f: F) {
     const v = form[f.key]
-    // read-only display
-    if (view) {
-      const disp = f.kind === 'bool' ? (v ? 'ใช่' : 'ไม่') : Array.isArray(v) ? (v.join(', ') || '—') : (f.kind === 'date' && v ? String(v).slice(0, 10) : (v ?? '—'))
-      return (
-        <div><label className="text-[11px] text-zinc-500 block mb-0.5">{f.label}</label>
-        <div className="text-xs text-zinc-800 px-2 py-1.5 bg-zinc-50 rounded border border-zinc-100 min-h-[30px] break-words">{disp === '' ? '—' : disp}</div></div>
-      )
-    }
     if (f.kind === 'bool') return (
       <label className="flex items-center gap-2 text-xs text-zinc-700 py-1.5">
         <input type="checkbox" checked={!!v} onChange={e => set(f.key, e.target.checked)} /> {f.label}
@@ -163,9 +153,6 @@ export default function RopaEditor() {
             <div className="flex items-center gap-2 mb-1">
               <button onClick={() => router.push('/inventory/ropa')} className="glass-btn-soft text-[10px] px-2 py-0.5 rounded">← กลับ</button>
               <span className="font-mono text-[10px] text-zinc-400">{data.ropa_code}</span>
-              {view
-                ? <button onClick={() => { setView(false); window.history.replaceState(null, '', `/inventory/ropa/${id}`) }} className="glass-btn-primary text-[10px] px-2 py-0.5 rounded">✏️ แก้ไข</button>
-                : <span className="text-[9px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-700">โหมดแก้ไข</span>}
             </div>
             <h1 className="text-sm font-semibold text-zinc-900">{data.processing_activity_name}</h1>
           </div>
@@ -205,10 +192,9 @@ export default function RopaEditor() {
         </div>
 
         <div className="flex items-center gap-3 mt-4 pt-3 border-t border-zinc-100">
-          {!view && <button onClick={save} disabled={saving} className="glass-btn-primary text-xs px-4 py-1.5 rounded-lg">
+          <button onClick={save} disabled={saving} className="glass-btn-primary text-xs px-4 py-1.5 rounded-lg">
             {saving ? 'กำลังบันทึก...' : 'บันทึก'}
-          </button>}
-          {view && <span className="text-xs text-zinc-400">👁 มุมมองรายละเอียด (อ่านอย่างเดียว)</span>}
+          </button>
           {saved && <span className="text-xs text-emerald-600">✓ บันทึกแล้ว</span>}
           <div className="ml-auto flex gap-2">
             {phase > 0 && <button onClick={() => setPhase(phase - 1)} className="glass-btn-soft text-xs px-3 py-1.5 rounded-lg">← ก่อนหน้า</button>}
