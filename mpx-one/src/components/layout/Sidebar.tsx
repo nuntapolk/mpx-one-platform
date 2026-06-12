@@ -37,7 +37,8 @@ export default function Sidebar() {
       <div className="px-4 py-4 flex items-center gap-2.5" style={{ borderBottom: '1px solid rgba(13,27,62,0.08)' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/mpx-one-logo-small.png" alt="MPX-ONE" className="h-16 w-16 object-contain flex-shrink-0" />
-        <p className="text-[16px] font-bold tracking-wide" style={{ color: '#0D1B3E' }}>MPX-ONE</p>
+        <p className="text-[18px] font-bold tracking-[0.04em] bg-clip-text text-transparent"
+          style={{ fontFamily: 'var(--font-brand), system-ui, sans-serif', backgroundImage: 'linear-gradient(95deg, #0D1B3E 0%, #1D63B0 55%, #02C39A 100%)' }}>MPX-ONE</p>
       </div>
 
       <nav className="flex-1 overflow-y-auto py-2">
