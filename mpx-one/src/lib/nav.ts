@@ -8,11 +8,11 @@ export const SECTIONS: NavSectionDef[] = [
   ]},
   { id: 'inventory', label: 'SHARED INVENTORY', items: [
     { id: 'inv-app',    label: 'Applications', icon: '🖥', href: '/inventory/applications' },
-    { id: 'inv-data',   label: 'Data Assets',  icon: '◫', href: '/inventory/data-assets' },
-    { id: 'inv-ropa',   label: 'ROPA',         icon: '⊡', href: '/inventory/ropa' },
-    { id: 'inv-vendor', label: 'Vendors',      icon: '⬢', href: '/inventory/vendors' },
-    { id: 'inv-proj',   label: 'Projects',     icon: '◇', href: '/inventory/projects' },
-    { id: 'inv-ai',     label: 'AI Use Cases', icon: '◈', href: '/inventory/ai-use-cases' },
+    { id: 'inv-data',   label: 'Data Assets',  icon: '🗄', href: '/inventory/data-assets' },
+    { id: 'inv-ropa',   label: 'ROPA',         icon: '📋', href: '/inventory/ropa' },
+    { id: 'inv-vendor', label: 'Vendors',      icon: '🏢', href: '/inventory/vendors' },
+    { id: 'inv-proj',   label: 'Projects',     icon: '📁', href: '/inventory/projects' },
+    { id: 'inv-ai',     label: 'AI Use Cases', icon: '🤖', href: '/inventory/ai-use-cases' },
   ]},
   { id: 'pdpa', label: 'PDPA GOVERNANCE', items: [
     { id: 'pdpa-consent', label: 'Consent',       icon: '✍', href: '/pdpa/consent' },
