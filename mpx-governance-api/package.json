@@ -31,6 +31,7 @@
     "seed:apps-apm": "ts-node -r tsconfig-paths/register src/database/seeds/applications-apm.seed.ts",
     "seed:ea-arb": "ts-node -r tsconfig-paths/register src/database/seeds/ea-arb.seed.ts",
     "seed:studio-apps": "ts-node -r tsconfig-paths/register src/database/seeds/mpx-studio-apps.seed.ts",
+    "migrate:pdpa-studio": "ts-node -r tsconfig-paths/register src/database/seeds/pdpa-studio-migrate.seed.ts",
     "health": "bash ../scripts/health-check.sh"
   },
   "dependencies": {
