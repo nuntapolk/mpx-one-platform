@@ -3,7 +3,7 @@ export interface NavSectionDef { id: string; label: string; items: NavItemDef[] 
 
 // Single source of truth for sidebar nav — shared by Sidebar + role permission matrix.
 export const SECTIONS: NavSectionDef[] = [
-  { id: 'overview', label: 'OVERVIEW', items: [
+  { id: 'overview', label: 'HOME', items: [
     { id: 'dashboard', label: 'Dashboard', icon: '📊', href: '/dashboard' },
   ]},
   { id: 'inventory', label: 'SHARED INVENTORY', items: [
