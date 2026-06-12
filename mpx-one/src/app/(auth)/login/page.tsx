@@ -23,8 +23,8 @@ function LoginInner() {
     <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'linear-gradient(135deg,#0D1B3E 0%,#15294f 60%,#0D1B3E 100%)' }}>
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 text-2xl font-bold" style={{ background: '#02C39A', color: '#0D1B3E' }}>M</div>
-          <h1 className="text-2xl font-bold text-white">MPX-ONE</h1>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/mpx-one-logo.png" alt="MPX-ONE" className="mx-auto h-20 w-auto mb-4 bg-white rounded-2xl px-5 py-3 shadow-lg" />
           <p className="text-sm text-zinc-400 mt-1">Enterprise Governance & PDPA Platform</p>
         </div>
 
