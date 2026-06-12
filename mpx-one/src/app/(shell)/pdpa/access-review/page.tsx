@@ -112,7 +112,7 @@ export default function Page() {
                         {r.status === 'pending' && DECISIONS.map(d => (
                           <button key={d} onClick={() => decide(r.id, d)} title={d} className="glass-btn-soft text-[10px] px-1.5 py-0.5 rounded capitalize">{d[0].toUpperCase()}</button>
                         ))}
-                        <button onClick={() => del(r.id)} className="glass-btn-danger text-[10px] px-1.5 py-0.5 rounded">ลบ</button>
+                        <button onClick={() => del(r.id)} title="ลบ" className="glass-btn-danger text-[10px] px-1.5 py-0.5 rounded">🗑️</button>
                       </div>
                     </Td>
                   </tr>

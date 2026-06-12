@@ -47,8 +47,8 @@ export default function Page() {
 
   const EditBtn = ({ section, fields }: { section: string; fields: string[] }) =>
     editing === section
-      ? <div className="flex gap-1"><button onClick={save} disabled={saving} className="glass-btn-primary text-[10px] px-2 py-1 rounded">{saving ? '...' : 'บันทึก'}</button><button onClick={() => setEditing(null)} className="glass-btn-soft text-[10px] px-2 py-1 rounded">ยกเลิก</button></div>
-      : <button onClick={() => startEdit(section, fields)} className="glass-btn-soft text-[10px] px-2 py-1 rounded">✏️ แก้ไข</button>
+      ? <div className="flex gap-1"><button onClick={save} disabled={saving} title="บันทึก" className="glass-btn-primary text-[10px] px-2 py-1 rounded">{saving ? '...' : 'บันทึก'}</button><button onClick={() => setEditing(null)} title="ยกเลิก" className="glass-btn-soft text-[10px] px-2 py-1 rounded">ยกเลิก</button></div>
+      : <button onClick={() => startEdit(section, fields)} title="แก้ไข" className="glass-btn-primary text-[11px] px-2 py-1 rounded">✏️</button>
 
   const Gauge = ({ label, value, color }: { label: string; value: number; color: string }) => (
     <div className="text-center">

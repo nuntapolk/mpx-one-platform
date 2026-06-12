@@ -189,7 +189,7 @@ function RolesTab() {
                       ? <><button onClick={() => save(r)} className="glass-btn-primary text-[10px] px-2 py-1 rounded">บันทึกสิทธิ์</button>
                           <button onClick={() => setEditing(null)} className="glass-btn-soft text-[10px] px-2 py-1 rounded">ยกเลิก</button></>
                       : <button onClick={() => startEdit(r)} className="glass-btn-soft text-[10px] px-2 py-1 rounded">⚙ ตั้งสิทธิ์</button>}
-                    {!r.is_system && editing !== r.id && <button onClick={() => del(r)} className="glass-btn-danger text-[10px] px-2 py-1 rounded">ลบ</button>}
+                    {!r.is_system && editing !== r.id && <button onClick={() => del(r)} title="ลบ" className="glass-btn-danger text-[10px] px-2 py-1 rounded">🗑️</button>}
                   </div>
                 </div>
                 {editing === r.id && (

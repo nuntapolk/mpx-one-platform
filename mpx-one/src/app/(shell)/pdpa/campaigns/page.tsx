@@ -59,7 +59,7 @@ export default function Page() {
                     <Td><span className="text-xs text-zinc-600">{(r.mode!=null&&r.mode!=="")?String(r.mode).replace(/_/g," "):"—"}</span></Td>
                     <Td><span className="text-xs text-zinc-600">{(r.status!=null&&r.status!=="")?String(r.status).replace(/_/g," "):"—"}</span></Td>
                     <Td><span className="text-xs text-zinc-500">{r.deadline ? new Date(r.deadline).toLocaleDateString("th-TH") : "—"}</span></Td>
-                    <Td><button onClick={()=>del(r.id)} className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">ลบ</button></Td>
+                    <Td><button onClick={()=>del(r.id)} title="ลบ" className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">🗑️</button></Td>
                   </tr>
                 ))}
               </tbody>

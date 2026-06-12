@@ -68,7 +68,7 @@ function LookupManager({ category, title }: { category: string; title: string })
                   <Td><span className="font-mono text-[10px] text-zinc-500">{r.value}</span></Td>
                   <Td><span className="text-zinc-800">{r.label}</span>{r.is_builtin && <span className="ml-2 text-[9px] text-zinc-400">builtin</span>}</Td>
                   <Td><button onClick={() => toggle(r)} className={`text-[10px] px-2 py-0.5 rounded-full ${r.is_active ? 'bg-green-100 text-green-700' : 'bg-zinc-100 text-zinc-400'}`}>{r.is_active ? 'active' : 'inactive'}</button></Td>
-                  <Td><button onClick={() => del(r.id)} className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">ลบ</button></Td>
+                  <Td><button onClick={() => del(r.id)} title="ลบ" className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">🗑️</button></Td>
                 </tr>
               ))}
             </tbody>
@@ -135,7 +135,7 @@ function FieldConfigManager() {
                     <Td><span className="text-[10px] px-2 py-0.5 rounded bg-zinc-100 text-zinc-600">{r.field_type}</span></Td>
                     <Td>{r.is_required ? <span className="text-red-500 text-xs">✓</span> : <span className="text-zinc-300">—</span>}</Td>
                     <Td><button onClick={() => toggle(r)} className={`text-[10px] px-2 py-0.5 rounded-full ${r.is_active ? 'bg-green-100 text-green-700' : 'bg-zinc-100 text-zinc-400'}`}>{r.is_active ? 'active' : 'inactive'}</button></Td>
-                    <Td><button onClick={() => del(r.id)} className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">ลบ</button></Td>
+                    <Td><button onClick={() => del(r.id)} title="ลบ" className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">🗑️</button></Td>
                   </tr>
                 ))}
               </tbody>

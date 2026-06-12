@@ -93,7 +93,7 @@ export default function Page() {
                     <Td><span className="text-[10px] font-medium capitalize" style={{ color: tierColor(r.tier) }}>{r.tier || '—'}</span></Td>
                     <Td><span className="text-xs text-zinc-600">{r.app_count}</span></Td>
                     <Td><span className="text-[10px] px-2 py-0.5 rounded-full font-medium capitalize" style={{ background: covColor(r.coverage_status)[0], color: covColor(r.coverage_status)[1] }}>{r.coverage_status}</span></Td>
-                    <Td><button onClick={() => del(r.id)} className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">ลบ</button></Td>
+                    <Td><button onClick={() => del(r.id)} title="ลบ" className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">🗑️</button></Td>
                   </tr>
                 ))}
               </tbody>

@@ -109,7 +109,7 @@ export default function Page() {
                   </div>
                   <div className="flex gap-2 mt-2">
                     <button onClick={() => startInst(t.id, `${t.module.toUpperCase()}: ${t.name}`)} className="glass-btn-primary text-[10px] px-2 py-1 rounded">▶️ เริ่ม Instance</button>
-                    <button onClick={() => delTpl(t.id)} className="glass-btn-danger text-[10px] px-2 py-1 rounded">ลบ</button>
+                    <button onClick={() => delTpl(t.id)} title="ลบ" className="glass-btn-danger text-[10px] px-2 py-1 rounded">🗑️</button>
                   </div>
                 </div>
               ))}

@@ -63,7 +63,7 @@ export default function Page() {
                     <Td><span className="text-xs text-zinc-600">{(r.country!=null&&r.country!=="")?String(r.country).replace(/_/g," "):"—"}</span></Td>
                     <Td><span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ background: cb(r.risk_level), color: cf(r.risk_level) }}>{r.risk_level}</span></Td>
                     <Td>{r.is_cross_border ? <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-700">Yes</span> : <span className="text-zinc-300 text-xs">—</span>}</Td>
-                    <Td><button onClick={()=>del(r.id)} className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">ลบ</button></Td>
+                    <Td><button onClick={()=>del(r.id)} title="ลบ" className="glass-btn-danger text-[10px] px-2 py-0.5 rounded">🗑️</button></Td>
                   </tr>
                 ))}
               </tbody>

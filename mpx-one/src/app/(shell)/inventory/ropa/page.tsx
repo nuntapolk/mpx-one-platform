@@ -91,7 +91,7 @@ export default function RopaPage() {
                       </div>
                     </Td>
                     <Td>
-                      <button onClick={() => setOpenId(openId === r.id ? null : r.id)} className="glass-btn-soft text-[10px] px-2 py-0.5 rounded">{openId === r.id ? 'ปิด' : 'phases'}</button>
+                      <button onClick={() => setOpenId(openId === r.id ? null : r.id)} title="ดูความสมบูรณ์แต่ละ phase" className="glass-btn-soft text-[10px] px-2 py-0.5 rounded">{openId === r.id ? 'ปิด' : 'phases'}</button>
                     </Td>
                   </tr>
                 ))}

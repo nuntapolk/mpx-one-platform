@@ -77,7 +77,7 @@ export default function DashboardPage() {
                   <span className={`text-xs font-semibold ${item.warn && item.value > 0 ? 'text-red-600' : 'text-zinc-800'}`}>
                     {item.value ?? '—'}
                   </span>
-                  {item.link && <Link href={item.link} className="text-[10px] text-blue-500 hover:underline">ดู</Link>}
+                  {item.link && <Link href={item.link} title="ดูรายละเอียด" className="text-[11px] text-blue-500 hover:text-blue-700">🔍</Link>}
                 </div>
               </div>
             ))}

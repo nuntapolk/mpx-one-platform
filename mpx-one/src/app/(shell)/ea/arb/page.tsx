@@ -86,7 +86,7 @@ export default function Page() {
                       ) : (
                         <div className="flex items-center gap-2">
                           <span className="text-[10px] text-zinc-500 max-w-[180px] truncate">{r.decision || '—'}</span>
-                          <button onClick={() => del(r.id)} className="glass-btn-danger text-[10px] px-1.5 py-0.5 rounded">ลบ</button>
+                          <button onClick={() => del(r.id)} title="ลบ" className="glass-btn-danger text-[10px] px-1.5 py-0.5 rounded">🗑️</button>
                         </div>
                       )}
                     </Td>
