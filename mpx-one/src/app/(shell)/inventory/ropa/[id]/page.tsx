@@ -113,12 +113,22 @@ export default function RopaDetail() {
   }
   const set = (k: string, v: any) => setDraft((d: any) => ({ ...d, [k]: v }))
 
-  function readVal(f: F) {
+  function readNode(f: F) {
     const v = data[f.key]
-    if (f.kind === 'bool') return v ? 'ใช่' : 'ไม่'
-    if (Array.isArray(v)) return v.join(', ') || '—'
-    if (f.kind === 'date' && v) return String(v).slice(0, 10)
-    return (v == null || v === '') ? '—' : String(v)
+    const box = 'text-xs text-zinc-800 px-2 py-1.5 bg-zinc-50 rounded border border-zinc-100 min-h-[30px] break-words'
+    if (Array.isArray(v)) {
+      if (v.length === 0) return <div className={box}>—</div>
+      // แสดงบรรทัดละ record
+      return (
+        <div className={box + ' space-y-1'}>
+          {v.map((item: any, i: number) => (
+            <div key={i} className="flex gap-1.5"><span className="text-zinc-300 flex-shrink-0">•</span><span>{String(item)}</span></div>
+          ))}
+        </div>
+      )
+    }
+    const disp = f.kind === 'bool' ? (v ? 'ใช่' : 'ไม่') : (f.kind === 'date' && v ? String(v).slice(0, 10) : (v == null || v === '' ? '—' : String(v)))
+    return <div className={box}>{disp}</div>
   }
   function editInput(f: F) {
     const v = draft[f.key]
@@ -175,7 +185,7 @@ export default function RopaDetail() {
               {g.fields.map(f => (
                 <div key={f.key}>
                   <label className="text-[11px] text-zinc-500 block mb-0.5">{f.label}</label>
-                  {ed ? editInput(f) : <div className="text-xs text-zinc-800 px-2 py-1.5 bg-zinc-50 rounded border border-zinc-100 min-h-[30px] break-words">{readVal(f)}</div>}
+                  {ed ? editInput(f) : readNode(f)}
                 </div>
               ))}
             </div>
