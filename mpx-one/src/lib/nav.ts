@@ -4,7 +4,7 @@ export interface NavSectionDef { id: string; label: string; items: NavItemDef[] 
 // Single source of truth for sidebar nav — shared by Sidebar + role permission matrix.
 export const SECTIONS: NavSectionDef[] = [
   { id: 'overview', label: 'OVERVIEW', items: [
-    { id: 'dashboard', label: 'Dashboard', icon: '▦', href: '/dashboard' },
+    { id: 'dashboard', label: 'Dashboard', icon: '📊', href: '/dashboard' },
   ]},
   { id: 'inventory', label: 'SHARED INVENTORY', items: [
     { id: 'inv-app',    label: 'Applications', icon: '🖥', href: '/inventory/applications' },
@@ -36,11 +36,11 @@ export const SECTIONS: NavSectionDef[] = [
     { id: 'ea-arb', label: 'Architecture Review', icon: '⚖', href: '/ea/arb' },
   ]},
   { id: 'governance', label: 'GOVERNANCE', items: [
-    { id: 'data',   label: 'Data governance', icon: '⊙', href: '/governance/data' },
-    { id: 'it',     label: 'IT governance',   icon: '⬡', href: '/governance/it' },
-    { id: 'ai',     label: 'AI governance',   icon: '◈', href: '/governance/ai' },
-    { id: 'risk',   label: 'IT risk mgmt',    icon: '⚠', href: '/governance/risk' },
-    { id: 'regmap', label: 'Reg. mapping',    icon: '⊞', href: '/governance/reg-map' },
+    { id: 'data',   label: 'Data governance', icon: '🛢', href: '/governance/data' },
+    { id: 'it',     label: 'IT governance',   icon: '⚙️', href: '/governance/it' },
+    { id: 'ai',     label: 'AI governance',   icon: '🧠', href: '/governance/ai' },
+    { id: 'risk',   label: 'IT risk mgmt',    icon: '🛡️', href: '/governance/risk' },
+    { id: 'regmap', label: 'Reg. mapping',    icon: '📜', href: '/governance/reg-map' },
   ]},
   { id: 'assessment', label: 'ASSESSMENT', items: [
     { id: 'assessments', label: 'Assessments',       icon: '✓', href: '/assessments' },
