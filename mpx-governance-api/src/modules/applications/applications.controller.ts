@@ -11,6 +11,7 @@ export class ApplicationsController {
   constructor(private readonly svc: ApplicationsService) {}
 
   @Get('stats') getStats(@Req() req: any) { return this.svc.getStats(req.user?.organization_id ?? 'default') }
+  @Get('analytics') getAnalytics(@Req() req: any) { return this.svc.getAnalytics(req.user?.organization_id ?? 'default') }
   @Get()        findAll(@Req() req: any) { return this.svc.findAll(req.user?.organization_id ?? 'default') }
   @Get(':id/360') get360(@Param('id') id: string, @Req() req: any) { return this.svc.get360(id, req.user?.organization_id ?? 'default') }
   @Get(':id')   findOne(@Param('id') id: string, @Req() req: any) { return this.svc.findOne(id, req.user?.organization_id ?? 'default') }

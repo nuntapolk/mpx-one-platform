@@ -31,6 +31,10 @@ export const SECTIONS: NavSectionDef[] = [
     { id: 'pdpa-workflow',label: 'Workflow',      icon: '🔀', href: '/pdpa/workflow' },
     { id: 'pdpa-master',  label: 'Master Data',   icon: '⚙', href: '/pdpa/master-data' },
   ]},
+  { id: 'ea', label: 'EA PORTFOLIO', items: [
+    { id: 'ea-cap', label: 'EA Capabilities', icon: '🏛', href: '/ea/capabilities' },
+    { id: 'ea-arb', label: 'Architecture Review', icon: '⚖', href: '/ea/arb' },
+  ]},
   { id: 'governance', label: 'GOVERNANCE', items: [
     { id: 'data',   label: 'Data governance', icon: '⊙', href: '/governance/data' },
     { id: 'it',     label: 'IT governance',   icon: '⬡', href: '/governance/it' },

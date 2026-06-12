@@ -107,6 +107,11 @@ import { AccessLogModule } from './modules/access-log/access-log.module'
 import { AccessLog } from './database/entities/access-log.entity'
 import { RolesModule } from './modules/roles/roles.module'
 import { Role } from './database/entities/role.entity'
+import { EaCapabilitiesModule } from './modules/ea-capabilities/ea-capabilities.module'
+import { EaCapability } from './database/entities/ea-capability.entity'
+import { EaCapabilityMap } from './database/entities/ea-capability-map.entity'
+import { ArbModule } from './modules/arb/arb.module'
+import { ArbRequest } from './database/entities/arb-request.entity'
 import { AccountsModule } from './modules/accounts/accounts.module'
 import { RequestIdMiddleware } from './common/logging/request-id.middleware'
 // Legacy modules
@@ -131,6 +136,7 @@ const ALL_ENTITIES = [
   DpoTask, CookieBannerSetting, CookieConsent, TrainingCourse, TrainingCompletion,
   ExternalParty, DataProcessingAgreement, RopaCampaign, RopaCampaignInvitee,
   AccessReview, WorkflowTemplate, WorkflowInstance, RopaFieldConfig, AppUser, AccessLog, Role,
+  EaCapability, EaCapabilityMap, ArbRequest,
   // Legacy
   ITAsset, ChangeRequest, AITool, RegMapping,
 ]
@@ -153,6 +159,8 @@ const ALL_ENTITIES = [
     AccessLogModule,
     AccountsModule,
     RolesModule,
+    EaCapabilitiesModule,
+    ArbModule,
     HealthModule,
     DashboardModule,
     // Governance library

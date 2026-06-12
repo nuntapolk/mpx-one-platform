@@ -72,6 +72,47 @@ export class ApplicationsService {
     }
   }
 
+  // P3 — APM Analytics (portfolio-level distributions for charts)
+  async getAnalytics(orgId: string) {
+    const all: any[] = await this.repo.find({ where: { organization_id: orgId } })
+    const active = all.filter(a => !a.decommissioned && a.status !== 'inactive')
+    const tally = (key: (a: any) => string | null | undefined) => {
+      const o: Record<string, number> = {}
+      for (const a of active) { const k = key(a); if (k) o[k] = (o[k] || 0) + 1 }
+      return o
+    }
+    const sumBy = (key: (a: any) => string | null | undefined, val: (a: any) => number) => {
+      const o: Record<string, number> = {}
+      for (const a of active) { const k = key(a); if (k) o[k] = (o[k] || 0) + (val(a) || 0) }
+      return o
+    }
+    const buckets = (val: (a: any) => number | null) => {
+      const b = { '0-49': 0, '50-74': 0, '75-100': 0 }
+      for (const a of active) { const v = val(a); if (v == null) continue; if (v < 50) b['0-49']++; else if (v < 75) b['50-74']++; else b['75-100']++ }
+      return b
+    }
+    // EOL timeline by year
+    const eolByYear: Record<string, number> = {}
+    for (const a of active) if (a.eol_date) { const y = String(new Date(a.eol_date).getFullYear()); eolByYear[y] = (eolByYear[y] || 0) + 1 }
+    // scatter: health vs tech_debt (bubble size = tco)
+    const scatter = active.filter(a => a.health_score != null && a.tech_debt_score != null)
+      .map(a => ({ id: a.id, name: a.application_name, health: a.health_score, tech_debt: a.tech_debt_score, tco: Number(a.tco_annual) || 0, bcg: a.bcg_classification }))
+
+    return {
+      total: active.length,
+      by_bcg: tally(a => a.bcg_classification),
+      by_ea_group: tally(a => a.ea_group),
+      by_lifecycle: tally(a => a.lifecycle_status),
+      by_criticality: tally(a => a.business_criticality),
+      by_assess: tally(a => a.assess_status),
+      health_buckets: buckets(a => a.health_score),
+      tech_debt_buckets: buckets(a => a.tech_debt_score),
+      tco_by_ea_group: sumBy(a => a.ea_group, a => Number(a.tco_annual)),
+      eol_by_year: Object.fromEntries(Object.entries(eolByYear).sort()),
+      scatter,
+    }
+  }
+
   // ⭐ Application 360° — รวมทุก governance lens ของ 1 app
   async get360(id: string, orgId: string) {
     const app = await this.findOne(id, orgId)
