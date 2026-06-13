@@ -21,5 +21,12 @@ export class AiAssessmentController {
   @Post(':id/step/:no') setStep(@Param('id') id: string, @Param('no') no: string, @Body() body: any, @Req() req: any) { return this.svc.setStep(id, +no, body, this.org(req)) }
   @Post(':id/score/:domain') setScore(@Param('id') id: string, @Param('domain') domain: string, @Body() body: any, @Req() req: any) { return this.svc.setScore(id, domain, +body.score, this.org(req)) }
   @Post(':id/decide') decide(@Param('id') id: string, @Body() body: any, @Req() req: any) { return this.svc.decide(id, body, this.org(req)) }
+  // P4 — integrations & lifecycle
+  @Get(':id/links') links(@Param('id') id: string, @Req() req: any) { return this.svc.getLinks(id, this.org(req)) }
+  @Post(':id/link-vendor') linkVendor(@Param('id') id: string, @Body() body: any, @Req() req: any) { return this.svc.linkVendor(id, body.vendor_id, this.org(req)) }
+  @Post(':id/link-training') linkTraining(@Param('id') id: string, @Body() body: any, @Req() req: any) { return this.svc.linkTraining(id, body.training_course_id, this.org(req)) }
+  @Post(':id/create-risk') createRisk(@Param('id') id: string, @Req() req: any) { return this.svc.createRisk(id, this.org(req)) }
+  @Post(':id/go-live') goLive(@Param('id') id: string, @Req() req: any) { return this.svc.goLive(id, this.org(req)) }
+  @Post(':id/retire') retire(@Param('id') id: string, @Body() body: any, @Req() req: any) { return this.svc.retire(id, body, this.org(req)) }
   @Delete(':id') remove(@Param('id') id: string, @Req() req: any) { return this.svc.remove(id, this.org(req)) }
 }

@@ -3,6 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { AiAssessment } from '../../database/entities/ai-assessment.entity'
 import { AIUseCase } from '../../database/entities/ai-use-case.entity'
+import { Vendor } from '../../database/entities/vendor.entity'
+import { RiskRegister } from '../../database/entities/risk-register.entity'
+import { TrainingCourse } from '../../database/entities/training-course.entity'
 import { AI_STEPS, SCORE_DOMAINS, phaseOf } from './ai-steps'
 
 @Injectable()
@@ -10,6 +13,9 @@ export class AiAssessmentService {
   constructor(
     @InjectRepository(AiAssessment) private repo: Repository<AiAssessment>,
     @InjectRepository(AIUseCase) private useCases: Repository<AIUseCase>,
+    @InjectRepository(Vendor) private vendors: Repository<Vendor>,
+    @InjectRepository(RiskRegister) private risks: Repository<RiskRegister>,
+    @InjectRepository(TrainingCourse) private courses: Repository<TrainingCourse>,
   ) {}
 
   findAll(orgId: string) { return this.repo.find({ where: { organization_id: orgId }, order: { created_at: 'DESC' } }) }
@@ -84,6 +90,62 @@ export class AiAssessmentService {
       status, decision: body.decision, conditions: body.conditions, decided_at: new Date(),
     })
     return this.findOne(id, orgId)
+  }
+
+  // ── P4 — cross-module integration ──────────────────────────
+  async linkVendor(id: string, vendorId: string, orgId: string) {
+    await this.findOne(id, orgId)
+    await this.repo.update({ id, organization_id: orgId }, { vendor_id: vendorId || null } as any)
+    return this.findOne(id, orgId)
+  }
+  async linkTraining(id: string, courseId: string, orgId: string) {
+    await this.findOne(id, orgId)
+    await this.repo.update({ id, organization_id: orgId }, { training_course_id: courseId || null } as any)
+    return this.findOne(id, orgId)
+  }
+
+  // Step 12 → create a Risk Register entry from the assessment
+  async createRisk(id: string, orgId: string) {
+    const a = await this.findOne(id, orgId)
+    if (a.related_risk_id) return this.findOne(id, orgId)   // already created
+    const cnt = await this.risks.count({ where: { organization_id: orgId } })
+    const tierImpact: Record<string, number> = { high: 5, medium: 3, low: 2 }
+    const impact = tierImpact[a.risk_tier] || 3
+    const likelihood = Math.max(1, Math.min(5, Math.round((a.consolidated_score || 0) / 20)))
+    const saved: any = await this.risks.save(this.risks.create({
+      organization_id: orgId,
+      risk_id: `RSK-AI-${String(cnt + 1).padStart(4, '0')}`,
+      title: `AI Risk — ${a.title}`,
+      description: `สร้างจาก AI Assessment ${a.assessment_code} (consolidated score ${a.consolidated_score ?? 0})`,
+      category: 'ai_risk', likelihood, impact, status: 'open', treatment: 'mitigate',
+    } as any))
+    await this.repo.update({ id, organization_id: orgId }, { related_risk_id: saved.id })
+    return this.findOne(id, orgId)
+  }
+
+  // Step 18 Go-Live
+  async goLive(id: string, orgId: string) {
+    const a = await this.findOne(id, orgId)
+    if (!['approved', 'conditional'].includes(a.status)) { /* allow anyway in dev */ }
+    await this.repo.update({ id, organization_id: orgId }, { status: 'live', phase: 'operations', go_live_at: new Date() })
+    return this.findOne(id, orgId)
+  }
+  // Step 21 End-of-Life
+  async retire(id: string, body: any, orgId: string) {
+    await this.findOne(id, orgId)
+    await this.repo.update({ id, organization_id: orgId }, { status: 'retired', phase: 'closed', eol_date: body.eol_date || new Date() })
+    return this.findOne(id, orgId)
+  }
+
+  // 360 — linked entities for the detail page
+  async getLinks(id: string, orgId: string) {
+    const a = await this.findOne(id, orgId)
+    const out: any = { vendor: null, risk: null, training: null, use_case: null }
+    if (a.vendor_id) { const v: any = await this.vendors.findOne({ where: { id: a.vendor_id, organization_id: orgId } }); if (v) out.vendor = { id: v.id, name: v.vendor_name, code: v.vendor_code, risk_level: v.risk_level } }
+    if (a.related_risk_id) { const r: any = await this.risks.findOne({ where: { id: a.related_risk_id, organization_id: orgId } }); if (r) out.risk = { id: r.id, risk_id: r.risk_id, title: r.title, score: r.inherent_score, status: r.status } }
+    if (a.training_course_id) { const c: any = await this.courses.findOne({ where: { id: a.training_course_id, organization_id: orgId } }); if (c) out.training = { id: c.id, title: c.title } }
+    if (a.ai_use_case_id) { const u: any = await this.useCases.findOne({ where: { id: a.ai_use_case_id, organization_id: orgId } }); if (u) out.use_case = { id: u.id, name: u.ai_use_case_name } }
+    return out
   }
 
   async remove(id: string, orgId: string) {

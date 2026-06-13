@@ -44,6 +44,12 @@ export class AiAssessment {
   // Operations (Steps 18-21)
   @Column({ type: 'text', nullable: true }) monitoring_notes: string
   @Column({ type: 'date', nullable: true }) eol_date: Date
+  @Column({ type: 'timestamptz', nullable: true }) go_live_at: Date
+
+  // P4 — cross-module links
+  @Column({ type: 'uuid', nullable: true }) vendor_id: string            // Step 10
+  @Column({ type: 'uuid', nullable: true }) related_risk_id: string      // Step 12 → Risk Register
+  @Column({ type: 'uuid', nullable: true }) training_course_id: string   // Step 16
 
   // 21-step progress
   @Column({ type: 'jsonb', default: () => "'[]'" }) steps: AiStepState[]

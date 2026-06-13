@@ -18,6 +18,9 @@ export default function Page() {
   const key = `${API}/api/v1/ai-assessments/${id}`
   const { data: a, mutate } = useSWR(key, fetcher)
   const { data: tpl } = useSWR(`${API}/api/v1/ai-assessments/template`, fetcher)
+  const { data: links, mutate: mutateLinks } = useSWR(`${key}/links`, fetcher)
+  const { data: vendors } = useSWR(`${API}/api/v1/vendors`, fetcher)
+  const { data: courses } = useSWR(`${API}/api/v1/training`, fetcher)
   const [editStep, setEditStep] = useState<number | null>(null)
   const [draft, setDraft] = useState<any>({})
 
@@ -42,6 +45,11 @@ export default function Page() {
     const g = [...(a.guardrails || [])]; g[i] = { ...g[i], enabled: !g[i].enabled }
     await fetch(key, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ guardrails: g }) }); mutate()
   }
+  async function post(path: string, body?: any) {
+    await fetch(`${key}/${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined })
+    mutate(); mutateLinks()
+  }
+  async function saveField(patch: any) { await fetch(key, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(patch) }); mutate() }
 
   return (
     <div className="space-y-4 max-w-4xl">
@@ -133,6 +141,56 @@ export default function Page() {
           </div>
         </Card>
       ))}
+
+      {/* P4 — Integrations & Lifecycle */}
+      <Card>
+        <SectionHeader title="🔗 Integrations & Lifecycle" />
+        <div className="grid grid-cols-2 gap-3">
+          {/* Vendor (Step 10) */}
+          <div>
+            <div className="text-[11px] text-zinc-500 mb-1">🏢 Vendor (Step 10)</div>
+            <select value={a.vendor_id ?? ''} onChange={e => post('link-vendor', { vendor_id: e.target.value })} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded">
+              <option value="">— เลือก vendor —</option>
+              {(Array.isArray(vendors) ? vendors : []).map((v: any) => <option key={v.id} value={v.id}>{v.vendor_name}</option>)}
+            </select>
+            {links?.vendor && <div className="text-[10px] text-zinc-500 mt-1">{links.vendor.name} · risk {links.vendor.risk_level}</div>}
+          </div>
+          {/* Training (Step 16) */}
+          <div>
+            <div className="text-[11px] text-zinc-500 mb-1">🎓 Training (Step 16)</div>
+            <select value={a.training_course_id ?? ''} onChange={e => post('link-training', { training_course_id: e.target.value })} className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded">
+              <option value="">— เลือกหลักสูตร —</option>
+              {(Array.isArray(courses) ? courses : []).map((c: any) => <option key={c.id} value={c.id}>{c.title}</option>)}
+            </select>
+          </div>
+          {/* Risk (Step 12) */}
+          <div>
+            <div className="text-[11px] text-zinc-500 mb-1">⚠️ Risk Register (Step 12)</div>
+            {links?.risk
+              ? <Link href="/governance/risk" className="text-xs text-blue-600 hover:underline">{links.risk.risk_id} — {links.risk.title} (score {links.risk.score})</Link>
+              : <button onClick={() => post('create-risk')} className="glass-btn-soft text-[10px] px-2 py-1 rounded">+ สร้าง Risk จาก assessment</button>}
+          </div>
+          {/* Lifecycle */}
+          <div>
+            <div className="text-[11px] text-zinc-500 mb-1">🚀 Lifecycle</div>
+            <div className="flex gap-1">
+              {a.status !== 'live' && <button onClick={() => post('go-live')} className="glass-btn-primary text-[10px] px-2 py-1 rounded">Go-Live (18)</button>}
+              {a.status !== 'retired' && <button onClick={() => post('retire', {})} className="glass-btn-danger text-[10px] px-2 py-1 rounded">Retire / EoL (21)</button>}
+            </div>
+            {a.go_live_at && <div className="text-[10px] text-zinc-400 mt-1">live: {new Date(a.go_live_at).toLocaleDateString('th-TH')}</div>}
+          </div>
+          {/* AI-IRP (Step 17) */}
+          <div className="col-span-2">
+            <div className="text-[11px] text-zinc-500 mb-1">🆘 AI Incident Response Plan / Kill Switch (Step 17)</div>
+            <textarea defaultValue={a.airp ?? ''} onBlur={e => saveField({ airp: e.target.value })} rows={2} placeholder="ระบุแผนเผชิญเหตุ Kill Switch / Fallback..." className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded" />
+          </div>
+          {/* Monitoring (Step 19) */}
+          <div className="col-span-2">
+            <div className="text-[11px] text-zinc-500 mb-1">📡 Monitoring Notes (Step 19)</div>
+            <textarea defaultValue={a.monitoring_notes ?? ''} onBlur={e => saveField({ monitoring_notes: e.target.value })} rows={2} placeholder="บันทึกการเฝ้าระวัง / policy violations / model drift..." className="w-full text-xs px-2 py-1.5 border border-zinc-200 rounded" />
+          </div>
+        </div>
+      </Card>
 
       {a.decision && (
         <Card><SectionHeader title="⚖️ Approval" />
