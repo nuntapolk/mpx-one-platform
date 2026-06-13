@@ -3,17 +3,38 @@ export interface NavSectionDef { id: string; label: string; items: NavItemDef[] 
 
 // Single source of truth for sidebar nav — shared by Sidebar + role permission matrix.
 export const SECTIONS: NavSectionDef[] = [
+  // 1. HOME
   { id: 'overview', label: 'HOME', items: [
     { id: 'dashboard', label: 'Dashboard', icon: '📊', href: '/dashboard' },
   ]},
+  // 2. SHARED INVENTORY
   { id: 'inventory', label: 'SHARED INVENTORY', items: [
     { id: 'inv-app',    label: 'Applications', icon: '🖥', href: '/inventory/applications' },
-    { id: 'inv-data',   label: 'Data Assets',  icon: '🗄', href: '/inventory/data-assets' },
     { id: 'inv-ropa',   label: 'ROPA',         icon: '📋', href: '/inventory/ropa' },
     { id: 'inv-vendor', label: 'Vendors',      icon: '🏢', href: '/inventory/vendors' },
     { id: 'inv-proj',   label: 'Projects',     icon: '📁', href: '/inventory/projects' },
     { id: 'inv-ai',     label: 'AI Use Cases', icon: '🤖', href: '/inventory/ai-use-cases' },
   ]},
+  // 3. IT RISK MANAGEMENT
+  { id: 'itrisk', label: 'IT RISK MANAGEMENT', items: [
+    { id: 'risk',   label: 'IT risk mgmt',    icon: '🛡️', href: '/governance/risk' },
+    { id: 'issues', label: 'Issues & Findings', icon: '⚑', href: '/issues' },
+  ]},
+  // 4. EA PORTFOLIO
+  { id: 'ea', label: 'EA PORTFOLIO', items: [
+    { id: 'ea-cap', label: 'EA Capabilities', icon: '🏛', href: '/ea/capabilities' },
+    { id: 'ea-arb', label: 'Architecture Review', icon: '⚖', href: '/ea/arb' },
+  ]},
+  // 5. IT GOVERNANCE
+  { id: 'itgov', label: 'IT GOVERNANCE', items: [
+    { id: 'it', label: 'IT governance', icon: '⚙️', href: '/governance/it' },
+  ]},
+  // 6. DATA GOVERNANCE
+  { id: 'datagov', label: 'DATA GOVERNANCE', items: [
+    { id: 'data',     label: 'Data governance', icon: '🛢', href: '/governance/data' },
+    { id: 'inv-data', label: 'Data Assets',     icon: '🗄', href: '/inventory/data-assets' },
+  ]},
+  // PDPA (kept separate, grouped with data)
   { id: 'pdpa', label: 'PDPA GOVERNANCE', items: [
     { id: 'pdpa-consent', label: 'Consent',       icon: '✍', href: '/pdpa/consent' },
     { id: 'pdpa-dsar',    label: 'Rights (DSAR)', icon: '⚖', href: '/pdpa/dsar' },
@@ -26,33 +47,29 @@ export const SECTIONS: NavSectionDef[] = [
     { id: 'pdpa-party',   label: 'External Parties', icon: '⇄', href: '/pdpa/external-parties' },
     { id: 'pdpa-camp',    label: 'ROPA Campaigns',icon: '📣', href: '/pdpa/campaigns' },
     { id: 'pdpa-datamap', label: 'Data Map',      icon: '🗺', href: '/pdpa/data-map' },
-    { id: 'pdpa-reports', label: 'Reports',       icon: '📈', href: '/pdpa/reports' },
     { id: 'pdpa-access',  label: 'Access Review', icon: '🔑', href: '/pdpa/access-review' },
     { id: 'pdpa-workflow',label: 'Workflow',      icon: '🔀', href: '/pdpa/workflow' },
     { id: 'pdpa-master',  label: 'Master Data',   icon: '⚙', href: '/pdpa/master-data' },
   ]},
-  { id: 'ea', label: 'EA PORTFOLIO', items: [
-    { id: 'ea-cap', label: 'EA Capabilities', icon: '🏛', href: '/ea/capabilities' },
-    { id: 'ea-arb', label: 'Architecture Review', icon: '⚖', href: '/ea/arb' },
-  ]},
+  // 7. AI GOVERNANCE
   { id: 'aigov', label: 'AI GOVERNANCE', items: [
     { id: 'ai-assessment', label: 'AI Assessment', icon: '🤖', href: '/ai-governance/assessment' },
+    { id: 'ai',            label: 'AI governance', icon: '🧠', href: '/governance/ai' },
   ]},
+  // 8. GOVERNANCE
   { id: 'governance', label: 'GOVERNANCE', items: [
-    { id: 'data',   label: 'Data governance', icon: '🛢', href: '/governance/data' },
-    { id: 'it',     label: 'IT governance',   icon: '⚙️', href: '/governance/it' },
-    { id: 'ai',     label: 'AI governance',   icon: '🧠', href: '/governance/ai' },
-    { id: 'risk',   label: 'IT risk mgmt',    icon: '🛡️', href: '/governance/risk' },
-    { id: 'regmap', label: 'Reg. mapping',    icon: '📜', href: '/governance/reg-map' },
+    { id: 'regmap', label: 'Reg. mapping', icon: '📜', href: '/governance/reg-map' },
   ]},
-  { id: 'assessment', label: 'ASSESSMENT', items: [
+  // 9. ASSESSMENT & REPORT
+  { id: 'assessment', label: 'ASSESSMENT & REPORT', items: [
     { id: 'assessments', label: 'Assessments',       icon: '✓', href: '/assessments' },
-    { id: 'issues',      label: 'Issues & Findings', icon: '⚑', href: '/issues' },
     { id: 'evidences',   label: 'Evidence Repo',     icon: '📎', href: '/evidences' },
     { id: 'oic',         label: 'OIC Readiness',     icon: '◎', href: '/oic' },
     { id: 'controls',    label: 'Control Library',   icon: '⊟', href: '/controls' },
     { id: 'frameworks',  label: 'Frameworks',        icon: '≡', href: '/frameworks' },
+    { id: 'pdpa-reports', label: 'Reports',          icon: '📈', href: '/pdpa/reports' },
   ]},
+  // 10. CONFIGURATION
   { id: 'platform', label: 'CONFIGURATION', items: [
     { id: 'import-export', label: 'Import / Export', icon: '⇅', href: '/import-export' },
     { id: 'accounts',      label: 'Account Mgmt',    icon: '👤', href: '/accounts' },
