@@ -20,6 +20,7 @@ export default function Page() {
   const rows = Array.isArray(list) ? list : []
   const ucList = Array.isArray(useCases) ? useCases : []
   const [showForm, setShowForm] = useState(false)
+  const [view, setView] = useState<'list' | 'analytics'>('list')
   const blank = { title: '', requester: '', ai_use_case_id: '', risk_tier: '', regulatory: [] as string[] }
   const [form, setForm] = useState<any>(blank)
 
@@ -45,6 +46,12 @@ export default function Page() {
         <KPICard label="ใช้งานจริง" value={stats?.live ?? '—'} sub="live" />
       </div>
 
+      <div className="inline-flex gap-0.5 p-1 rounded-lg bg-zinc-100/60">
+        <button onClick={() => setView('list')} className={`text-xs px-3 py-1.5 rounded-md font-medium ${view === 'list' ? 'glass-tab active' : 'glass-tab'}`}>📋 รายการ</button>
+        <button onClick={() => setView('analytics')} className={`text-xs px-3 py-1.5 rounded-md font-medium ${view === 'analytics' ? 'glass-tab active' : 'glass-tab'}`}>📈 Analytics</button>
+      </div>
+
+      {view === 'analytics' ? <Analytics /> : (
       <Card>
         <SectionHeader title="AI Assessments" action={<button onClick={() => setShowForm(v => !v)} className="glass-btn-primary text-xs px-3 py-1.5 rounded-lg">+ เริ่มประเมิน</button>} />
         {showForm && (
@@ -96,6 +103,76 @@ export default function Page() {
               </tbody>
             </TableWrap>
           )}
+      </Card>
+      )}
+    </div>
+  )
+}
+
+/* P5 — AI Governance Analytics */
+const PAL = ['#15803d', '#1d4ed8', '#d97706', '#7c3aed', '#0369a1', '#c0272d', '#64748b']
+function Bars({ data, colorMap }: { data: Record<string, number>; colorMap?: (k: string) => string }) {
+  const entries = Object.entries(data || {}).sort((a, b) => b[1] - a[1])
+  const max = Math.max(1, ...entries.map(e => e[1]))
+  if (!entries.length) return <Empty message="ไม่มีข้อมูล" />
+  return (
+    <div className="space-y-1.5">
+      {entries.map(([k, v], i) => (
+        <div key={k} className="flex items-center gap-2">
+          <div className="w-28 text-[11px] text-zinc-500 truncate capitalize" title={k}>{String(k).replace(/_/g, ' ')}</div>
+          <div className="flex-1 h-4 bg-zinc-100 rounded overflow-hidden"><div className="h-full rounded flex items-center justify-end pr-1.5 text-[9px] text-white font-medium" style={{ width: `${Math.max(8, v / max * 100)}%`, background: colorMap ? colorMap(k) : PAL[i % PAL.length] }}>{v}</div></div>
+        </div>
+      ))}
+    </div>
+  )
+}
+function Analytics() {
+  const { data } = useSWR(`${API}/api/v1/ai-assessments/analytics`, fetcher)
+  if (!data) return <Card><div className="py-8 text-center text-xs text-zinc-400">กำลังโหลด...</div></Card>
+  const heatColor = (n: number) => n === 0 ? '#f4f4f5' : n >= 3 ? '#c0272d' : n >= 2 ? '#d97706' : '#fde68a'
+  const phases = ['intake', 'risk', 'approval', 'implementation', 'operations', 'closed']
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <Card><SectionHeader title="ตาม Risk Tier" /><Bars data={data.by_tier} colorMap={(k) => ({ high: '#c0272d', medium: '#d97706', low: '#15803d' } as any)[k]} /></Card>
+        <Card><SectionHeader title="ตาม Phase" /><Bars data={data.by_phase} /></Card>
+        <Card><SectionHeader title="คะแนนเสี่ยงเฉลี่ยต่อ Domain" /><Bars data={data.domain_avg} colorMap={(_) => '#1d4ed8'} /></Card>
+        <Card><SectionHeader title="Regulatory Coverage" /><Bars data={data.regulatory} colorMap={(_) => '#0369a1'} /></Card>
+        <Card><SectionHeader title="การกระจายคะแนนเสี่ยง" /><Bars data={data.score_buckets} colorMap={(k) => k.includes('สูง') ? '#c0272d' : k.includes('กลาง') ? '#d97706' : '#15803d'} /></Card>
+        <Card><SectionHeader title="Approval Funnel" /><Bars data={data.funnel} /></Card>
+      </div>
+
+      {/* Heatmap: tier × phase */}
+      <Card>
+        <SectionHeader title="🔥 Risk Heatmap (Tier × Phase)" />
+        <table className="text-[11px] w-full">
+          <thead><tr><th className="text-left p-1 text-zinc-400"></th>{phases.map(p => <th key={p} className="p-1 text-zinc-500 capitalize font-medium">{p}</th>)}</tr></thead>
+          <tbody>
+            {['high', 'medium', 'low'].map(t => (
+              <tr key={t}>
+                <td className="p-1 font-semibold capitalize" style={{ color: ({ high: '#c0272d', medium: '#d97706', low: '#15803d' } as any)[t] }}>{t}</td>
+                {phases.map(p => { const n = data.heatmap?.[t]?.[p] ?? 0; return <td key={p} className="p-1 text-center font-medium" style={{ background: heatColor(n), color: n >= 2 ? '#fff' : '#71717a' }}>{n || ''}</td> })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
+
+      {/* Top risky */}
+      <Card>
+        <SectionHeader title="⚠️ ความเสี่ยงสูงสุด (Top consolidated score)" />
+        {(data.top_risky || []).length === 0 ? <Empty message="ยังไม่มีคะแนน" /> : (
+          <div className="space-y-1">
+            {data.top_risky.map((a: any) => (
+              <Link key={a.id} href={`/ai-governance/assessment/${a.id}`} className="flex items-center gap-2 text-xs py-1.5 px-2 rounded hover:bg-zinc-50 border-b border-zinc-100 last:border-0">
+                <span className="font-mono text-[10px] text-zinc-400">{a.code}</span>
+                <span className="text-zinc-700 flex-1 truncate">{a.title}</span>
+                {a.tier && <span className="text-[9px] px-1.5 rounded-full font-bold uppercase" style={{ background: tierColor(a.tier)[0], color: tierColor(a.tier)[1] }}>{a.tier}</span>}
+                <span className="text-xs font-bold" style={{ color: a.score >= 70 ? '#c0272d' : a.score >= 40 ? '#d97706' : '#15803d' }}>{a.score}</span>
+              </Link>
+            ))}
+          </div>
+        )}
       </Card>
     </div>
   )

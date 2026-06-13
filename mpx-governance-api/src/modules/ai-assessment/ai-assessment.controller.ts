@@ -14,6 +14,7 @@ export class AiAssessmentController {
 
   @Get('template') template() { return { phases: AI_PHASES, steps: AI_STEPS } }
   @Get('stats') stats(@Req() req: any) { return this.svc.getStats(this.org(req)) }
+  @Get('analytics') analytics(@Req() req: any) { return this.svc.getAnalytics(this.org(req)) }
   @Get() findAll(@Req() req: any) { return this.svc.findAll(this.org(req)) }
   @Get(':id') findOne(@Param('id') id: string, @Req() req: any) { return this.svc.findOne(id, this.org(req)) }
   @Post() create(@Body() body: any, @Req() req: any) { return this.svc.create(body, this.org(req)) }

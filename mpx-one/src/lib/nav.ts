@@ -60,8 +60,8 @@ export const SECTIONS: NavSectionDef[] = [
   { id: 'governance', label: 'GOVERNANCE', items: [
     { id: 'regmap', label: 'Reg. mapping', icon: '📜', href: '/governance/reg-map' },
   ]},
-  // 9. ASSESSMENT & REPORT
-  { id: 'assessment', label: 'ASSESSMENT & REPORT', items: [
+  // 9. ASSESSMENT
+  { id: 'assessment', label: 'ASSESSMENT', items: [
     { id: 'assessments', label: 'Assessments',       icon: '✓', href: '/assessments' },
     { id: 'evidences',   label: 'Evidence Repo',     icon: '📎', href: '/evidences' },
     { id: 'oic',         label: 'OIC Readiness',     icon: '◎', href: '/oic' },

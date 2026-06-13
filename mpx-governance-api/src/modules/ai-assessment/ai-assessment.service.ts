@@ -92,6 +92,45 @@ export class AiAssessmentService {
     return this.findOne(id, orgId)
   }
 
+  // ── P5 — AI Governance analytics ───────────────────────────
+  async getAnalytics(orgId: string) {
+    const all = await this.repo.find({ where: { organization_id: orgId } })
+    const tally = (k: (a: AiAssessment) => string | null | undefined) => { const o: Record<string, number> = {}; for (const a of all) { const v = k(a); if (v) o[v] = (o[v] || 0) + 1 } return o }
+    // avg score per domain
+    const domainAvg: Record<string, number> = {}
+    for (const d of SCORE_DOMAINS) {
+      const vals = all.map(a => a.scores?.[d]).filter(v => v != null) as number[]
+      domainAvg[d] = vals.length ? Math.round(vals.reduce((s, v) => s + v, 0) / vals.length) : 0
+    }
+    // regulatory coverage
+    const reg: Record<string, number> = { BOT: 0, OIC: 0, PDPA: 0 }
+    for (const a of all) for (const r of (a.regulatory || [])) reg[r] = (reg[r] || 0) + 1
+    // score buckets
+    const buckets = { 'ต่ำ (0-39)': 0, 'กลาง (40-69)': 0, 'สูง (70-100)': 0 }
+    for (const a of all) { const s = a.consolidated_score ?? 0; if (s < 40) buckets['ต่ำ (0-39)']++; else if (s < 70) buckets['กลาง (40-69)']++; else buckets['สูง (70-100)']++ }
+    // approval funnel
+    const funnel = {
+      assessing: all.filter(a => a.status === 'in_progress').length,
+      approved: all.filter(a => a.status === 'approved').length,
+      conditional: all.filter(a => a.status === 'conditional').length,
+      rejected: all.filter(a => a.status === 'rejected').length,
+      live: all.filter(a => a.status === 'live').length,
+      retired: all.filter(a => a.status === 'retired').length,
+    }
+    // top risky
+    const top = [...all].filter(a => a.consolidated_score != null).sort((x, y) => (y.consolidated_score || 0) - (x.consolidated_score || 0)).slice(0, 8)
+      .map(a => ({ id: a.id, code: a.assessment_code, title: a.title, tier: a.risk_tier, score: a.consolidated_score, status: a.status }))
+    // heatmap: tier × phase
+    const heat: Record<string, Record<string, number>> = {}
+    for (const t of ['high', 'medium', 'low']) { heat[t] = {}; for (const p of ['intake', 'risk', 'approval', 'implementation', 'operations', 'closed']) heat[t][p] = 0 }
+    for (const a of all) if (a.risk_tier && heat[a.risk_tier]) heat[a.risk_tier][a.phase] = (heat[a.risk_tier][a.phase] || 0) + 1
+    return {
+      total: all.length,
+      by_tier: tally(a => a.risk_tier), by_phase: tally(a => a.phase), by_status: tally(a => a.status),
+      domain_avg: domainAvg, regulatory: reg, score_buckets: buckets, funnel, top_risky: top, heatmap: heat,
+    }
+  }
+
   // ── P4 — cross-module integration ──────────────────────────
   async linkVendor(id: string, vendorId: string, orgId: string) {
     await this.findOne(id, orgId)
