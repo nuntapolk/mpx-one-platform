@@ -34,11 +34,12 @@ export default function Sidebar() {
 
   return (
     <aside className="w-[210px] flex-shrink-0 flex flex-col" style={{ background: 'linear-gradient(180deg, #f3f8fd 0%, #dfeaf7 100%)', borderRight: '1px solid rgba(13,27,62,0.08)' }}>
-      <div className="px-4 py-4 flex items-center justify-center" style={{ borderBottom: '1px solid rgba(13,27,62,0.08)' }}>
+      <div className="px-4 py-4 flex flex-col items-center gap-1" style={{ borderBottom: '1px solid rgba(13,27,62,0.08)' }}>
         <Link href="/about" title="เกี่ยวกับ MPX-ONE" className="w-full">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/mpx-one-logo.png" alt="MPX-ONE" className="w-full h-auto object-contain" />
         </Link>
+        <span className="text-[10px] font-mono tracking-wide" style={{ color: 'rgba(13,27,62,0.4)' }}>v{APP_VERSION.full}</span>
       </div>
 
       <nav className="flex-1 overflow-y-auto py-2">
@@ -77,7 +78,7 @@ export default function Sidebar() {
           style={{ background: '#1D63B0', color: '#fff' }}>{(user?.name || user?.email || 'M')[0].toUpperCase()}</div>
         <div className="min-w-0 flex-1">
           <p className="text-[11px] truncate" style={{ color: 'rgba(13,27,62,0.75)' }}>{user?.name || user?.email || 'MPX Admin'}</p>
-          <p className="text-[10px]" style={{ color: 'rgba(13,27,62,0.4)' }}>{(user?.roles?.[0] || 'member')} · v{APP_VERSION.full}</p>
+          <p className="text-[10px]" style={{ color: 'rgba(13,27,62,0.4)' }}>{(user?.roles?.[0] || 'member')}</p>
         </div>
         {authEnabled && authenticated && (
           <a href="/api/auth/logout" title="ออกจากระบบ" aria-label="ออกจากระบบ"
