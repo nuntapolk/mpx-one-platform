@@ -34,12 +34,12 @@ export default function Sidebar() {
 
   return (
     <aside className="w-[210px] flex-shrink-0 flex flex-col" style={{ background: 'linear-gradient(180deg, #f3f8fd 0%, #dfeaf7 100%)', borderRight: '1px solid rgba(13,27,62,0.08)' }}>
-      <div className="px-4 py-4 flex flex-col items-center gap-1" style={{ borderBottom: '1px solid rgba(13,27,62,0.08)' }}>
+      <div className="px-4 pt-3 pb-2 flex flex-col items-center gap-0.5" style={{ borderBottom: '1px solid rgba(13,27,62,0.08)' }}>
         <Link href="/about" title="เกี่ยวกับ MPX-ONE" className="w-full">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/mpx-one-logo.png" alt="MPX-ONE" className="w-full h-auto object-contain" />
         </Link>
-        <span className="text-[10px] font-mono tracking-wide" style={{ color: 'rgba(13,27,62,0.4)' }}>v{APP_VERSION.full}</span>
+        <span className="w-full text-right text-[10px] font-mono tracking-wide" style={{ color: 'rgba(13,27,62,0.4)' }}>v{APP_VERSION.full}</span>
       </div>
 
       <nav className="flex-1 overflow-y-auto py-2">
