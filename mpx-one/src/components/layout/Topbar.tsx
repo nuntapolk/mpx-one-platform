@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/store/auth'
 
@@ -60,12 +61,11 @@ export default function Topbar() {
 function UserMenu() {
   const { user, authEnabled, authenticated } = useAuthStore()
   const name = user?.name || user?.email || 'User'
-  const initial = (name[0] || 'M').toUpperCase()
   return (
     <div className="flex items-center gap-2">
-      <div className="w-7 h-7 rounded-full text-[11px] font-medium flex items-center justify-center" style={{ background: '#0D1B3E', color: '#02C39A' }}>
-        {initial}
-      </div>
+      <Link href="/about" title={`เกี่ยวกับ MPX-ONE · ${name}`}>
+        <img src="/mpx-logo-2.png" alt="MPX-ONE" className="h-7 w-auto object-contain" />
+      </Link>
       {authEnabled && authenticated && (
         <a href="/api/auth/logout" title="ออกจากระบบ" aria-label="ออกจากระบบ"
           className="w-7 h-7 rounded-lg flex items-center justify-center text-zinc-400 hover:text-red-500 hover:bg-red-50 transition-colors">

@@ -114,6 +114,8 @@ import { ArbModule } from './modules/arb/arb.module'
 import { ArbRequest } from './database/entities/arb-request.entity'
 import { AiAssessmentModule } from './modules/ai-assessment/ai-assessment.module'
 import { AiAssessment } from './database/entities/ai-assessment.entity'
+import { AppContentModule } from './modules/app-content/app-content.module'
+import { AppContent } from './database/entities/app-content.entity'
 import { AccountsModule } from './modules/accounts/accounts.module'
 import { RequestIdMiddleware } from './common/logging/request-id.middleware'
 // Legacy modules
@@ -138,7 +140,7 @@ const ALL_ENTITIES = [
   DpoTask, CookieBannerSetting, CookieConsent, TrainingCourse, TrainingCompletion,
   ExternalParty, DataProcessingAgreement, RopaCampaign, RopaCampaignInvitee,
   AccessReview, WorkflowTemplate, WorkflowInstance, RopaFieldConfig, AppUser, AccessLog, Role,
-  EaCapability, EaCapabilityMap, ArbRequest, AiAssessment,
+  EaCapability, EaCapabilityMap, ArbRequest, AiAssessment, AppContent,
   // Legacy
   ITAsset, ChangeRequest, AITool, RegMapping,
 ]
@@ -164,6 +166,7 @@ const ALL_ENTITIES = [
     EaCapabilitiesModule,
     ArbModule,
     AiAssessmentModule,
+    AppContentModule,
     HealthModule,
     DashboardModule,
     // Governance library
