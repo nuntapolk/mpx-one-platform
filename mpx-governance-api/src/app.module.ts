@@ -2,8 +2,10 @@ import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ScheduleModule } from '@nestjs/schedule'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { CacheModule } from '@nestjs/cache-manager'
 import databaseConfig from './config/database.config'
 import keycloakConfig from './config/keycloak.config'
+import { StorageModule } from './modules/storage/storage.module'
 
 // ── Core entities ─────────────────────────────────────────────
 import { Organization } from './database/entities/organization.entity'
@@ -159,6 +161,19 @@ const ALL_ENTITIES = [
       }),
     }),
     ScheduleModule.forRoot(),
+    // B — Redis cache (falls back to in-memory when REDIS_URL is unset)
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: async () => {
+        const url = process.env.REDIS_URL
+        if (!url) return { ttl: 30000 }
+        const { redisStore } = await import('cache-manager-redis-store')
+        const store = await redisStore({ url })
+        return { store: store as any, ttl: 30000 }
+      },
+    }),
+    // C — Object storage (MinIO/S3), disabled gracefully when MINIO_ENDPOINT is unset
+    StorageModule,
     AuthCommonModule,
     AccessLogModule,
     AccountsModule,

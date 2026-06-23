@@ -53,8 +53,10 @@ Browser ──HTTPS──► mpx-web (Next.js BFF)
 | `KEYCLOAK_REALM` | `mpx-one` |
 | `KEYCLOAK_CLIENT_ID` | `mpx-api` |
 | `FRONTEND_URL` | `https://<mpx-web-public-domain>` |
-| `REDIS_URL` | `${{Redis.REDIS_URL}}` *(หลัง wire โค้ด)* |
-| `MINIO_ENDPOINT` / `MINIO_ACCESS_KEY` / `MINIO_SECRET_KEY` / `MINIO_BUCKET` | *(หลัง wire โค้ด)* |
+| `REDIS_URL` | `${{Redis.REDIS_URL}}` ✅ wired |
+| `MINIO_ENDPOINT` | `http://minio.railway.internal:9000` ✅ wired |
+| `MINIO_ACCESS_KEY` / `MINIO_SECRET_KEY` | จาก MinIO service |
+| `MINIO_BUCKET` | `mpx-one-storage` (auto-create) |
 | `LOG_LEVEL` | `info` |
 | `RETENTION_*` | ตามค่าเดิมใน `.env.example` |
 
@@ -91,11 +93,17 @@ Browser ──HTTPS──► mpx-web (Next.js BFF)
 - บน Railway: ตั้ง **`DB_SYNC=false`** เท่านั้นพอ ที่เหลือ container จัดการเอง
 - ทดสอบครบ: empty DB → `migration:run:prod` → 62 tables สำเร็จ, re-run ไม่พัง
 
-### 🟡 B. Redis wiring (ยังไม่มีในโค้ด)
-ปัจจุบัน API ไม่อ่าน `REDIS_URL` เลย → ต้องเพิ่ม cache module (เช่น `@nestjs/cache-manager` + `cache-manager-redis-yet`) ก่อน Redis ถึงจะมีประโยชน์ มิฉะนั้นแค่ provision ทิ้งไว้
+### ✅ B. Redis wiring — **เสร็จแล้ว**
+- เพิ่ม global `CacheModule.registerAsync` ใน `app.module.ts` (ใช้ `@nestjs/cache-manager` + `cache-manager-redis-store`)
+- ตั้ง **`REDIS_URL`** → ใช้ Redis; ไม่ตั้ง → fallback เป็น in-memory cache (แอป boot ได้เสมอ)
+- ทดสอบแล้ว: boot โดยไม่มี `REDIS_URL` → ไม่ crash
 
-### 🟡 C. MinIO wiring (ยังไม่มีในโค้ด)
-Evidence/Export ยังไม่ได้ผูกกับ object storage → ต้องเพิ่ม S3 client (`@aws-sdk/client-s3` ชี้ MinIO endpoint) ในโมดูล evidences/import-export
+### ✅ C. MinIO wiring — **เสร็จแล้ว**
+- เพิ่ม `StorageModule` (global) + `StorageService` ใช้ SDK `minio` — auto-create bucket ตอน start
+- Endpoints (guarded): `POST /api/v1/storage/upload` (multipart), `GET /api/v1/storage/presign?key=`, `DELETE /api/v1/storage/:key`, `GET /api/v1/storage/status`
+- Gated ด้วย **`MINIO_ENDPOINT`** — ไม่ตั้ง → object storage disabled (endpoints คืน 503, แอป boot ปกติ)
+- โมดูลอื่น (evidences/import-export) inject `StorageService` ไปใช้เก็บ key ในฟิลด์เดิมได้
+- ทดสอบแล้ว: boot โดยไม่มี `MINIO_ENDPOINT` → log "object storage disabled" + start สำเร็จ
 
 ### 🟢 D. Health checks
 `mpx-api` มี `GET /health` แล้ว → ตั้งเป็น Railway healthcheck path. `mpx-web` ใช้ `/` หรือเพิ่ม `/api/health`
