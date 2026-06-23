@@ -83,20 +83,13 @@ Browser ──HTTPS──► mpx-web (Next.js BFF)
 
 ## 4. งานที่ต้องทำก่อน deploy (gap จากโค้ดปัจจุบัน)
 
-### 🔴 A. Migrations (สำคัญสุด — ตอนนี้ schema ถูกสร้างด้วย DB_SYNC)
-โฟลเดอร์ `migrations/` ยังว่าง schema ปัจจุบันเกิดจาก `synchronize`. ต้อง:
-1. ตั้ง `DB_SYNC=false`
-2. Generate baseline migration จาก entities ทั้งหมด:
-   ```
-   npm run typeorm -- migration:generate src/database/migrations/Init -d src/config/data-source.ts
-   ```
-   (ต้องชี้ data-source ไป DB ว่างเพื่อให้ได้ schema เต็ม; data-source.ts มีอยู่แล้ว)
-3. เพิ่ม `app_content` table (เพิ่งสร้างมือใน local) เข้า migration ด้วย
-4. รัน migration ตอน deploy — ใส่ใน **release/start command** ของ `mpx-api`:
-   ```
-   npm run migration:run && node dist/main
-   ```
-   ⚠️ `data-source.ts` ชี้ entities/migrations เป็น `src/*.ts` — ต้องเพิ่ม build-time path ไป `dist/*.js` หรือใช้ ts-node ใน container
+### ✅ A. Migrations — **เสร็จแล้ว** (B1047+)
+- Generate baseline migration ครบ **62 tables** (รวม `app_content`, `ai_assessments`): `src/database/migrations/1782222863718-Init.ts`
+- `data-source.ts` ปรับให้ resolve path อัตโนมัติ — `src/*.ts` ตอน dev, `dist/*.js` ตอน production (image ไม่มี ts-node)
+- เพิ่ม npm scripts: `migration:run:prod` (typeorm CLI ชี้ `dist/config/data-source.js`) + `start:migrate` (run migration แล้วค่อย start)
+- **Dockerfile** `mpx-api` เปลี่ยน CMD → `npm run start:migrate` → รัน migration อัตโนมัติทุกครั้งที่ deploy (idempotent — ทดสอบแล้ว re-run = "No migrations are pending")
+- บน Railway: ตั้ง **`DB_SYNC=false`** เท่านั้นพอ ที่เหลือ container จัดการเอง
+- ทดสอบครบ: empty DB → `migration:run:prod` → 62 tables สำเร็จ, re-run ไม่พัง
 
 ### 🟡 B. Redis wiring (ยังไม่มีในโค้ด)
 ปัจจุบัน API ไม่อ่าน `REDIS_URL` เลย → ต้องเพิ่ม cache module (เช่น `@nestjs/cache-manager` + `cache-manager-redis-yet`) ก่อน Redis ถึงจะมีประโยชน์ มิฉะนั้นแค่ provision ทิ้งไว้

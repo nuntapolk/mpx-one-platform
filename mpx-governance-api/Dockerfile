@@ -11,4 +11,5 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 COPY --from=builder /app/dist ./dist
 EXPOSE 4000
-CMD ["node", "dist/main"]
+# Run pending migrations, then start. (DB_SYNC stays false in production.)
+CMD ["npm", "run", "start:migrate"]
