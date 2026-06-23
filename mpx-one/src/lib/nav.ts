@@ -10,6 +10,7 @@ export const SECTIONS: NavSectionDef[] = [
     { id: 'inv-vendor', label: 'Vendors',      icon: '🏢', href: '/inventory/vendors' },
     { id: 'inv-proj',   label: 'Projects',     icon: '📁', href: '/inventory/projects' },
     { id: 'inv-ai',     label: 'AI Use Cases', icon: '🤖', href: '/inventory/ai-use-cases' },
+    { id: 'regmap',     label: 'Reg. mapping', icon: '📜', href: '/governance/reg-map' },
   ]},
   // 3. IT RISK MANAGEMENT
   { id: 'itrisk', label: 'RISK MANAGEMENT', items: [
@@ -51,10 +52,6 @@ export const SECTIONS: NavSectionDef[] = [
   { id: 'aigov', label: 'AI GOVERNANCE', items: [
     { id: 'ai-assessment', label: 'AI Assessment', icon: '🤖', href: '/ai-governance/assessment' },
     { id: 'ai',            label: 'AI governance', icon: '🧠', href: '/governance/ai' },
-  ]},
-  // 8. GOVERNANCE
-  { id: 'governance', label: 'GOVERNANCE', items: [
-    { id: 'regmap', label: 'Reg. mapping', icon: '📜', href: '/governance/reg-map' },
   ]},
   // 9. ASSESSMENT
   { id: 'assessment', label: 'ASSESSMENT', items: [
