@@ -48,10 +48,6 @@ export default function Topbar() {
     <header className="h-12 flex-shrink-0 flex items-center justify-between px-5" style={{ background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(255,255,255,0.6)', WebkitBackdropFilter: 'blur(16px)' }}>
       <h1 className="text-sm font-medium text-zinc-900">{title}</h1>
       <div className="flex items-center gap-3">
-        <a href="http://localhost:4000/api/docs" target="_blank" rel="noreferrer"
-          className="text-[10px] px-2 py-1 rounded border border-zinc-200 text-zinc-500 hover:border-[#02C39A] hover:text-[#02C39A] transition-colors">
-          API Docs
-        </a>
         <UserMenu />
       </div>
     </header>

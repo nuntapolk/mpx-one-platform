@@ -96,11 +96,15 @@ export default function Sidebar() {
 }
 
 function NavLink({ item, active, onClick }: { item: NavItemDef; active: boolean; onClick: () => void }) {
-  return (
-    <Link href={item.href} onClick={onClick}
-      className={`sidebar-link ${active ? 'active' : ''} w-full flex items-center gap-2.5 pl-4 pr-2 py-2 text-xs text-left rounded-lg`}>
+  const cls = `sidebar-link ${active ? 'active' : ''} w-full flex items-center gap-2.5 pl-4 pr-2 py-2 text-xs text-left rounded-lg`
+  const inner = (
+    <>
       <span className="text-[11px] flex-shrink-0 w-4 text-center leading-none">{item.icon}</span>
       <span className="flex-1">{item.label}</span>
-    </Link>
+    </>
   )
+  if (/^https?:\/\//.test(item.href)) {
+    return <a href={item.href} target="_blank" rel="noreferrer" onClick={onClick} className={cls}>{inner}</a>
+  }
+  return <Link href={item.href} onClick={onClick} className={cls}>{inner}</Link>
 }

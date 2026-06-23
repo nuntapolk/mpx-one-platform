@@ -77,6 +77,7 @@ export const SECTIONS: NavSectionDef[] = [
     { id: 'audit-trail',   label: 'Audit Trail',     icon: '◉', href: '/audit-trail' },
     { id: 'access-logs',   label: 'Access Logs',     icon: '🔍', href: '/access-logs' },
     { id: 'settings',      label: 'Settings',        icon: '⚙', href: '/settings' },
+    { id: 'api-docs',      label: 'API Docs',        icon: '📘', href: 'http://localhost:4000/api/docs' },
   ]},
 ]
 
