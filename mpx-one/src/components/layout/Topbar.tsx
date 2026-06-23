@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/store/auth'
+import { useUiStore } from '@/store/ui'
 
 const PAGE_TITLES: Record<string, string> = {
   '/dashboard':              '🏠 Executive Dashboard',
@@ -46,11 +47,27 @@ export default function Topbar() {
 
   return (
     <header className="h-12 flex-shrink-0 flex items-center justify-between px-5" style={{ background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(255,255,255,0.6)', WebkitBackdropFilter: 'blur(16px)' }}>
-      <h1 className="text-sm font-medium text-zinc-900">{title}</h1>
+      <div className="flex items-center gap-2.5">
+        <SidebarToggle />
+        <h1 className="text-sm font-medium text-zinc-900">{title}</h1>
+      </div>
       <div className="flex items-center gap-3">
         <UserMenu />
       </div>
     </header>
+  )
+}
+
+function SidebarToggle() {
+  const { sidebarHidden, toggleSidebar } = useUiStore()
+  return (
+    <button onClick={toggleSidebar} title={sidebarHidden ? 'แสดงเมนู' : 'ซ่อนเมนู'} aria-label="hide/show sidebar"
+      className="w-7 h-7 rounded-lg flex items-center justify-center text-zinc-500 hover:text-[#1D63B0] hover:bg-[#1D63B0]/10 transition-colors">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <line x1="9" y1="3" x2="9" y2="21" />
+      </svg>
+    </button>
   )
 }
 

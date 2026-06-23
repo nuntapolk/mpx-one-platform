@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import useSWR from 'swr'
 import { SECTIONS, effectiveAccess, type NavItemDef } from '@/lib/nav'
 import { useAuthStore } from '@/store/auth'
+import { useUiStore } from '@/store/ui'
 import { APP_VERSION } from '@/lib/version'
 
 const API = process.env.NEXT_PUBLIC_API_URL || '/api/proxy'
@@ -14,6 +15,7 @@ export default function Sidebar() {
   const pathname = usePathname()
   const [openSection, setOpenSection] = useState<string | null>(null)
   const { user, authEnabled, authenticated } = useAuthStore()
+  const sidebarHidden = useUiStore((s) => s.sidebarHidden)
   const { data: rolesData } = useSWR(`${API}/api/v1/roles`, fetcher)
 
   // Match the current user's role keys to role configs; compute effective access.
@@ -33,9 +35,13 @@ export default function Sidebar() {
     .filter(s => s.items.length > 0)
 
   return (
-    <aside className="w-[210px] flex-shrink-0 flex flex-col" style={{ background: 'linear-gradient(180deg, #f3f8fd 0%, #dfeaf7 100%)', borderRight: '1px solid rgba(13,27,62,0.08)' }}>
-      <div className="px-4 pt-1.5 pb-1 flex flex-col items-center" style={{ borderBottom: '1px solid rgba(13,27,62,0.08)' }}>
-        <Link href="/about" title="เกี่ยวกับ MPX-ONE" className="w-full flex justify-center">
+    <aside
+      className="flex-shrink-0 flex flex-col overflow-hidden transition-[width] duration-300 ease-in-out"
+      style={{ width: sidebarHidden ? 0 : 210, background: 'linear-gradient(180deg, #f3f8fd 0%, #dfeaf7 100%)', borderRight: sidebarHidden ? 'none' : '1px solid rgba(13,27,62,0.08)' }}
+    >
+      <div className="w-[210px] flex-shrink-0 flex flex-col h-full">
+      <div className="px-4 pt-1.5 pb-1 flex flex-col items-start" style={{ borderBottom: '1px solid rgba(13,27,62,0.08)' }}>
+        <Link href="/about" title="เกี่ยวกับ MPX-ONE" className="w-full flex justify-start">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/mpx-one-logo.png" alt="MPX-ONE" className="h-auto object-contain" style={{ width: '66%' }} />
         </Link>
@@ -43,6 +49,10 @@ export default function Sidebar() {
       </div>
 
       <nav className="flex-1 overflow-y-auto py-2">
+        {/* Standalone top-level link (no section) */}
+        <div className="px-2 pb-1">
+          <NavLink item={{ id: 'about', label: 'About us', icon: 'ℹ️', href: '/about' }} active={pathname === '/about'} onClick={() => {}} />
+        </div>
         {sections.map(section => {
           const isOpen = openSection === section.id
           const hasActiveChild = section.items.some(i => isActive(i.href))
@@ -90,6 +100,7 @@ export default function Sidebar() {
             </svg>
           </a>
         )}
+      </div>
       </div>
     </aside>
   )
