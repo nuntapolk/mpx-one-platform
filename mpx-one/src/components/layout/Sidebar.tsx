@@ -51,7 +51,7 @@ export default function Sidebar() {
       <nav className="flex-1 overflow-y-auto py-2">
         {/* Standalone top-level link (no section) */}
         <div className="px-2 pb-1">
-          <NavLink item={{ id: 'about', label: 'About us', icon: 'ℹ️', href: '/about' }} active={pathname === '/about'} onClick={() => {}} />
+          <NavLink item={{ id: 'about', label: 'About us', icon: 'ℹ️', href: '/dashboard' }} active={pathname === '/dashboard'} onClick={() => {}} />
         </div>
         {sections.map(section => {
           const isOpen = openSection === section.id
