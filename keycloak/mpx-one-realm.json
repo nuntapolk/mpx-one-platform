@@ -22,11 +22,11 @@
       },
       "redirectUris": [
         "http://localhost:3000/*",
-        "https://mpx-one.example.com/*"
+        "https://mpx-web-production.up.railway.app/*"
       ],
       "webOrigins": [
         "http://localhost:3000",
-        "https://mpx-one.example.com"
+        "https://mpx-web-production.up.railway.app"
       ],
       "protocol": "openid-connect"
     },
@@ -49,14 +49,14 @@
       "serviceAccountsEnabled": false,
       "redirectUris": [
         "http://localhost:3000/api/auth/callback",
-        "https://mpx-one.example.com/api/auth/callback"
+        "https://mpx-web-production.up.railway.app/api/auth/callback"
       ],
       "webOrigins": [
         "http://localhost:3000",
-        "https://mpx-one.example.com"
+        "https://mpx-web-production.up.railway.app"
       ],
       "attributes": {
-        "post.logout.redirect.uris": "http://localhost:3000/*##https://mpx-one.example.com/*"
+        "post.logout.redirect.uris": "http://localhost:3000/*##https://mpx-web-production.up.railway.app/*"
       },
       "protocolMappers": [
         {
