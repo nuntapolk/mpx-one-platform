@@ -5,6 +5,48 @@
 
 ---
 
+## 🚀 LIVE DEPLOYMENT STATUS (Railway project `mpx-one`)
+
+Project: https://railway.com/project/83f40c71-3207-4e3e-a44d-b5cd8e24f137
+
+| Service | สถานะ | URL |
+|---|---|---|
+| **mpx-web** | ✅ LIVE | https://mpx-web-production.up.railway.app |
+| **mpx-api** | ✅ LIVE (internal) | `mpx-api.railway.internal:4000` |
+| Postgres (แอป) | ✅ + migrations 62 tables | internal |
+| Redis | ✅ | internal |
+| Postgres-Xz_6 (Keycloak DB) | ✅ | internal |
+| keycloak | ⚠️ ต้องตั้ง start command | https://keycloak-production-2b9a.up.railway.app |
+| minio | ⚠️ ต้องตั้ง start command + volume | internal |
+
+Env ครบทุก service แล้ว (DATABASE_URL/REDIS_URL/KEYCLOAK_URL/FRONTEND_URL/MINIO_* resolve ถูกต้อง)
+
+### ⚠️ ขั้นตอนที่เหลือ — ต้องทำใน Railway Dashboard (CLI ทำไม่ได้)
+
+**1. keycloak → Settings → Deploy → Custom Start Command:**
+```
+start
+```
+(env KC_PROXY=edge, KC_HOSTNAME, KC_DB_* ตั้งไว้แล้ว — credential admin: `admin` / ดู KEYCLOAK_ADMIN_PASSWORD ใน service variables)
+
+**2. minio → Settings → Custom Start Command + Volume:**
+```
+server /data --console-address ":9001"
+```
++ เพิ่ม Volume mount ที่ `/data` (ไม่งั้นไฟล์หายเมื่อ restart)
+
+**3. หลัง Keycloak รัน → เข้า admin UI สร้าง:**
+- Realm `mpx-one`
+- Client `mpx-web` (public, PKCE) — redirect URIs: `https://mpx-web-production.up.railway.app/*`
+- Client `mpx-api` (bearer-only)
+- สร้าง user + assign role `admin`
+
+**4. ลบ duplicate `Redis-_RK2`** (เผลอสร้างซ้ำตอน provision)
+
+**5. (ถ้าต้องการ)** seed ข้อมูลตัวอย่างบน Railway DB: `railway run --service mpx-api npm run seed:...`
+
+---
+
 ## 1. ภาพรวม Services บน Railway
 
 หนึ่ง **Railway Project** มีหลาย service (ใช้ private networking `*.railway.internal` ระหว่างกัน — ไม่เสีย egress):
