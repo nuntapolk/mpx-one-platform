@@ -33,6 +33,26 @@ Project: https://railway.com/project/83f40c71-3207-4e3e-a44d-b5cd8e24f137
 ### 🔑 Login (production)
 URL: https://mpx-web-production.up.railway.app — user: `admin@mpx.local` / `mpx1234` (role admin)
 
+### 🔄 Auto commit + deploy (ตั้งค่าแล้ว)
+
+**1. Auto commit+push (Claude Code Stop hook):** ทุกครั้งที่จบงาน Claude จะรัน
+`scripts/auto-commit-push.sh` → commit ทุก change แล้ว `git push` อัตโนมัติ
+(no-op ถ้าไม่มี change). Hook อยู่ใน session settings (`.claude/settings.local.json`).
+
+**2. Auto deploy (GitHub → Railway) — ต้องต่อใน dashboard ครั้งเดียวต่อ service:**
+แต่ละ service (`mpx-api`, `mpx-web`, `keycloak`, `minio`) → Settings → **Source** →
+Connect repo `nuntapolk/mpx-one-platform` แล้วตั้ง **Root Directory**:
+
+| Service | Root Directory |
+|---|---|
+| mpx-api | `mpx-governance-api` |
+| mpx-web | `mpx-one` |
+| keycloak | `keycloak` |
+| minio | `deploy/minio` |
+
+หลังต่อแล้ว → ทุก `git push` ขึ้น `main` จะ trigger build+deploy เองอัตโนมัติ
+(ไม่ต้องรัน `railway up` อีก) ครบ flow: **แก้โค้ด → จบงาน → auto commit+push → Railway auto-deploy**
+
 ### ⚠️ เหลือทำเอง (ไม่กระทบการทำงาน)
 - **ลบ duplicate `Redis-_RK2`** ใน dashboard (CLI ลบ service ไม่ได้)
 - **(แนะนำ)** เพิ่ม Volume ที่ `/data` ของ minio เพื่อให้ไฟล์ persist ข้าม restart
