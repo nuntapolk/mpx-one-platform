@@ -16,34 +16,27 @@ Project: https://railway.com/project/83f40c71-3207-4e3e-a44d-b5cd8e24f137
 | Postgres (แอป) | ✅ + migrations 62 tables | internal |
 | Redis | ✅ | internal |
 | Postgres-Xz_6 (Keycloak DB) | ✅ | internal |
-| keycloak | ⚠️ ต้องตั้ง start command | https://keycloak-production-2b9a.up.railway.app |
-| minio | ⚠️ ต้องตั้ง start command + volume | internal |
+| **keycloak** | ✅ LIVE + realm imported | https://keycloak-production-2b9a.up.railway.app |
+| **minio** | ✅ LIVE | internal `minio.railway.internal:9000` |
 
-Env ครบทุก service แล้ว (DATABASE_URL/REDIS_URL/KEYCLOAK_URL/FRONTEND_URL/MINIO_* resolve ถูกต้อง)
+**ทุก service LIVE — auth chain verified end-to-end** ✅
+- Keycloak realm `mpx-one` imported (clients mpx-web/mpx-api/mpx-bff, roles, users)
+- `/api/auth/login` → redirect ไป Keycloak ถูกต้อง (client mpx-bff, PKCE)
+- ทดสอบ token: `admin@mpx.local` / `mpx1234` → ได้ access token สำเร็จ
 
-### ⚠️ ขั้นตอนที่เหลือ — ต้องทำใน Railway Dashboard (CLI ทำไม่ได้)
+### วิธีที่ใช้เลี่ยง dashboard (สำคัญ)
+แทนการใช้ image service (ที่ต้องตั้ง custom start command ใน dashboard) → สร้าง **wrapper Dockerfile**:
+- `keycloak/Dockerfile` — bake realm JSON + CMD `start --import-realm`
+- `deploy/minio/Dockerfile` — bake CMD `server /data --console-address :9001`
+- deploy ผ่าน `railway up <dir> --path-as-root --service <svc>`
 
-**1. keycloak → Settings → Deploy → Custom Start Command:**
-```
-start
-```
-(env KC_PROXY=edge, KC_HOSTNAME, KC_DB_* ตั้งไว้แล้ว — credential admin: `admin` / ดู KEYCLOAK_ADMIN_PASSWORD ใน service variables)
+### 🔑 Login (production)
+URL: https://mpx-web-production.up.railway.app — user: `admin@mpx.local` / `mpx1234` (role admin)
 
-**2. minio → Settings → Custom Start Command + Volume:**
-```
-server /data --console-address ":9001"
-```
-+ เพิ่ม Volume mount ที่ `/data` (ไม่งั้นไฟล์หายเมื่อ restart)
-
-**3. หลัง Keycloak รัน → เข้า admin UI สร้าง:**
-- Realm `mpx-one`
-- Client `mpx-web` (public, PKCE) — redirect URIs: `https://mpx-web-production.up.railway.app/*`
-- Client `mpx-api` (bearer-only)
-- สร้าง user + assign role `admin`
-
-**4. ลบ duplicate `Redis-_RK2`** (เผลอสร้างซ้ำตอน provision)
-
-**5. (ถ้าต้องการ)** seed ข้อมูลตัวอย่างบน Railway DB: `railway run --service mpx-api npm run seed:...`
+### ⚠️ เหลือทำเอง (ไม่กระทบการทำงาน)
+- **ลบ duplicate `Redis-_RK2`** ใน dashboard (CLI ลบ service ไม่ได้)
+- **(แนะนำ)** เพิ่ม Volume ที่ `/data` ของ minio เพื่อให้ไฟล์ persist ข้าม restart
+- **(ถ้าต้องการ)** seed ข้อมูลตัวอย่าง: `railway run --service mpx-api npm run seed:...`
 
 ---
 
