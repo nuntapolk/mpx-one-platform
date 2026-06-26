@@ -1,9 +1,10 @@
-import Sidebar from '@/components/layout/Sidebar'
-import Topbar from '@/components/layout/Topbar'
+import MenuBar from '@/components/layout/MenuBar'
+import StatusBar from '@/components/layout/StatusBar'
+import PageTitle from '@/components/layout/PageTitle'
 
 export default function ShellLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: 'linear-gradient(135deg, #e8edf5 0%, #f0f4fa 40%, #eef1f7 100%)' }}>
+    <div className="flex flex-col h-screen overflow-hidden" style={{ background: 'linear-gradient(135deg, #e8edf5 0%, #f0f4fa 40%, #eef1f7 100%)' }}>
       {/* Decorative blobs for depth */}
       <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden">
         <div style={{
@@ -26,11 +27,12 @@ export default function ShellLayout({ children }: { children: React.ReactNode })
         }} />
       </div>
 
-      <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Topbar />
-        <main className="flex-1 overflow-y-auto p-5 relative">{children}</main>
-      </div>
+      <MenuBar />
+      <main className="flex-1 overflow-y-auto p-5 relative">
+        <PageTitle />
+        {children}
+      </main>
+      <StatusBar />
     </div>
   )
 }
