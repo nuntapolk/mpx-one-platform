@@ -93,7 +93,7 @@ export class ScoringService {
     // Retire previous latest for this scope/period
     await this.snapRepo.update({ tenant_id: org, assessment_period: period, is_latest: true } as any, { is_latest: false })
 
-    const snap = await this.snapRepo.save(this.snapRepo.create({
+    const snapEntity = this.snapRepo.create({
       tenant_id: org, assessment_period: period, profile_level: 'enterprise',
       overall_score: overall, compliance_score: compliance,
       control_evidence_score: controlEvidence, operational_score: operational,
@@ -101,7 +101,8 @@ export class ScoringService {
       record_count: mods.reduce((s, m) => s + m.total, 0),
       is_latest: true, calculated_at: new Date(),
       calculated_by_type: userId ? 'user' : 'system', calculated_by_user_id: userId,
-    } as any))
+    })
+    const snap: ScoreSnapshot = await this.snapRepo.save(snapEntity)
 
     await this.compRepo.save(components.map(c => this.compRepo.create({
       score_snapshot_id: snap.id, component_code: c.code, component_name: c.name,
