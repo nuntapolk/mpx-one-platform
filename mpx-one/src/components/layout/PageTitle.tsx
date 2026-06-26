@@ -3,6 +3,7 @@ import { usePathname } from 'next/navigation'
 
 const PAGE_TITLES: Record<string, string> = {
   '/dashboard':              '🏠 Executive Dashboard',
+  '/readiness':              '🛡️ PDPA Compliance & Readiness Score',
   '/governance/data':        'Data Governance',
   '/governance/it':          'IT Governance',
   '/governance/ai':          'AI Governance',

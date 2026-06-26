@@ -70,6 +70,15 @@ export default function MenuBar() {
         About us
       </Link>
 
+      {/* Readiness Score — direct top-level menu */}
+      <Link
+        href="/readiness"
+        className="text-[13px] px-2.5 py-1 rounded-md transition-colors"
+        style={{ color: isActive('/readiness') ? ACTIVE_TEXT : 'rgba(13,27,62,0.7)', background: isActive('/readiness') ? ACTIVE_BG : 'transparent' }}
+      >
+        Readiness
+      </Link>
+
       {sections.map(section => {
         const isOpen = openMenu === section.id
         const hasActiveChild = section.items.some(i => isActive(i.href))
