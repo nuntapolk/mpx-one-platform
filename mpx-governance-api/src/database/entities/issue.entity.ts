@@ -34,6 +34,22 @@ export class Issue {
   @Column({ nullable: true })
   related_risk_id: string
 
+  // Readiness Score (gap) additions — Issue doubles as a readiness gap record
+  @Column({ default: false })
+  is_readiness_gap: boolean
+
+  @Column({ length: 100, nullable: true })
+  source_module: string
+
+  @Column({ type: 'uuid', nullable: true })
+  region_id: string
+
+  @Column({ length: 20, nullable: true })
+  province_code: string
+
+  @Column({ type: 'uuid', nullable: true })
+  methodology_version_id: string
+
   @Column({ default: 'medium' })
   @ApiProperty({ enum: ['critical', 'high', 'medium', 'low'] })
   severity: string

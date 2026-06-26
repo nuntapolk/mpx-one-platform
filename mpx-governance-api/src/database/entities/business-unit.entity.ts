@@ -27,6 +27,17 @@ export class BusinessUnit {
   @Column({ type: 'uuid', nullable: true })
   head_user_id: string
 
+  // Readiness Score additions
+  @Column({ type: 'uuid', nullable: true })
+  region_id: string
+
+  @Column({ length: 20, nullable: true })
+  province_code: string
+
+  @Column({ length: 30, nullable: true })
+  @ApiProperty({ enum: ['basic', 'standard', 'enterprise'] })
+  profile_level: string
+
   @Column({ default: true })
   is_active: boolean
 

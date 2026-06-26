@@ -118,6 +118,15 @@ import { AiAssessmentModule } from './modules/ai-assessment/ai-assessment.module
 import { AiAssessment } from './database/entities/ai-assessment.entity'
 import { AppContentModule } from './modules/app-content/app-content.module'
 import { AppContent } from './database/entities/app-content.entity'
+import { ReadinessModule } from './modules/readiness/readiness.module'
+import { Tenant } from './database/entities/tenant.entity'
+import { Region } from './database/entities/region.entity'
+import { ScoreMethodologyVersion } from './database/entities/score-methodology-version.entity'
+import { ScoreSnapshot } from './database/entities/score-snapshot.entity'
+import { ScoreComponent } from './database/entities/score-component.entity'
+import { ModuleScore } from './database/entities/module-score.entity'
+import { UnitScore } from './database/entities/unit-score.entity'
+import { ScoreSourceMetric } from './database/entities/score-source-metric.entity'
 import { AccountsModule } from './modules/accounts/accounts.module'
 import { RequestIdMiddleware } from './common/logging/request-id.middleware'
 // Legacy modules
@@ -143,6 +152,7 @@ const ALL_ENTITIES = [
   ExternalParty, DataProcessingAgreement, RopaCampaign, RopaCampaignInvitee,
   AccessReview, WorkflowTemplate, WorkflowInstance, RopaFieldConfig, AppUser, AccessLog, Role,
   EaCapability, EaCapabilityMap, ArbRequest, AiAssessment, AppContent,
+  Tenant, Region, ScoreMethodologyVersion, ScoreSnapshot, ScoreComponent, ModuleScore, UnitScore, ScoreSourceMetric,
   // Legacy
   ITAsset, ChangeRequest, AITool, RegMapping,
 ]
@@ -182,6 +192,7 @@ const ALL_ENTITIES = [
     ArbModule,
     AiAssessmentModule,
     AppContentModule,
+    ReadinessModule,
     HealthModule,
     DashboardModule,
     // Governance library

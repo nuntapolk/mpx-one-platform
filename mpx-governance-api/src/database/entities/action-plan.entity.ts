@@ -32,6 +32,13 @@ export class ActionPlan {
   @Column({ nullable: true })
   issue_id: string
 
+  // Readiness Score (action) additions
+  @Column({ length: 100, nullable: true })
+  source_module: string
+
+  @Column({ type: 'uuid', nullable: true })
+  business_unit_id: string
+
   @Column({ nullable: true })
   control_id: string
 
