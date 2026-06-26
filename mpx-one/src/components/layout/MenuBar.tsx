@@ -12,8 +12,12 @@ const fetcher = (url: string) => fetch(url, { cache: 'no-store' }).then(r => r.o
 // Short horizontal-bar labels for each section (fallback to the section's own label).
 const MENU_LABELS: Record<string, string> = {
   inventory: 'Inventory', itrisk: 'Risk', ea: 'EA', itgov: 'IT Gov',
-  datagov: 'Data', pdpa: 'PDPA', aigov: 'AI Gov', assessment: 'Assessment', platform: 'Config',
+  datagov: 'Data', pdpa: 'PDPA', aigov: 'AI Gov', assessment: 'Assessment', platform: 'Setting',
 }
+
+// Active/open highlight — light blue (30% opacity) with dark-blue text.
+const ACTIVE_BG = 'rgba(29,99,176,0.3)'
+const ACTIVE_TEXT = '#1D63B0'
 
 export default function MenuBar() {
   const pathname = usePathname()
@@ -54,14 +58,14 @@ export default function MenuBar() {
       {/* Logo → About/Dashboard */}
       <Link href="/dashboard" title="เกี่ยวกับ MPX-ONE" className="flex items-center mr-1.5 pr-2" style={{ borderRight: '1px solid rgba(13,27,62,0.1)' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/mpx-one-logo.png" alt="MPX-ONE" className="h-5 w-auto object-contain" />
+        <img src="/mpx-one-logo.png" alt="MPX-ONE" className="h-[26px] w-auto object-contain" />
       </Link>
 
       {/* About us — direct link, no dropdown */}
       <Link
         href="/dashboard"
         className="text-[13px] px-2.5 py-1 rounded-md transition-colors"
-        style={{ color: isActive('/dashboard') ? '#fff' : 'rgba(13,27,62,0.7)', background: isActive('/dashboard') ? '#1D63B0' : 'transparent' }}
+        style={{ color: isActive('/dashboard') ? ACTIVE_TEXT : 'rgba(13,27,62,0.7)', background: isActive('/dashboard') ? ACTIVE_BG : 'transparent' }}
       >
         About us
       </Link>
@@ -76,8 +80,8 @@ export default function MenuBar() {
               onMouseEnter={() => { if (openMenu) setOpenMenu(section.id) }}
               className="text-[13px] px-2.5 py-1 rounded-md transition-colors"
               style={{
-                color: isOpen || hasActiveChild ? (isOpen ? '#fff' : '#1D63B0') : 'rgba(13,27,62,0.7)',
-                background: isOpen ? '#1D63B0' : 'transparent',
+                color: isOpen || hasActiveChild ? ACTIVE_TEXT : 'rgba(13,27,62,0.7)',
+                background: isOpen ? ACTIVE_BG : 'transparent',
               }}
             >
               {MENU_LABELS[section.id] ?? section.label}
