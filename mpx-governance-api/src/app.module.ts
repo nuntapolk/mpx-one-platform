@@ -119,6 +119,7 @@ import { AiAssessment } from './database/entities/ai-assessment.entity'
 import { AppContentModule } from './modules/app-content/app-content.module'
 import { AppContent } from './database/entities/app-content.entity'
 import { ReadinessModule } from './modules/readiness/readiness.module'
+import { PdpaSyncModule } from './modules/pdpa-sync/pdpa-sync.module'
 import { Tenant } from './database/entities/tenant.entity'
 import { Region } from './database/entities/region.entity'
 import { ScoreMethodologyVersion } from './database/entities/score-methodology-version.entity'
@@ -193,6 +194,7 @@ const ALL_ENTITIES = [
     AiAssessmentModule,
     AppContentModule,
     ReadinessModule,
+    PdpaSyncModule,
     HealthModule,
     DashboardModule,
     // Governance library

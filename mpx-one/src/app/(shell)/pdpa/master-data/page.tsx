@@ -12,6 +12,7 @@ const TABS = [
   { id: 'lawful', label: '⚖️ ฐานทางกฎหมาย' },
   { id: 'compliance', label: '🔐 Compliance Tags' },
   { id: 'fields', label: '⚙️ ROPA Field Config' },
+  { id: 'sync', label: '🔄 PDPA Studio Sync' },
 ]
 
 export default function Page() {
@@ -32,7 +33,59 @@ export default function Page() {
       {tab === 'lawful' && <LookupManager category="lawful_basis" title="ฐานทางกฎหมาย (PDPA มาตรา 24/26)" />}
       {tab === 'compliance' && <LookupManager category="compliance_tag" title="Compliance & Governance Tags (ใช้ใน Application)" />}
       {tab === 'fields' && <FieldConfigManager />}
+      {tab === 'sync' && <PdpaSyncPanel />}
     </div>
+  )
+}
+
+/* ── PDPA Studio Sync (Phase 1 — one-way pull) ─────────────── */
+function PdpaSyncPanel() {
+  const { data: status } = useSWR(`${API}/api/v1/pdpa-sync/status`, fetcher)
+  const [running, setRunning] = useState(false)
+  const [result, setResult] = useState<any>(null)
+  const run = async () => {
+    setRunning(true); setResult(null)
+    try {
+      const res = await fetch(`${API}/api/v1/pdpa-sync/run`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) })
+      setResult(await res.json())
+      mutate(`${API}/api/v1/pdpa-sync/status`)
+    } catch (e: any) { setResult({ success: false, error: { message: e.message } }) }
+    finally { setRunning(false) }
+  }
+  const enabled = status?.enabled
+  return (
+    <Card>
+      <SectionHeader title="🔄 PDPA Studio Sync (one-way pull)" />
+      <div className="text-xs text-zinc-600 space-y-1.5 mb-3">
+        <div>สถานะการเชื่อมต่อ: {enabled === undefined ? '…' : enabled
+          ? <span className="text-green-600 font-medium">เปิดใช้งาน</span>
+          : <span className="text-amber-600 font-medium">ยังไม่ตั้งค่า (ต้องตั้ง env PDPA_STUDIO_API_KEY)</span>}</div>
+        <div className="text-zinc-400">Source: {status?.base_url} · ทิศทาง: {status?.direction || 'pull_only'}</div>
+        <div className="text-zinc-400">Sync ล่าสุด: {status?.last_run_at ? new Date(status.last_run_at).toLocaleString('th-TH') : '—'}</div>
+      </div>
+      <button onClick={run} disabled={!enabled || running}
+        className="text-xs px-4 py-2 rounded-lg text-white bg-[#1D63B0] hover:bg-[#17518f] disabled:opacity-40 transition-colors">
+        {running ? 'กำลัง sync…' : '⤓ Sync now (ROPA · DSAR · Consent)'}
+      </button>
+      {!enabled && <p className="text-[11px] text-zinc-400 mt-2">ปุ่มจะเปิดเมื่อมีการตั้ง API key ของ PDPA Studio ที่ฝั่ง backend</p>}
+      {(result?.results || status?.domains)?.length > 0 && (
+        <div className="mt-3 border-t border-white/50 pt-3">
+          <div className="text-[11px] font-medium text-zinc-600 mb-1.5">ผลล่าสุด</div>
+          <table className="w-full text-[11px]">
+            <thead><tr className="text-zinc-400 text-left"><th className="py-1">Domain</th><th>Pulled</th><th>Upserted</th><th>Skipped</th><th>Error</th></tr></thead>
+            <tbody>
+              {(result?.results || status?.domains).map((d: any) => (
+                <tr key={d.domain} className="border-t border-white/40">
+                  <td className="py-1 font-medium">{d.domain}</td><td>{d.pulled}</td><td className="text-green-600">{d.upserted}</td><td>{d.skipped}</td>
+                  <td className="text-red-500">{d.error || '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="text-[10px] text-zinc-400 mt-2">ROPA → Shared Inventory · DSAR/Consent → PDPA modules. ข้อมูลที่สร้างใน MPX (origin=mpx) จะไม่ถูกทับ</p>
+        </div>
+      )}
+    </Card>
   )
 }
 

@@ -6,6 +6,13 @@ export class RightsRequest {
   @PrimaryGeneratedColumn('uuid') @ApiProperty() id: string
   @Column({ type: 'uuid' }) organization_id: string
 
+  // PDPA Studio sync metadata (Phase 1 — one-way pull)
+  @Column({ length: 100, nullable: true }) external_id: string
+  @Column({ length: 50, nullable: true }) external_source: string
+  @Column({ type: 'timestamptz', nullable: true }) last_synced_at: Date
+  @Column({ length: 20, default: 'mpx' }) origin: string
+  @Column({ type: 'jsonb', nullable: true }) external_payload: any
+
   @Column({ type: 'uuid', nullable: true }) data_subject_id: string
   @Column({ unique: true, length: 50 }) ticket_number: string
 
