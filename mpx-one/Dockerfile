@@ -3,6 +3,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
+# NEXT_PUBLIC_* must be present at build time (Next.js inlines them).
+# The browser always talks to the same-origin BFF proxy, never the API directly.
+ENV NEXT_PUBLIC_API_URL=/api/proxy
 RUN npm run build
 
 FROM node:20-alpine
